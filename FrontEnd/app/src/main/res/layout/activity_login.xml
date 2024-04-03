@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/new_background"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingRight="32sp"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cherry_swash"
+        android:text="Cantina da Tia"
+        android:textColor="#D8D8D4"
+        android:textSize="48sp" />
+
+
+    <EditText
+        android:id="@+id/EmailLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:drawableLeft="@drawable/email"
+        android:drawablePadding="6dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textWebEmailAddress|textPersonName"
+        android:padding="10dp" />
+
+    <EditText
+        android:id="@+id/SenhaLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:drawableLeft="@drawable/lock"
+        android:drawablePadding="6dp"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPersonName|textPassword"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/Acessar"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:text="Acessar" />
+
+    <Button
+        android:id="@+id/Cadastre"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:onClick="cadastrar"
+        android:text="Cadastre-se" />
+
+</LinearLayout>
