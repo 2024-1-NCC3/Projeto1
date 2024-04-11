@@ -2,5 +2,6 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/cherry_swash</item>
+        <item>@font/kurale</item>
     </array>
 </resources>

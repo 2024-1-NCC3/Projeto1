@@ -12,7 +12,7 @@
         android:theme="@style/Theme.ComedoriaTIa"
         tools:targetApi="31">
         <activity
-            android:name=".PedidoActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".PagamentoActivity"
@@ -21,7 +21,7 @@
             android:name=".CadastroActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".PedidoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
