@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.comedoria.ui.databinding.FragmentNotificationsBinding;
+import com.example.comedoria.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
 

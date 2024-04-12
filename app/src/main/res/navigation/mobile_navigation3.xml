@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/garcom"
+        android:id="@+id/pedido"
         android:name="com.example.comedoria.ui.ui.dashboard.DashboardFragment"
         android:label="pedido"
         tools:layout="@layout/fragment_dashboard" />

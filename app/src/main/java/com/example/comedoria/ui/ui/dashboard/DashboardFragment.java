@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.comedoria.ui.databinding.FragmentDashboardBinding;
+import com.example.comedoria.databinding.FragmentDashboardBinding;
 
 public class DashboardFragment extends Fragment {
 

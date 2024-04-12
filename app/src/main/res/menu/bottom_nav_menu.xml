@@ -7,7 +7,7 @@
         android:title="cardapio"/>
 
     <item
-        android:id="@+id/garcom"
+        android:id="@+id/pedido"
         android:icon="@drawable/garcom"
         android:title="pedido" />
 
