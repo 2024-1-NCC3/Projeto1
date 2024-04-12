@@ -15,7 +15,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(LoadingActivity.this, Login.class);
+                Intent intent = new Intent(LoadingActivity.this, Teste.class);
                 startActivity(intent);
                 finish();
             }
