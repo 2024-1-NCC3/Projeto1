@@ -59,8 +59,8 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/pessoa"
-                tools:srcCompat="@drawable/pessoa" />
+                app:srcCompat="@drawable/ic_pessoa"
+                tools:srcCompat="@drawable/ic_pessoa" />
 
             <EditText
                 android:id="@+id/txtEmail"
@@ -103,8 +103,8 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/pessoa"
-                tools:srcCompat="@drawable/pessoa" />
+                app:srcCompat="@drawable/ic_pessoa"
+                tools:srcCompat="@drawable/ic_pessoa" />
 
             <EditText
                 android:id="@+id/txtConfirmarEmail"
@@ -148,8 +148,8 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/pessoa"
-                tools:srcCompat="@drawable/pessoa" />
+                app:srcCompat="@drawable/ic_pessoa"
+                tools:srcCompat="@drawable/ic_pessoa" />
 
             <EditText
                 android:id="@+id/txtCpf"
@@ -192,8 +192,8 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/senha"
-                tools:srcCompat="@drawable/senha" />
+                app:srcCompat="@drawable/ic_senha"
+                tools:srcCompat="@drawable/ic_senha" />
 
             <EditText
                 android:id="@+id/txtSenha"
@@ -236,8 +236,8 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/senha"
-                tools:srcCompat="@drawable/senha" />
+                app:srcCompat="@drawable/ic_senha"
+                tools:srcCompat="@drawable/ic_senha" />
 
             <EditText
                 android:id="@+id/txtConfirmarSenha"

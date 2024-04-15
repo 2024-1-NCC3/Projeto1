@@ -3,9 +3,9 @@ package com.example.comedoria;
 public class Categoria {
     private String nome;
     private String Descricao;
-    private String caminho;
+    private int caminho;
 
-    public Categoria(String nome, String descricao, String caminho) {
+    public Categoria(String nome, String descricao, int caminho) {
         this.nome = nome;
         Descricao = descricao;
         this.caminho = caminho;
@@ -27,11 +27,11 @@ public class Categoria {
         Descricao = descricao;
     }
 
-    public String getCaminho() {
+    public int getCaminho() {
         return caminho;
     }
 
-    public void setCaminho(String caminho) {
+    public void setCaminho(int caminho) {
         this.caminho = caminho;
     }
 }
