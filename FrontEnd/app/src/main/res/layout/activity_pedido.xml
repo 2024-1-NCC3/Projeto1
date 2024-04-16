@@ -28,77 +28,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/grupMarmitaStrogono"
-            android:layout_width="150dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleProduto"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#0F5929"
-                android:buttonTint="#FFEEE1"
-                android:text="CheckBox" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                app:srcCompat="@drawable/marmitastrgonofffrango" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="145dp"
-                android:layout_height="53dp"
-                android:background="#0F5929"
-                android:padding="5dp"
-                android:text="Marmita de Strogonoff de frango com batata"
-                android:textColor="#FBFBFB"
-                android:textSize="13sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/grupMarmitaStrogonoff"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.826"
-            app:layout_constraintStart_toEndOf="@+id/grupMarmitaStrogono"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
-
-            <RadioButton
-                android:id="@+id/radioButton8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#403832"
-                android:text="R$ 7,50"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                app:srcCompat="@drawable/marmitastrgonofffrango" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="145dp"
-                android:layout_height="53dp"
-                android:background="#403832"
-                android:padding="5dp"
-                android:text="Marmita de Strogonoff de frango com batata"
-                android:textColor="#FBFBFB" />
-
-        </LinearLayout>
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="10dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
