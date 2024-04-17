@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/layoutProduto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rbProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="produto" />
+
+        <ImageButton
+            android:id="@+id/imageProduto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/bebidassazonais" />
+
+        <TextView
+            android:id="@+id/descricaoProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="descricao" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public Adapter(List<Categoria> lista){
         this.listaCategorias = lista;
     }
+
+
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
