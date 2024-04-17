@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/cardapio"
-        android:icon="@drawable/cardapio"
+
         android:title="cardapio"/>
 
     <item
         android:id="@+id/pedido"
-        android:icon="@drawable/garcom"
+
         android:title="pedido" />
 
     <item

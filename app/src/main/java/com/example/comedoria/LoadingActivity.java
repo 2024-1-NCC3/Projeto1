@@ -17,7 +17,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(LoadingActivity.this, InicialActivity.class);
+                Intent intent = new Intent(LoadingActivity.this, Teste.class);
                 startActivity(intent);
                 finish();
             }
