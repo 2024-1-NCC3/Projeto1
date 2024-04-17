@@ -11,4 +11,7 @@
     <color name="login_fundo">#244028</color>
     <color name="botao">#94E986</color>
     <color name="bege">#FFEEE1</color>
+    <color name="transparente">#00000000</color>
+    <color name="verde_categorias">#FF93E885</color>
+    <color name="verde_fundo_categoria">#0F5929</color>
 </resources>
