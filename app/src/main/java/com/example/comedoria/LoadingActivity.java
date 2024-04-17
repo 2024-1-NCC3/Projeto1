@@ -1,10 +1,11 @@
 package com.example.comedoria;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoadingActivity extends AppCompatActivity {
     @Override
@@ -15,7 +16,8 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(LoadingActivity.this, Teste.class);
+
+                Intent intent = new Intent(LoadingActivity.this, InicialActivity.class);
                 startActivity(intent);
                 finish();
             }
