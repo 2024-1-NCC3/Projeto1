@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="#00FFFFFF">
 
     <LinearLayout
         android:id="@+id/layoutProduto"
@@ -14,24 +17,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginLeft="10dp">
 
-        <RadioButton
-            android:id="@+id/rbProduto"
+        <CheckBox
+            android:id="@+id/cbProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="produto" />
+            android:background="#0F5929"
+            android:buttonTint="@color/bege"
+            android:text="CheckBox"
+            android:textColor="#F6F2F2" />
 
         <ImageButton
             android:id="@+id/imageProduto"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/bebidassazonais" />
+            app:srcCompat="@drawable/delivery_capa" />
 
         <TextView
             android:id="@+id/descricaoProduto"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="descricao" />
+            android:background="@drawable/borda_arrendondada"
+            android:padding="10dp"
+            android:text="descricao"
+            android:textColor="#FBF8F8" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
