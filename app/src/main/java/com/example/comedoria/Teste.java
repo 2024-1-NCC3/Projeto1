@@ -1,5 +1,6 @@
 package com.example.comedoria;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,5 +46,23 @@ public class Teste extends AppCompatActivity {
 
         categoria = new Categoria("Marmitas","Experimente nossas marmitas", listaImg[2]);
         listaCategorias.add(categoria);
+    }
+
+    public void home(){
+        Intent home = new Intent(Teste.this, Login.class);
+        startActivity(home);
+    }
+
+    public void cardapio(){
+        Intent cardapio = new Intent();
+        startActivity(cardapio);
+    }
+    public void carrinho(){
+        Intent carrinho = new Intent();
+        startActivity(carrinho);
+    }
+    public void usuario(){
+        Intent usuario = new Intent();
+        startActivity(usuario);
     }
 }

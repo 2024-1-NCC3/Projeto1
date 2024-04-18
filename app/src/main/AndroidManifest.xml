@@ -14,15 +14,11 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
-            android:name=".InicialActivity"
-            android:exported="false"
-            android:label="@string/title_activity_inicial" />
+            android:name=".Login"
+            android:exported="false" />
 
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Login"
+            android:name=".LoadingActivity"
             android:exported="false" />
         <activity
             android:name=".Teste"
@@ -31,7 +27,7 @@
             android:name=".Cadastro"
             android:exported="false" />
         <activity
-            android:name=".LoadingActivity"
+            android:name=".Start"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

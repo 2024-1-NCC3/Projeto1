@@ -13,7 +13,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -34,14 +33,13 @@ public class Login extends AppCompatActivity {
 
     }
     public void cadastro(View view){
-
-
         Intent i = new Intent(this, Cadastro.class);
         startActivity(i);
     }
     public void Logar(View view){
         String url = "https://lt3dcj-3000.csb.app/login";
         try {
+
             //Cria o arquivo Json
             JSONObject dadosDeSolicitacao = new JSONObject();
             //Adiciona os campos= input e senha ao Json, e define seus valores
@@ -51,6 +49,9 @@ public class Login extends AppCompatActivity {
 
             JSONArray solicitacao = new JSONArray();
             solicitacao.put(dadosDeSolicitacao);
+
+            Intent care = new Intent(Login.this, LoadingActivity.class);
+            startActivity(care);
 
             JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.POST,
@@ -72,7 +73,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
                                         //Se estever tudo certo, passa para a próxima página
                                         if(sucesso){
-                                            Intent intent = new Intent(Login.this, Cadastro.class);
+                                            Intent intent = new Intent(Login.this, Teste.class);
                                             startActivity(intent);
                                         }
                                     }catch (JSONException ex){
@@ -95,8 +96,5 @@ public class Login extends AppCompatActivity {
         }catch (JSONException ex){
 
         }
-
-
-
     }
 }
