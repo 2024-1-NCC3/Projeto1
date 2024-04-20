@@ -24,15 +24,15 @@
             android:id="@+id/cbProduto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0F5929"
+            android:background="@drawable/borda_superior_arrendondada"
             android:buttonTint="@color/bege"
             android:text="CheckBox"
             android:textColor="#F6F2F2" />
 
         <ImageButton
             android:id="@+id/imageProduto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="125dp"
             app:srcCompat="@drawable/delivery_capa" />
 
         <TextView

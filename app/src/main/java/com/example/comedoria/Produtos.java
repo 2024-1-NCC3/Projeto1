@@ -27,7 +27,9 @@ public class Produtos extends AppCompatActivity {
     private List<Produto> listaProdutos = new ArrayList<>();
 
     private int[] listImgProduto = {
-            R.drawable.imgstrogonofffrango
+            R.drawable.imgstrogonofffrango,
+            R.drawable.strogonoffimgpq,
+            R.drawable.pao_de_queijo
 
     };
 
@@ -62,14 +64,18 @@ public class Produtos extends AppCompatActivity {
     }
 
     private void ListarProduto(){
-        Produto produto = new Produto("Marmita Strogonoff de Frango com Batatas",14.5, listaIngrediente[0], listImgProduto[0]);
+        Produto produto = new Produto("Marmita Strogonoff de Frango com Batatas",14.5, listaIngrediente[0], listImgProduto[1]);
         listaProdutos.add(produto);
 
         Produto pedacoBolo = new Produto ("Pedaço de bolo de Bolo Cholate com cobertura chocolate", 10.0, listaIngrediente[1],listImgProduto[0]);
         listaProdutos.add(pedacoBolo);
 
-        Produto paoDeQueijo = new Produto("Porção de pao de queijo", 5.00, listaIngrediente[1], listImgProduto[0]);
+        Produto paoDeQueijo = new Produto("Porção de pao de queijo", 5.00, listaIngrediente[1], listImgProduto[2]);
         listaProdutos.add(paoDeQueijo);
+
+        Produto refriLataNormal = new Produto ("Refrigerante lata 350ml", 7.99, listaIngrediente[1], listImgProduto[0]);
+        listaProdutos.add(refriLataNormal);
+
     }
 
 }
