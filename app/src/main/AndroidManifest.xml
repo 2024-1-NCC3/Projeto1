@@ -14,9 +14,11 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
+            android:name=".Catalogo"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
-
         <activity
             android:name=".LoadingActivity"
             android:exported="false" />
