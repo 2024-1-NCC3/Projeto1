@@ -18,7 +18,7 @@ public class Catalogo extends AppCompatActivity {
 
     // Array de IDs das imagens das categorias
     private int[] listaImg = {
-            R.drawable.promocao,
+            R.drawable.ofertas,
             R.drawable.marmitas,
             R.drawable.salgados,
             R.drawable.doces,
@@ -61,7 +61,7 @@ public class Catalogo extends AppCompatActivity {
         categoria = new Categoria("Picolés", "Experimente nossos picolés", listaImg[4]);
         listaCategorias.add(categoria);
 
-        categoria = new Categoria("Bebidas", "Experimente nossas bebidas", listaImg[5]);
+        categoria = new Categoria("Bebidas", "Experimente nossas bebidas sazonais", listaImg[5]);
         listaCategorias.add(categoria);
     }
 

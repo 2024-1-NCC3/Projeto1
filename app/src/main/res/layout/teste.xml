@@ -24,7 +24,7 @@
             android:layout_width="83dp"
             android:layout_height="72dp"
             android:clickable="true"
-            android:onClick="home"
+            android:onClick="log"
             app:srcCompat="@drawable/ic_home"
             tools:layout_editor_absoluteX="30dp"
             tools:layout_editor_absoluteY="71dp" />

@@ -48,7 +48,7 @@ public class Teste extends AppCompatActivity {
         listaCategorias.add(categoria);
     }
 
-    public void home(){
+    public void log(){
         Intent home = new Intent(Teste.this, Login.class);
         startActivity(home);
     }
