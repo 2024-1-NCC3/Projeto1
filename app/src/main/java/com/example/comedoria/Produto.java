@@ -12,14 +12,22 @@ public class Produto {
 
     private String ingrediente;
 
+    private boolean selecionado;
     public Produto(String nome, double preco,String ingrediente, int caminhoImg) {
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
         this.ingrediente = ingrediente;
+        this.setSelecionado(false);
     }
 
+    public boolean isSelecionado() {
+        return selecionado;
+    }
 
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
 
     public String getNome() {
         return nome;

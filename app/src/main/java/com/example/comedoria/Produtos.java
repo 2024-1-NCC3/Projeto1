@@ -6,9 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +25,7 @@ public class Produtos extends AppCompatActivity {
     //#FFEEE1 bege
     //#0F5929 verde escuro
     //#94E986 verde claro
-
+    private AdapterProduto adapter1;
     private RecyclerView recyclerProduto, recyclerProduto1;
     private CheckBox cbProduto;
 
@@ -50,7 +55,7 @@ public class Produtos extends AppCompatActivity {
 
         ListarProduto();
 
-        AdapterProduto adapter1 = new AdapterProduto(listaProdutos);
+        adapter1 = new AdapterProduto(this, listaProdutos);
 
         RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this,2);
         recyclerProduto.setLayoutManager(layoutManager1);
@@ -78,4 +83,27 @@ public class Produtos extends AppCompatActivity {
 
     }
 
+    public void irParaOCarrinho(View view){
+        listaProdutos = adapter1.getListaProdutos();
+        List<Produto> produtosSelecionados = new ArrayList<>();
+
+        for(Produto produto: listaProdutos){
+            if(produto.isSelecionado()){
+                produtosSelecionados.add(produto);
+            }
+        }
+        if(produtosSelecionados.size() == 0){
+            Toast.makeText(this, "Nenhum produto selecionad", Toast.LENGTH_SHORT).show();
+            return;
+        }else{
+            Intent i = new Intent(getApplicationContext(), Carrinho.class);
+            String produtosComoString = new Gson().toJson(produtosSelecionados);
+
+            i.putExtra("produtosSelecionados", produtosComoString);
+            startActivity(i);
+        }
+
+
+
+    }
 }
