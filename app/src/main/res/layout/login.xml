@@ -80,8 +80,8 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/pessoa"
-                tools:srcCompat="@drawable/pessoa" />
+                app:srcCompat="@drawable/ic_pessoa"
+                tools:srcCompat="@drawable/ic_pessoa" />
 
             <EditText
                 android:id="@+id/txtEmail"
@@ -124,7 +124,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/txtSenha"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/senha" />
+                app:srcCompat="@drawable/ic_senha" />
 
             <EditText
                 android:id="@+id/txtSenha"

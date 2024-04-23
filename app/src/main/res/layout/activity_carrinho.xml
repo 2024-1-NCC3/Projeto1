@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Carrinho">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBarraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borda_arrendondada"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtTituloCarrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Carrinho"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutConteudo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/fundo"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/txtPedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pedido:"
+            android:textColor="@color/verde_fundo_categoria"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutListaPedido"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtPedido">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recylerCarrinho"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTituloProduto" />
+
+            <TextView
+                android:id="@+id/txtTituloProduto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Produto"
+                app:layout_constraintEnd_toStartOf="@+id/txtTituloQuantidade"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtTituloQuantidade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantidade"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTituloProduto"
+                app:layout_constraintEnd_toStartOf="@+id/txtTituloSoma"
+                app:layout_constraintStart_toEndOf="@+id/txtTituloProduto"
+                app:layout_constraintTop_toTopOf="@+id/txtTituloProduto" />
+
+            <TextView
+                android:id="@+id/txtTituloSoma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTituloQuantidade"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtTituloQuantidade"
+                app:layout_constraintTop_toTopOf="@+id/txtTituloQuantidade" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/txtObservacoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Observações:"
+            android:textColor="@color/verde_fundo_categoria"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLabelTotal" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtObservacoes">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txtTituloHorario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horário para retirada:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+        <TextView
+            android:id="@+id/txtHora"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Selecione a hora"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@+id/imgIconeHora"
+            app:layout_constraintStart_toStartOf="@+id/txtTituloHorario"
+            app:layout_constraintTop_toTopOf="@+id/imgIconeHora" />
+
+        <ImageView
+            android:id="@+id/imgIconeHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="128dp"
+            android:onClick="selecionarHora"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloHorario"
+            app:srcCompat="@mipmap/password" />
+
+        <TextView
+            android:id="@+id/txtTituloData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data de retirada:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgIconeHora" />
+
+        <ImageView
+            android:id="@+id/imgIconeData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="128dp"
+            android:onClick="selecionarData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloData"
+            app:srcCompat="@mipmap/calendar" />
+
+        <TextView
+            android:id="@+id/txtData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecione a Data"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/imgIconeData"
+            app:layout_constraintStart_toStartOf="@+id/txtTituloData"
+            app:layout_constraintTop_toTopOf="@+id/imgIconeData" />
+
+        <TextView
+            android:id="@+id/txtLabelTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="TOTAL"
+            app:layout_constraintEnd_toStartOf="@+id/txtTotal"
+            app:layout_constraintTop_toBottomOf="@id/layoutListaPedido" />
+
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R$ 00,00"
+            app:layout_constraintBottom_toBottomOf="@+id/txtLabelTotal"
+            app:layout_constraintEnd_toEndOf="@id/layoutListaPedido"
+            app:layout_constraintTop_toTopOf="@+id/txtLabelTotal" />
+
+        <Button
+            android:id="@+id/btnFinalizarPedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/verde_fundo_categoria"
+            android:onClick="finalizarPedido"
+            android:text="Finalizar Pedido"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
