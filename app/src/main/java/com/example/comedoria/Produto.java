@@ -5,20 +5,40 @@ import android.widget.ImageView;
 public class Produto {
 
     private String nome;
-
+    private int id;
     private double preco;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     private int caminhoImg;
 
     private String ingrediente;
 
     private boolean selecionado;
-    public Produto(String nome, double preco,String ingrediente, int caminhoImg) {
+
+    private int quantidade = 1;
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Produto(int id,String nome, double preco, String ingrediente, int caminhoImg) {
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
         this.ingrediente = ingrediente;
         this.setSelecionado(false);
+        this.id = id;
     }
 
     public boolean isSelecionado() {
