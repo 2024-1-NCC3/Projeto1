@@ -131,10 +131,11 @@ public class Carrinho extends AppCompatActivity {
     public void finalizarPedido(View view) throws JSONException {
         double soma = 0;
         for(Produto produto: produtos){
-            soma += produto.getPreco();
+            soma += produto.getPreco() * produto.getQuantidade();
         }
         if(soma <= 0){
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
+            return;
         }else{
             //Retira qualquer produto que tenha quantidade 0
             for(Produto produto: produtos){
@@ -165,6 +166,7 @@ public class Carrinho extends AppCompatActivity {
 
                                         Boolean sucesso = jsonObj.getBoolean("sucesso");
                                         String msg = jsonObj.getString("msg");
+                                        int pedido = jsonObj.getInt("pedido");
 
                                         //Manda a mensagem de retorno, pra indicar o status
                                         Toast.makeText(Carrinho.this, msg, Toast.LENGTH_SHORT).show();
