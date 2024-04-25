@@ -21,6 +21,8 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 progressBar.setVisibility(View.GONE);
+                Intent intent = new Intent(LoadingActivity.this, Produtos.class);
+                startActivity(intent);
                 finish();
             }
         }, 2000);

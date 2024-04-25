@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/marro_comedori_tia"
+    android:paddingStart="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/txtNomeProduto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        android:text="Nome do produto"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layoutQuantidade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSoma"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="R$ 00,00"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutQuantidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/layoutQuantidade"
+        app:layout_constraintTop_toTopOf="@+id/layoutQuantidade" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutQuantidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/txtNomeProduto"
+        app:layout_constraintEnd_toStartOf="@+id/txtSoma"
+        app:layout_constraintStart_toEndOf="@+id/txtNomeProduto"
+        app:layout_constraintTop_toTopOf="@+id/txtNomeProduto">
+
+        <ImageView
+            android:id="@+id/imgRetirar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtQuantidade"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtQuantidade"
+            app:srcCompat="@mipmap/remove" />
+
+        <TextView
+            android:id="@+id/txtQuantidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgRetirar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgAdicionar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtQuantidade"
+            app:layout_constraintStart_toEndOf="@+id/txtQuantidade"
+            app:layout_constraintTop_toTopOf="@+id/txtQuantidade"
+            app:srcCompat="@mipmap/add" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

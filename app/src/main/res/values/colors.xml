@@ -14,4 +14,6 @@
     <color name="transparente">#00000000</color>
     <color name="verde_categorias">#FF93E885</color>
     <color name="verde_fundo_categoria">#0F5929</color>
+    <color name="MarroComedoriaTia">#403832</color>
+    <color name="marro_comedori_tia">#FF403832</color>
 </resources>
