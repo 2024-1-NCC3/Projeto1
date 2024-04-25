@@ -66,7 +66,7 @@
                 android:id="@+id/txtEmail"
                 android:layout_width="151dp"
                 android:layout_height="56dp"
-                android:fontFamily="@font/jetbrains_mono"
+                android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="email"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
