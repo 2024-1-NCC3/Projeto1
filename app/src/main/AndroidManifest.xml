@@ -33,7 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".Cadastro"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".LoadingActivity"
             android:exported="true">
