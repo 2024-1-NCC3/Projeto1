@@ -13,12 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
-      <activity
+        <activity
+            android:name=".TesteFirebase"
+            android:exported="false" />
+        <activity
             android:name=".Catalogo"
-             android:exported="false" />
-      <activity
+            android:exported="false" />
+        <activity
             android:name=".ComprovantePedido"
-            android:exported="false" />      
+            android:exported="false" />
         <activity
             android:name=".Carrinho"
             android:exported="false" />
