@@ -29,13 +29,13 @@
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".Teste"
+            android:name=".LoadingActivity"
             android:exported="false" />
         <activity
             android:name=".Cadastro"
             android:exported="false" />
         <activity
-            android:name=".LoadingActivity"
+            android:name=".Teste"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

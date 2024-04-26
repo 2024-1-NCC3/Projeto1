@@ -171,6 +171,7 @@ public class Carrinho extends AppCompatActivity {
                                         //Se estever tudo certo, passa para a próxima página
                                         if(sucesso){
                                             Intent intent = new Intent(Carrinho.this, ComprovantePedido.class);
+
                                             startActivity(intent);
                                         }
                                     }catch (JSONException ex){

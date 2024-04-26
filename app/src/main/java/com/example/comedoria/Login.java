@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
                                         //Se estever tudo certo, passa para a próxima página
                                         if(sucesso){
-                                            Intent intent = new Intent(Login.this, Cadastro.class);
+                                            Intent intent = new Intent(Login.this, Categoria.class);
                                             startActivity(intent);
                                         }
                                     }catch (JSONException ex){
