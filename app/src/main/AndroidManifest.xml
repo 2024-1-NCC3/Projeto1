@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
+            android:name=".perfilAdm"
+            android:exported="false" />
+        <activity
             android:name=".ComprovantePedido"
             android:exported="false" />
         <activity
