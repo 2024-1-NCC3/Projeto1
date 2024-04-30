@@ -17,10 +17,10 @@
             android:name=".Teste"
             android:exported="false" />
         <activity
-            android:name=".Carrinho"
+            android:name=".ComprovantePedido"
             android:exported="false" />
         <activity
-            android:name=".Produtos"
+            android:name=".Carrinho"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -35,7 +35,7 @@
             android:name=".Cadastro"
             android:exported="false" />
         <activity
-            android:name=".ComprovantePedido"
+            android:name=".Produtos"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -31,11 +31,13 @@ public class ComprovantePedido extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprovante_pedido);
 
-        String arrayProdutos = getIntent().getStringExtra("produtosSelecionados");
-        //produtos = Arrays.asList(new Gson().fromJson(arrayProdutos, Produto[].class));
         textData = findViewById(R.id.textData);
         tituloPedido = findViewById(R.id.tituloPedido);
         statusPedido = findViewById(R.id.statusPedido);
+
+        String horaRetirada = getIntent().getStringExtra("retirarProduto");
+        textData.setText(horaRetirada);
+
 
         recyclerResumo = findViewById(R.id.recycleResumo);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -47,6 +49,10 @@ public class ComprovantePedido extends AppCompatActivity {
 
 
 
+
+    }
+    public void atualizarLista(List<Produto> listaAtualizada){
+        this.produtos = listaAtualizada;
     }
 
 
