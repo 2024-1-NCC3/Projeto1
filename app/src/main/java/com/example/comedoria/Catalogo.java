@@ -46,29 +46,29 @@ public class Catalogo extends AppCompatActivity {
     // Método para preencher a lista de categorias
     private void listarCategorias() {
         // Cria instâncias de Categoria e adiciona à lista
-        Categoria categoria = new Categoria("Oferta", "Aproveite nossas ofertas!", listaImg[0]);
-        listaCategorias.add(categoria);
-
-        categoria = new Categoria("Marmitas", "Conheça nossas marmitas!", listaImg[1]);
-        listaCategorias.add(categoria);
-
-        categoria = new Categoria("Salgados", "Experimente nossos salgados", listaImg[2]);
-        listaCategorias.add(categoria);
-
-        categoria = new Categoria("Doces", "Experimente nossos doces", listaImg[3]);
-        listaCategorias.add(categoria);
-
-        categoria = new Categoria("Picolés", "Experimente nossos picolés", listaImg[4]);
-        listaCategorias.add(categoria);
-
-        categoria = new Categoria("Bebidas", "Experimente nossas bebidas sazonais", listaImg[5]);
-        listaCategorias.add(categoria);
+//        Categoria categoria = new Categoria("Oferta", "Aproveite nossas ofertas!", listaImg[0]);
+//        listaCategorias.add(categoria);
+//
+//        categoria = new Categoria("Marmitas", "Conheça nossas marmitas!", listaImg[1]);
+//        listaCategorias.add(categoria);
+//
+//        categoria = new Categoria("Salgados", "Experimente nossos salgados", listaImg[2]);
+//        listaCategorias.add(categoria);
+//
+//        categoria = new Categoria("Doces", "Experimente nossos doces", listaImg[3]);
+//        listaCategorias.add(categoria);
+//
+//        categoria = new Categoria("Picolés", "Experimente nossos picolés", listaImg[4]);
+//        listaCategorias.add(categoria);
+//
+//        categoria = new Categoria("Bebidas", "Experimente nossas bebidas sazonais", listaImg[5]);
+//        listaCategorias.add(categoria);
     }
 
     // Método chamado quando o botão "home" é clicado
     public void home(View view) {
         // Cria uma intent para iniciar a atividade de Login e inicia-a
-        Intent home = new Intent(Catalogo.this, Teste.class);
+        Intent home = new Intent(Catalogo.this, PaginaInicial.class);
         startActivity(home);
     }
 }
