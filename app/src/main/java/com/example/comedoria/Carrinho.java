@@ -51,8 +51,6 @@ public class Carrinho extends AppCompatActivity {
 
     //Pega as chaves necessárias para acessar a API
     private static final String API_URL = BuildConfig.API_URL;
-    private static final String API_KEY = BuildConfig.API_KEY;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -28,7 +28,6 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
     EditText txtInput, txtSenha;
     RequestQueue filaRequest;
-    private static final String API_URL = BuildConfig.API_URL;
     private static final String API_KEY = BuildConfig.API_KEY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +45,7 @@ public class Login extends AppCompatActivity {
     }
     public void Logar(View view) throws JSONException {
         Map<String, String> headers = new HashMap<>();
+        //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Content-Type", "application/json");
 
@@ -63,12 +63,47 @@ public class Login extends AppCompatActivity {
                 new ConectorAPI.VolleySingleCallback() {
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
-                Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
-                String acessToken = response.getString("access_token");
-                Intent intent = new Intent(Login.this, PaginaInicial.class);
+                //Verificar se quem logou é cliente ou funcionário
+                Map<String, String> headers = new HashMap<>();
 
-                intent.putExtra("accessToken", acessToken);
-                startActivity(intent);
+                String acessToken = response.getString("access_token");
+
+                headers.put("apikey", API_KEY);
+                headers.put("Authorization", "Bearer " + acessToken);
+
+
+
+                ConectorAPI.conexaoArrayGET(
+                        "/rest/v1/usuarios?select=*",
+                        headers, getApplicationContext(),
+                        new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        if(response.length() > 0){
+                            JSONObject resposta = response.getJSONObject(0);
+                            int papel = resposta.getInt("id_papel");
+
+                            //se for cliente, vai para a página Inicial
+                            if( papel == 2){
+                                Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, PaginaInicial.class);
+                                intent.putExtra("accessToken", acessToken);
+                                startActivity(intent);
+                            }else{
+                                //Todo: Conectar a página de funcionário
+                                Toast.makeText(Login.this, "Ir para a página de func", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                                //Intent intent = new Intent(Login.this, PaginaInicial.class);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+
+
             }
 
             @Override
