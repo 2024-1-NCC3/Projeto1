@@ -49,6 +49,8 @@ public class Carrinho extends AppCompatActivity {
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
 
+    //Pega as chaves necessárias para acessar a API
+    private static final String API_URL = BuildConfig.API_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,9 +148,11 @@ public class Carrinho extends AppCompatActivity {
 
             JSONObject body = montarRequisicao();
             JSONArray req = new JSONArray();
+
             req.put(body);
 
-            String url = "https://lt3dcj-3000.csb.app/fazerPedido";
+            //url para logar com senha
+            String url = API_URL + "/auth/v1/token?grant_type=password";
 
             JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.POST,

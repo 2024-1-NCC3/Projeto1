@@ -35,7 +35,7 @@
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity
-            android:name=".Teste"
+            android:name=".PaginaInicial"
             android:exported="false" />
         <activity
             android:name=".Cadastro"
