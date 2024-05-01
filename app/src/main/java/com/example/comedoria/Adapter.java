@@ -36,11 +36,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Categoria categoria = listaCategorias.get(position);
 
+
         if(!categoria.getAparecer()){
             holder.rootView.setVisibility(View.GONE);
         }
 
         holder.descricaoCategoria.setText(categoria.getDescricao());
+        //Cuida de carregar a imagem pela URL
         Picasso.get().load(categoria.getCaminho()).into(holder.imgCategoria);
     }
 

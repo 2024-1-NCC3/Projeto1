@@ -2,6 +2,7 @@ package com.example.comedoria;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,84 +44,51 @@ public class Login extends AppCompatActivity {
         Intent i = new Intent(this, Cadastro.class);
         startActivity(i);
     }
-    public void Logar(View view){
-        String url = API_URL + "/auth/v1/token?grant_type=password";
+    public void Logar(View view) throws JSONException {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("apikey", API_KEY);
+        headers.put("Content-Type", "application/json");
 
-        try {
+        JSONObject dadosDeSolicitacao = new JSONObject();
+        //Adiciona os campos= input e senha ao Json, e define seus valores
 
-            //Cria o arquivo Json
-            JSONObject dadosDeSolicitacao = new JSONObject();
-            //Adiciona os campos= input e senha ao Json, e define seus valores
+        dadosDeSolicitacao.put("email", txtInput.getText());
+        dadosDeSolicitacao.put("password", txtSenha.getText());
 
-            dadosDeSolicitacao.put("email", txtInput.getText());
-            dadosDeSolicitacao.put("password", txtSenha.getText());
+        ConectorAPI.conexaoSinglePOST(
+                "/auth/v1/token?grant_type=password",
+                dadosDeSolicitacao,
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleySingleCallback() {
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                String acessToken = response.getString("access_token");
+                Intent intent = new Intent(Login.this, PaginaInicial.class);
 
-            JSONArray solicitacao = new JSONArray();
-            solicitacao.put(dadosDeSolicitacao);
+                intent.putExtra("accessToken", acessToken);
+                startActivity(intent);
+            }
 
-//            Intent care = new Intent(Login.this, LoadingActivity.class);
-//            startActivity(care);
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.POST,
-                    url,
-                    dadosDeSolicitacao,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // O supabase já verifica se o email foi confirmado
-
-                            try {
-                                Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
-                                String acessToken = response.getString("access_token");
-                                Intent intent = new Intent(Login.this, PaginaInicial.class);
-
-                                intent.putExtra("accessToken", acessToken);
-                                startActivity(intent);
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                    //se a resposta for um erro, irá apresentar um Toast com o erro
-                    String body = null;
-                    try {
-                        body = new String(error.networkResponse.data, "utf-8");
-                    } catch (UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
-                    JSONObject data = null;
-                    try {
-                        data = new JSONObject(body);
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                    String message = data.optString("error_description");
-                    Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
+            @Override
+            public void onError(VolleyError error) {
+                //se a resposta for um erro, irá apresentar um Toast com o erro
+                String body = null;
+                try {
+                    body = new String(error.networkResponse.data, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
                 }
-            }){
-                @Override
-                // define os headers necessários para enviar a solicitação
-                // no caso, a chave da API e o tipo de conteúdo
-                public Map<String, String> getHeaders() {
-                    // Set API key in request headers
-                    Map<String, String> headers = new HashMap<>();
-                    headers.put("apikey", API_KEY);
-                    headers.put("Content-Type", "application/json");
-                    return headers;
+                JSONObject data = null;
+                try {
+                    data = new JSONObject(body);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-            };
-
-            RequestQueue filaRequest = Volley.newRequestQueue(Login.this);
-            filaRequest.add(jsonObjectRequest);
-        }catch (JSONException ex){
-
-        }
+                String message = data.optString("error_description");
+                Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
