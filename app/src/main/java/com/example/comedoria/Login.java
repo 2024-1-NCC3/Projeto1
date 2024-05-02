@@ -70,8 +70,6 @@ public class Login extends AppCompatActivity {
                 headers.put("apikey", API_KEY);
                 headers.put("Authorization", "Bearer " + acessToken);
 
-
-
                 ConectorAPI.conexaoArrayGET(
                         "/rest/v1/usuarios?select=*",
                         headers, getApplicationContext(),
@@ -125,4 +123,5 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 }

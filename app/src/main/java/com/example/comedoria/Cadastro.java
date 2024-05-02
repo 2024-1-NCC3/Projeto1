@@ -1,11 +1,12 @@
 package com.example.comedoria;
 
+import static com.example.comedoria.BuildConfig.API_KEY;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,15 +19,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Cadastro extends AppCompatActivity {
 
-    private EditText inputNome, inputSobrenome, inputCpf, inputEmail, inputSenha;
+    private EditText inputNome, inputSobrenome, inputCpf,
+            inputEmail, inputSenha,inputConfirmarEmail, inputConfirmarSenha;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,72 +40,128 @@ public class Cadastro extends AppCompatActivity {
         inputSobrenome = findViewById(R.id.txtSobrenome);
         inputCpf = findViewById(R.id.txtCpf);
         inputEmail = findViewById(R.id.txtEmail);
+        inputConfirmarEmail = findViewById(R.id.txtConfirmarEmail);
         inputSenha = findViewById(R.id.txtSenha);
+        inputConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
+
     }
 
     public void Cadastrar(View view){
-        String url = "https://lt3dcj-3000.csb.app/cadastro";
-        try {
-            //Cria o arquivo Json
+        if(verificarCampos()){
             JSONObject dadosCadastro = new JSONObject();
-            //Adiciona os campos= input e senha ao Json, e define seus valores
+            JSONObject dadosCliente = new JSONObject();
 
-            dadosCadastro.put("primeiro_nome", inputNome.getText());
-            dadosCadastro.put("ultimo_nome", inputSobrenome.getText());
-            dadosCadastro.put("cpf", inputCpf.getText());
-            dadosCadastro.put("email", inputEmail.getText());
-            dadosCadastro.put("senha", inputSenha.getText());
+            //define os heades que a solicitação vai precisar
 
-            JSONArray cadastro = new JSONArray();
-            cadastro.put(dadosCadastro);
 
-            JsonArrayRequest request = new JsonArrayRequest(
-                    Request.Method.POST,
-                    url,
-                    cadastro,
-                    new Response.Listener<JSONArray>() {
+            try {
+                dadosCadastro.put("email", inputEmail.getText());
+                dadosCadastro.put("password", inputSenha.getText());
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            Map<String, String> headers = new HashMap<>();
+            headers.put("apikey", API_KEY);
+            headers.put("Content-Type", "application/json");
+
+            ConectorAPI.conexaoSinglePOST(
+                    "/auth/v1/signup",
+                    dadosCadastro,
+                    headers,
+                    getApplicationContext(),
+                    new ConectorAPI.VolleySingleCallback() {
                         @Override
-                        public void onResponse(JSONArray response) {
-                            if (response.length()>0){
-                                for(int i=0; i< response.length();i++){
-                                    try{
-                                        JSONObject jsonObj = response.getJSONObject(i);
-                                        //Se o pedido ter uma resposta, verifica se teve sucesso
-                                        Boolean sucesso = jsonObj.getBoolean("auth");
-                                        String msg = jsonObj.getString("msg");
+                        public void onSuccess(JSONObject response) throws JSONException {
 
-                                        //Manda a mensagem de retorno, pra indicar o status
-                                        Toast.makeText(Cadastro.this, msg, Toast.LENGTH_SHORT).show();
-                                        //Se estever tudo certo, passa para a próxima página
-                                        if(sucesso){
-                                            Intent intent = new Intent(Cadastro.this, Login.class);
-                                            Log.i("Cadastrou","Foi");
-                                            startActivity(intent);
+                            //segunda solicitação para linkar o novo user a tabela usuarios
+                            JSONObject user = response.getJSONObject("user");
+                            String id = user.getString("id");
+
+                            String accessToken = response.getString("access_token");
+                            Map<String, String> headerCliente = new HashMap<>();
+
+                            headerCliente.put("apikey", API_KEY);
+                            headerCliente.put("Authorization", "Bearer " + accessToken);
+                            headerCliente.put("Content-Type", "application/json");
+                            headerCliente.put("Prefer","return=minimal");
+
+                            JSONObject dadosSolicitacao = new JSONObject();
+
+                            dadosSolicitacao.put("primeiro_nome", inputNome.getText());
+                            dadosSolicitacao.put("ultimo_nome", inputSobrenome.getText());
+                            dadosSolicitacao.put("id_papel", 2);
+                            dadosSolicitacao.put("id_user", id);
+
+                            ConectorAPI.conexaoSinglePOST(
+                                    "/rest/v1/usuarios",
+                                    dadosSolicitacao,
+                                    headerCliente,
+                                    getApplicationContext(),
+                                    new ConectorAPI.VolleySingleCallback() {
+                                        @Override
+                                        public void onSuccess(JSONObject response) throws JSONException {
+                                            Toast.makeText(Cadastro.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
                                         }
-                                    }catch (JSONException ex){
 
+                                        @Override
+                                        //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
+
+                                        public void onError(VolleyError error) {
+                                            Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
                                     }
-                                }
+                            );
 
-                            }
                         }
-                    },
-                    new Response.ErrorListener() {
+
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onError(VolleyError error) {
 
                         }
-                    }
-            );
-            RequestQueue filaRequest = Volley.newRequestQueue(Cadastro.this);
-            filaRequest.add(request);
-        }catch (JSONException ex){
-
+                    });
         }
-    }
 
+
+    }
+    private boolean verificarCampos(){
+        //Verifica se o campo Nome não está vazio
+        if(inputNome.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Preencha o Nome", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //Verifica se o campo Sobrenome não está vazio
+        if(inputSobrenome.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Preencha o sobrenome", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //Verifica se o campo Email não está vazio
+        if(inputEmail.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Preencha o email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //Verifica se o campo senha não está vazio
+        if(inputSenha.getText().toString().trim().equals("")){
+            Toast.makeText(this, "Preencha a senha", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        //Verifica se email e confirmar email são iguais
+        if(!inputEmail.getText().toString().trim().equals(inputConfirmarEmail.getText().toString().trim())){
+            Toast.makeText(this, "Os emails não são iguais", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //Verifica se senha e confirmar senha são iguais
+        if(!inputConfirmarSenha.getText().toString().trim().equals(inputSenha.getText().toString().trim())){
+            Toast.makeText(this, "As senhas não são iguais", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
     public void cancelar(View view){
-        Intent i = new Intent(this, Login.class);
-        startActivity(i);
+        finish();
     }
 }
