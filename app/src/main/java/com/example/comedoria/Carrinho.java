@@ -81,8 +81,8 @@ public class Carrinho extends AppCompatActivity {
                 .setMinute(Calendar.MINUTE)
                 .setTitleText("Selecione a hora de retirada")
                 .build();
-        Intent intent =  new Intent(Carrinho.this, ComprovantePedido.class);
-        intent.putExtra("retirarProduto", calendar.getTime().toString());
+
+
 
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +180,7 @@ public class Carrinho extends AppCompatActivity {
                                         //Se estever tudo certo, passa para a próxima página
                                         if(sucesso){
                                             Intent intent = new Intent(Carrinho.this, ComprovantePedido.class);
-
+                                            intent.putExtra("retirarProduto", txtHora.getText().toString());
                                             startActivity(intent);
                                         }
                                     }catch (JSONException ex){

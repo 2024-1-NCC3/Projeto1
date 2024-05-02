@@ -129,7 +129,7 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/verde_fundo_categoria"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_pessoa"
+        android:src="@drawable/botaodeinicio"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

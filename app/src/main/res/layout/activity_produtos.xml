@@ -53,7 +53,7 @@
         android:layout_margin="16dp"
         android:layout_marginTop="560dp"
         android:backgroundTint="@color/verde_fundo_categoria"
-        android:src="@drawable/ic_pessoa"
+        android:src="@drawable/botaodeinicio"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/recycleProduto"
         app:layout_constraintEnd_toEndOf="parent"

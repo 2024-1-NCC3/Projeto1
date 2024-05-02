@@ -36,7 +36,7 @@ public class ComprovantePedido extends AppCompatActivity {
         statusPedido = findViewById(R.id.statusPedido);
 
         String horaRetirada = getIntent().getStringExtra("retirarProduto");
-        textData.setText(horaRetirada);
+        textData.setText("horario para retirar: " + horaRetirada);
 
 
         recyclerResumo = findViewById(R.id.recycleResumo);
@@ -46,6 +46,8 @@ public class ComprovantePedido extends AppCompatActivity {
 
         AdapterResumoPedido adapterResumoPedido = new AdapterResumoPedido(produtos, this);
         recyclerResumo.setAdapter(adapterResumoPedido);
+
+
 
 
 
