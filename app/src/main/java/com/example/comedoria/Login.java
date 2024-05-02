@@ -37,7 +37,6 @@ public class Login extends AppCompatActivity {
         //Atribuir os inputs para login
         txtInput = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
-
     }
     public void cadastro(View view){
         Intent i = new Intent(this, Cadastro.class);
