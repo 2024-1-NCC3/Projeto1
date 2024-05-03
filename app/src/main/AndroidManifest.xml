@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
+            android:name=".Estoque"
+            android:exported="false" />
+        <activity
             android:name=".perfilAdm"
             android:exported="false" />
         <activity
@@ -36,7 +39,7 @@
             android:exported="false" />
         <activity
             android:name=".Cadastro"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".LoadingActivity"
             android:exported="true">
