@@ -37,7 +37,6 @@ public class Login extends AppCompatActivity {
         //Atribuir os inputs para login
         txtInput = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
-
     }
     public void cadastro(View view){
         Intent i = new Intent(this, Cadastro.class);
@@ -70,8 +69,6 @@ public class Login extends AppCompatActivity {
 
                 headers.put("apikey", API_KEY);
                 headers.put("Authorization", "Bearer " + acessToken);
-
-
 
                 ConectorAPI.conexaoArrayGET(
                         "/rest/v1/usuarios?select=*",
@@ -126,4 +123,5 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 }
