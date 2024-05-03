@@ -5,6 +5,8 @@ import static com.example.comedoria.BuildConfig.API_URL;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,8 +60,9 @@ public class PaginaInicial extends AppCompatActivity {
         startActivity(home);
     }
 
-    public void cardapio(){
-        Intent cardapio = new Intent();
+    public void cardapio(View view){
+        Intent cardapio = new Intent(this,Produtos.class);
+        cardapio.putExtra("accessToken",accessToken);
         startActivity(cardapio);
     }
     public void carrinho(){
@@ -71,8 +74,8 @@ public class PaginaInicial extends AppCompatActivity {
         startActivity(usuario);
     }
 
+
     private void carregarCategorias(){
-//        String url = API_URL + "/rest/v1/categoria?select=*";
 
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
