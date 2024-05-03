@@ -49,6 +49,8 @@ public class Carrinho extends AppCompatActivity {
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
 
+    //Pega as chaves necessárias para acessar a API
+    private static final String API_URL = BuildConfig.API_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,10 +133,11 @@ public class Carrinho extends AppCompatActivity {
     public void finalizarPedido(View view) throws JSONException {
         double soma = 0;
         for(Produto produto: produtos){
-            soma += produto.getPreco();
+            soma += produto.getPreco() * produto.getQuantidade();
         }
         if(soma <= 0){
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
+            return;
         }else{
             //Retira qualquer produto que tenha quantidade 0
             for(Produto produto: produtos){
@@ -145,9 +148,11 @@ public class Carrinho extends AppCompatActivity {
 
             JSONObject body = montarRequisicao();
             JSONArray req = new JSONArray();
+
             req.put(body);
 
-            String url = "https://lt3dcj-3000.csb.app/fazerPedido";
+            //url para logar com senha
+            String url = API_URL + "/auth/v1/token?grant_type=password";
 
             JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.POST,
@@ -165,6 +170,7 @@ public class Carrinho extends AppCompatActivity {
 
                                         Boolean sucesso = jsonObj.getBoolean("sucesso");
                                         String msg = jsonObj.getString("msg");
+                                        int pedido = jsonObj.getInt("pedido");
 
                                         //Manda a mensagem de retorno, pra indicar o status
                                         Toast.makeText(Carrinho.this, msg, Toast.LENGTH_SHORT).show();

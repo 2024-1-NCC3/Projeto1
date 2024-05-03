@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyViewHolder> {
 
@@ -41,7 +42,7 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
         Produto produto = listaCarrinho.get(position);
 
         holder.nomeProduto.setText(produto.getNome());
-        holder.precoProduto.setText("R$ " + (produto.getPreco() * produto.getQuantidade()));
+        holder.precoProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", (produto.getPreco() * produto.getQuantidade())) );
         holder.quantidadeProduto.setText(produto.getQuantidade()+"");
 
         holder.botaoAdicionar.setOnClickListener(new View.OnClickListener() {

@@ -371,6 +371,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/jetbrains_mono"
             android:inputType="textCapSentences"
+            android:onClick="cancelar"
             android:text="Cancelar"
             android:textColor="@color/black"
             android:textSize="12sp"
