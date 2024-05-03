@@ -7,14 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+
+
+import org.w3c.dom.Text;
+
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ComprovantePedido extends AppCompatActivity {
+
 
     TextView textData, tituloPedido, statusPedido;
 
@@ -22,15 +30,14 @@ public class ComprovantePedido extends AppCompatActivity {
 
     List<Produto> produtos;
 
-    int dia, mes;
-
-
+    int hora, minuto;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprovante_pedido);
+
 
         textData = findViewById(R.id.textData);
         tituloPedido = findViewById(R.id.tituloPedido);
@@ -51,6 +58,10 @@ public class ComprovantePedido extends AppCompatActivity {
 
 
 
+
+
+        String arrayProdutos = getIntent().getStringExtra("produtosselecionado");
+        produtos = Arrays.asList(new Gson().fromJson(arrayProdutos, Produto[].class));;
 
 
 
