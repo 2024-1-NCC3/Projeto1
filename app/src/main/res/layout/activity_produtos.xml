@@ -43,18 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.019"
-        android:textColor="@color/bege" /><![CDATA[
-        />
-
-
-
-
-
-
-
-
-
-    ]]>
+        android:textColor="@color/bege" />
 
     <Spinner
         android:id="@+id/spinner_categoria"

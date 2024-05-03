@@ -51,6 +51,7 @@ public class Produtos extends AppCompatActivity implements AdapterView.OnItemSel
 
     private List<Produto> listaProdutos = new ArrayList<>();
 
+
     private int[] listImgProduto = {
             R.drawable.imgstrogonofffrango,
             R.drawable.strogonoffimgpq,
@@ -83,14 +84,18 @@ public class Produtos extends AppCompatActivity implements AdapterView.OnItemSel
         recyclerProduto.setAdapter(adapter1);
 
         spinnerOrdenar = findViewById(R.id.spinner_ordenar);
-                ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
-                        this,
-                        R.array.filtro_ordenar,
-                        R.layout.color_spinner_layout
-                );
-                arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
-                spinnerOrdenar.setAdapter(arrayAdapter);
-                spinnerOrdenar.setOnItemSelectedListener(this);
+
+        List<String> categorias = new ArrayList<>();
+        categorias.add("Ofertas");
+        categorias.add("Salgados");
+        categorias.add("Marmitas");
+        categorias.add("Bebidas");
+
+        AdapterDropdown adapterDropdown = new AdapterDropdown(this,categorias);
+
+
+        spinnerOrdenar.setAdapter(adapterDropdown);
+        spinnerOrdenar.setOnItemSelectedListener(this);
 
         spinnerCatalogo = findViewById(R.id.spinner_categoria);
         ArrayAdapter arrayAdapterCatalogo = ArrayAdapter.createFromResource(
@@ -98,7 +103,7 @@ public class Produtos extends AppCompatActivity implements AdapterView.OnItemSel
                 R.array.filtro_catalago,
                 R.layout.color_spinner_layout
         );
-        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+
         spinnerCatalogo.setAdapter(arrayAdapterCatalogo);
         spinnerCatalogo.setOnItemSelectedListener(this);
 
