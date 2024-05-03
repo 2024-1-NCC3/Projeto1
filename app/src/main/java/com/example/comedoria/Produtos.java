@@ -37,8 +37,7 @@ public class Produtos extends AppCompatActivity {
     //#94E986 verde claro
 
     private AdapterProduto adapter1;
-    private RecyclerView recyclerProduto, recyclerProduto1;
-    private CheckBox cbProduto;
+    private RecyclerView recyclerProduto;
 
     private List<Produto> listaProdutos = new ArrayList<>();
 
@@ -76,21 +75,6 @@ public class Produtos extends AppCompatActivity {
         recyclerProduto.setAdapter(adapter1);
     }
 
-    private void ListarProduto(){
-        Produto produto = new Produto(1,"Marmita Strogonoff de Frango com Batatas",14.5, listaIngrediente[0], listImgProduto[1]);
-        listaProdutos.add(produto);
-
-        Produto pedacoBolo = new Produto (2,"Pedaço de bolo de Bolo Cholate com cobertura chocolate", 10.0, listaIngrediente[1],listImgProduto[0]);
-        listaProdutos.add(pedacoBolo);
-
-        Produto paoDeQueijo = new Produto(3,"Porção de pao de queijo", 5.00, listaIngrediente[1], listImgProduto[2]);
-        listaProdutos.add(paoDeQueijo);
-
-        Produto refriLataNormal = new Produto (4,"Refrigerante lata 350ml", 7.99, listaIngrediente[1], listImgProduto[0]);
-        listaProdutos.add(refriLataNormal);
-
-    }
-
     public void irParaOCarrinho(View view){
         listaProdutos = adapter1.getListaProdutos();
         List<Produto> produtosSelecionados = new ArrayList<>();
@@ -101,7 +85,7 @@ public class Produtos extends AppCompatActivity {
             }
         }
         if(produtosSelecionados.size() == 0){
-            Toast.makeText(this, "Nenhum produto selecionad", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nenhum produto selecionado", Toast.LENGTH_SHORT).show();
             return;
         }else{
             Intent i = new Intent(getApplicationContext(), Carrinho.class);

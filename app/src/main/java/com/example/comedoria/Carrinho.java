@@ -25,15 +25,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -55,7 +51,6 @@ public class Carrinho extends AppCompatActivity {
     RecyclerView recycleCarrinho;
     List<Produto> produtos;
     Calendar dataFinal;
-    FirebaseFirestore db ;
     int dia, mes, ano, hora, minuto;
 
     //Pega as chaves necessárias para acessar a API
@@ -64,7 +59,6 @@ public class Carrinho extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
         String arrayProdutos = getIntent().getStringExtra("produtosSelecionados");
@@ -213,16 +207,6 @@ public class Carrinho extends AppCompatActivity {
     }
 
     private JSONObject montarRequisicao()throws JSONException{
-        /*Objeto que preciso:
-        {
-            "id_usuario": 50,
-            "modificado_por": Vitor,
-            "produtos":[{
-                    "id_produto": 1,
-                    "quantidade":2
-                }]
-        }
-        */
         JSONArray listReq = new JSONArray();
 
         for(Produto produto: produtos){
@@ -238,37 +222,5 @@ public class Carrinho extends AppCompatActivity {
         requisicao.put("produtos",listReq);
 
         return requisicao;
-    }
-
-    public void finalizarFirebase(View view) throws JSONException {
-        Map<String, Object> user = new HashMap<>();
-        JSONArray listReq = new JSONArray();
-        for(Produto produto: produtos){
-            JSONObject prod = new JSONObject();
-
-            prod.put("id_produto", produto.getId());
-            prod.put("quantidade", produto.getQuantidade());
-
-            listReq.put(prod);
-        }
-        user.put("id_usuario", 50);
-        user.put("modificado_por", "Vitor");
-        user.put("produtos",listReq);
-        db.collection("usuarios")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("Firebase", "Documento adicionado com id: " + documentReference.getId());
-                        Intent i = new Intent(Carrinho.this, TesteFirebase.class);
-                        startActivity(i);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Firebase", "Error adding document", e);
-                    }
-                });
     }
 }

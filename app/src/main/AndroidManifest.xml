@@ -14,12 +14,6 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
-            android:name=".TesteFirebase"
-            android:exported="false" />
-        <activity
-            android:name=".Catalogo"
-             android:exported="false" />
-        <activity
             android:name=".Estoque"
             android:exported="false" />
         <activity
