@@ -1,5 +1,7 @@
 package com.example.comedoria;
 
+import static com.example.comedoria.BuildConfig.API_KEY;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,7 +35,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Produtos extends AppCompatActivity{
 
@@ -103,21 +107,6 @@ public class Produtos extends AppCompatActivity{
         spinnerCatalogo.setAdapter(arrayAdapterCatalogo);
         spinnerCatalogo.setOnItemSelectedListener(this);
 
-
-    }
-
-    private void ListarProduto(){
-        Produto produto = new Produto(1,"Marmita Strogonoff de Frango com Batatas",14.5, listaIngrediente[0], listImgProduto[1]);
-        listaProdutos.add(produto);
-
-        Produto pedacoBolo = new Produto (2,"Pedaço de bolo de Bolo Cholate com cobertura chocolate", 10.0, listaIngrediente[1],listImgProduto[0]);
-        listaProdutos.add(pedacoBolo);
-
-        Produto paoDeQueijo = new Produto(3,"Porção de pao de queijo", 5.00, listaIngrediente[1], listImgProduto[2]);
-        listaProdutos.add(paoDeQueijo);
-
-        Produto refriLataNormal = new Produto (4,"Refrigerante lata 350ml", 7.99, listaIngrediente[1], listImgProduto[0]);
-        listaProdutos.add(refriLataNormal);
 
     }
 

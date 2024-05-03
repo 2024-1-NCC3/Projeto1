@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +35,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Categoria categoria = listaCategorias.get(position);
+
+
+        if(!categoria.getAparecer()){
+            holder.rootView.setVisibility(View.GONE);
+        }
+
         holder.descricaoCategoria.setText(categoria.getDescricao());
-        holder.imgCategoria.setImageResource(categoria.getCaminho());
+        //Cuida de carregar a imagem pela URL
+        Picasso.get().load(categoria.getCaminho()).into(holder.imgCategoria);
     }
 
     @Override
@@ -46,10 +55,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     public class MyViewHolder extends  RecyclerView.ViewHolder{
         TextView descricaoCategoria;
         ImageView imgCategoria;
+        View rootView;
 
         public MyViewHolder(View itemView){            
             super(itemView);
-            
+            rootView = itemView;
             descricaoCategoria = itemView.findViewById(R.id.txtDescricaoCategoria);
             imgCategoria = itemView.findViewById(R.id.imgCategoria);
         }

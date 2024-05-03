@@ -4,27 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoadingActivity extends AppCompatActivity {
-    private ProgressBar progressBar;
+public class Start extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loading);
-
-        progressBar = findViewById(R.id.ProgressBar);
-        progressBar.setVisibility(View.VISIBLE);
+        setContentView(R.layout.activity_start);
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.GONE);
-                Intent intent = new Intent(LoadingActivity.this, Produtos.class);
+
+                Intent intent = new Intent(Start.this, Login.class);
                 startActivity(intent);
-                finish();
             }
         }, 2000);
     }

@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +44,6 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         Produto produto = listaProdutos.get(position);
 
         holder.descricaoProduto.setText(produto.getNome());
-        
         Picasso.get().load(produto.getCaminhoImg()).into(holder.imgProduto);
 
         //Faz algo acontecer se clicar na imagem

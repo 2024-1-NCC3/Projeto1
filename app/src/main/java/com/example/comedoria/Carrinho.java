@@ -26,10 +26,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -42,20 +47,27 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Carrinho extends AppCompatActivity {
     TextView txtHora, txtData,txtTotal;
     RecyclerView recycleCarrinho;
     List<Produto> produtos;
     Calendar dataFinal;
+    FirebaseFirestore db ;
     int dia, mes, ano, hora, minuto;
 
+    //Pega as chaves necessárias para acessar a API
+    private static final String API_URL = BuildConfig.API_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
         String arrayProdutos = getIntent().getStringExtra("produtosSelecionados");
         produtos = Arrays.asList(new Gson().fromJson(arrayProdutos, Produto[].class));
@@ -137,13 +149,15 @@ public class Carrinho extends AppCompatActivity {
         txtTotal.setText(String.format(Locale.getDefault(), "R$ %.2f", soma));
     }
 
+
     public void finalizarPedido(View view) throws JSONException {
         double soma = 0;
         for(Produto produto: produtos){
-            soma += produto.getPreco();
+            soma += produto.getPreco() * produto.getQuantidade();
         }
         if(soma <= 0){
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
+            return;
         }else{
             //Retira qualquer produto que tenha quantidade 0
             for(Produto produto: produtos){
@@ -154,9 +168,11 @@ public class Carrinho extends AppCompatActivity {
 
             JSONObject body = montarRequisicao();
             JSONArray req = new JSONArray();
+
             req.put(body);
 
-            String url = "https://lt3dcj-3000.csb.app/fazerPedido";
+            //url para logar com senha
+            String url = API_URL + "/auth/v1/token?grant_type=password";
 
             JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.POST,
@@ -174,6 +190,7 @@ public class Carrinho extends AppCompatActivity {
 
                                         Boolean sucesso = jsonObj.getBoolean("sucesso");
                                         String msg = jsonObj.getString("msg");
+                                        int pedido = jsonObj.getInt("pedido");
 
                                         //Manda a mensagem de retorno, pra indicar o status
                                         Toast.makeText(Carrinho.this, msg, Toast.LENGTH_SHORT).show();
@@ -230,5 +247,37 @@ public class Carrinho extends AppCompatActivity {
         requisicao.put("produtos",listReq);
 
         return requisicao;
+    }
+
+    public void finalizarFirebase(View view) throws JSONException {
+        Map<String, Object> user = new HashMap<>();
+        JSONArray listReq = new JSONArray();
+        for(Produto produto: produtos){
+            JSONObject prod = new JSONObject();
+
+            prod.put("id_produto", produto.getId());
+            prod.put("quantidade", produto.getQuantidade());
+
+            listReq.put(prod);
+        }
+        user.put("id_usuario", 50);
+        user.put("modificado_por", "Vitor");
+        user.put("produtos",listReq);
+        db.collection("usuarios")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("Firebase", "Documento adicionado com id: " + documentReference.getId());
+                        Intent i = new Intent(Carrinho.this, TesteFirebase.class);
+                        startActivity(i);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Firebase", "Error adding document", e);
+                    }
+                });
     }
 }

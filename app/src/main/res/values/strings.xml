@@ -6,7 +6,10 @@
         <item>Maior preço</item>
         <item>A-Z</item>
         <item>Z-A</item>
-
-
     </string-array>
+    <string name="title_activity_inicial">InicialActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>
