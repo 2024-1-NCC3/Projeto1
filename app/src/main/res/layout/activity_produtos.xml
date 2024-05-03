@@ -19,19 +19,70 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+
+
+    <Spinner
+        android:id="@+id/spinner_ordenar"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/borda_quatro_pontas_arrendondadas"
+        android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
+        android:entries="@array/filtro_ordenar"
+        android:minWidth="50dp"
+        android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
+        android:scrollbarThumbHorizontal="@drawable/borda_quatro_pontas_arrendondadas"
+        android:scrollbarThumbVertical="@drawable/borda_quatro_pontas_arrendondadas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.019"
+        android:textColor="@color/bege" /><![CDATA[
+        />
+
+
+
+
+
+
+
+
+
+    ]]>
+
+    <Spinner
+        android:id="@+id/spinner_categoria"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/borda_quatro_pontas_arrendondadas"
+        android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
+        android:entries="@array/filtro_catalago"
+        android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.223"
+        app:layout_constraintStart_toEndOf="@+id/spinner_ordenar"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.019" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleProduto"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:scrollbars="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btnCarrinho"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_ordenar"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnCarrinho"

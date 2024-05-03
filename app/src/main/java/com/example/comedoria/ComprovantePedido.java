@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -46,6 +47,7 @@ public class ComprovantePedido extends AppCompatActivity {
 
         AdapterResumoPedido adapterResumoPedido = new AdapterResumoPedido(produtos, this);
         recyclerResumo.setAdapter(adapterResumoPedido);
+
 
 
 

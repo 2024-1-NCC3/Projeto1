@@ -1,16 +1,23 @@
 package com.example.comedoria;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -28,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Produtos extends AppCompatActivity {
+public class Produtos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Cores
     //#FF403832 Marrom
@@ -39,6 +46,8 @@ public class Produtos extends AppCompatActivity {
     private AdapterProduto adapter1;
     private RecyclerView recyclerProduto, recyclerProduto1;
     private CheckBox cbProduto;
+    private Spinner spinnerOrdenar, spinnerCatalogo;
+
 
     private List<Produto> listaProdutos = new ArrayList<>();
 
@@ -55,16 +64,14 @@ public class Produtos extends AppCompatActivity {
 
     };
 
-    @SuppressLint("ResourceAsColor")
+
+    @SuppressLint({"ResourceAsColor", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
 
         recyclerProduto = findViewById(R.id.recycleProduto);
-
-
-
         acessarListaProdutos();
 
         adapter1 = new AdapterProduto(this, listaProdutos);
@@ -74,6 +81,28 @@ public class Produtos extends AppCompatActivity {
         recyclerProduto.setHasFixedSize(true);
 
         recyclerProduto.setAdapter(adapter1);
+
+        spinnerOrdenar = findViewById(R.id.spinner_ordenar);
+                ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                        this,
+                        R.array.filtro_ordenar,
+                        R.layout.color_spinner_layout
+                );
+                arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+                spinnerOrdenar.setAdapter(arrayAdapter);
+                spinnerOrdenar.setOnItemSelectedListener(this);
+
+        spinnerCatalogo = findViewById(R.id.spinner_categoria);
+        ArrayAdapter arrayAdapterCatalogo = ArrayAdapter.createFromResource(
+                this,
+                R.array.filtro_catalago,
+                R.layout.color_spinner_layout
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+        spinnerCatalogo.setAdapter(arrayAdapterCatalogo);
+        spinnerCatalogo.setOnItemSelectedListener(this);
+
+
     }
 
     private void ListarProduto(){
@@ -155,4 +184,14 @@ public class Produtos extends AppCompatActivity {
 
 
 
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+        Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

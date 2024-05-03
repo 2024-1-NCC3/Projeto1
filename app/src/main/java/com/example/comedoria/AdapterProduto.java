@@ -14,10 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHolder1> {
     private List<Produto> listaProdutos;
     private android.content.Context context;
+
 
     public AdapterProduto(Context context, List<Produto> lista){
         this.listaProdutos = lista;
@@ -40,7 +42,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
 
         holder.descricaoProduto.setText(produto.getNome());
         holder.imgProduto.setImageResource(produto.getCaminhoImg());
-        holder.cbProduto.setText("R$ " + produto.getPreco() );
+        holder.cbProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco() ));
 
         holder.cbProduto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

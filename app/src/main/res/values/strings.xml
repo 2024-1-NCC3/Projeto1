@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Comedoria</string>
+    <string-array name="filtro_ordenar">
+        <item>Ordenar</item>
+        <item>Menor preço</item>
+        <item>Maior preço</item>
+        <item>A-Z</item>
+        <item>Z-A</item>
+
+
+    </string-array>
+    <string-array name="filtro_catalago">
+        <item>Catalogo</item>
+        <item>Ofertas</item>
+        <item>Salgados</item>
+        <item>Marmitas</item>
+        <item>Bebidas</item>
+        <item>Sorvetes</item>
+        <item>Saladas de frutas</item>
+
+    </string-array>
+
+
+
 </resources>
