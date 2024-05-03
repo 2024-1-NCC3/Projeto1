@@ -18,6 +18,13 @@
             android:exported="false" />
         <activity
             android:name=".Catalogo"
+             android:exported="false" />
+        <activity
+            android:name=".Estoque"
+            android:exported="false" />
+        <activity
+            android:name=".perfilAdm"
+
             android:exported="false" />
         <activity
             android:name=".ComprovantePedido"
@@ -29,16 +36,13 @@
             android:name=".Produtos"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity
-            android:name=".Teste"
+            android:name=".PaginaInicial"
             android:exported="false" />
         <activity
             android:name=".Cadastro"
