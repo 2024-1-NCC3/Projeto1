@@ -14,7 +14,11 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
-            android:name=".Teste"
+            android:name=".Estoque"
+            android:exported="false" />
+        <activity
+            android:name=".perfilAdm"
+
             android:exported="false" />
         <activity
             android:name=".ComprovantePedido"
@@ -23,7 +27,7 @@
             android:name=".Carrinho"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Produtos"
             android:exported="false" />
         <activity
             android:name=".Login"
@@ -32,10 +36,13 @@
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity
+            android:name=".PaginaInicial"
+            android:exported="false" />
+        <activity
             android:name=".Cadastro"
             android:exported="false" />
         <activity
-            android:name=".Produtos"
+            android:name=".Start"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

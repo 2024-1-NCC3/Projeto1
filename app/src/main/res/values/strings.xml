@@ -9,17 +9,4 @@
 
 
     </string-array>
-    <string-array name="filtro_catalago">
-        <item>Catalogo</item>
-        <item>Ofertas</item>
-        <item>Salgados</item>
-        <item>Marmitas</item>
-        <item>Bebidas</item>
-        <item>Sorvetes</item>
-        <item>Saladas de frutas</item>
-
-    </string-array>
-
-
-
 </resources>

@@ -2,6 +2,7 @@ package com.example.comedoria;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,9 +21,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Login extends AppCompatActivity {
     EditText txtInput, txtSenha;
     RequestQueue filaRequest;
+    private static final String API_KEY = BuildConfig.API_KEY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,72 +37,91 @@ public class Login extends AppCompatActivity {
         //Atribuir os inputs para login
         txtInput = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
-
     }
     public void cadastro(View view){
-
-
         Intent i = new Intent(this, Cadastro.class);
         startActivity(i);
     }
-    public void Logar(View view){
-        String url = "https://lt3dcj-3000.csb.app/login";
-        try {
-            //Cria o arquivo Json
-            JSONObject dadosDeSolicitacao = new JSONObject();
-            //Adiciona os campos= input e senha ao Json, e define seus valores
+    public void Logar(View view) throws JSONException {
+        Map<String, String> headers = new HashMap<>();
+        //define os heades que a solicitação vai precisar
+        headers.put("apikey", API_KEY);
+        headers.put("Content-Type", "application/json");
 
-            dadosDeSolicitacao.put("input", txtInput.getText());
-            dadosDeSolicitacao.put("senha", txtSenha.getText());
+        JSONObject dadosDeSolicitacao = new JSONObject();
+        //Adiciona os campos= input e senha ao Json, e define seus valores
 
-            JSONArray solicitacao = new JSONArray();
-            solicitacao.put(dadosDeSolicitacao);
+        dadosDeSolicitacao.put("email", txtInput.getText());
+        dadosDeSolicitacao.put("password", txtSenha.getText());
 
-            JsonArrayRequest request = new JsonArrayRequest(
-                    Request.Method.POST,
-                    url,
-                    solicitacao,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
+        ConectorAPI.conexaoSinglePOST(
+                "/auth/v1/token?grant_type=password",
+                dadosDeSolicitacao,
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleySingleCallback() {
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                //Verificar se quem logou é cliente ou funcionário
+                Map<String, String> headers = new HashMap<>();
 
-                            if (response.length()>0){
-                                for(int i=0; i< response.length();i++){
-                                    try{
-                                        JSONObject jsonObj = response.getJSONObject(i);
-                                        //Se o pedido ter uma resposta, verifica se teve sucesso
-                                        Boolean sucesso = jsonObj.getBoolean("auth");
-                                        String msg = jsonObj.getString("msg");
+                String acessToken = response.getString("access_token");
 
-                                        //Manda a mensagem de retorno, pra indicar o status
-                                        Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
-                                        //Se estever tudo certo, passa para a próxima página
-                                        if(sucesso){
-                                            Intent intent = new Intent(Login.this, Categoria.class);
-                                            startActivity(intent);
-                                        }
-                                    }catch (JSONException ex){
+                headers.put("apikey", API_KEY);
+                headers.put("Authorization", "Bearer " + acessToken);
 
-                                    }
-                                }
+                ConectorAPI.conexaoArrayGET(
+                        "/rest/v1/usuarios?select=*",
+                        headers, getApplicationContext(),
+                        new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        if(response.length() > 0){
+                            JSONObject resposta = response.getJSONObject(0);
+                            int papel = resposta.getInt("id_papel");
 
+                            //se for cliente, vai para a página Inicial
+                            if( papel == 2){
+                                Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, PaginaInicial.class);
+                                intent.putExtra("accessToken", acessToken);
+                                startActivity(intent);
+                            }else{
+                                //Todo: Conectar a página de funcionário
+                                Toast.makeText(Login.this, "Ir para a página de func", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                                //Intent intent = new Intent(Login.this, PaginaInicial.class);
                             }
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
                     }
-            );
-            RequestQueue filaRequest = Volley.newRequestQueue(Login.this);
-            filaRequest.add(request);
-        }catch (JSONException ex){
+                    @Override
+                    public void onError(VolleyError error) {
 
-        }
-
+                    }
+                });
 
 
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                //se a resposta for um erro, irá apresentar um Toast com o erro
+                String body = null;
+                try {
+                    body = new String(error.networkResponse.data, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+                JSONObject data = null;
+                try {
+                    data = new JSONObject(body);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                String message = data.optString("error_description");
+                Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }
