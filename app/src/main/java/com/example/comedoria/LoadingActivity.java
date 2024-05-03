@@ -1,5 +1,6 @@
 package com.example.comedoria;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +22,7 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 progressBar.setVisibility(View.GONE);
-                Intent intent = new Intent(LoadingActivity.this, Produtos.class);
+                Intent intent = new Intent(LoadingActivity.this, Teste.class);
                 startActivity(intent);
                 finish();
             }

@@ -17,7 +17,8 @@ public class Teste extends AppCompatActivity {
     private int[] listaImg = {
             R.drawable.promocao,
             R.drawable.bebidassazonais,
-            R.drawable.delivery_capa
+            R.drawable.delivery_capa,
+            R.drawable.salgados
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
