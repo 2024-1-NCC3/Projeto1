@@ -1,5 +1,7 @@
 package com.example.comedoria;
 
+import static com.example.comedoria.BuildConfig.API_KEY;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Produtos extends AppCompatActivity {
 
@@ -35,7 +39,7 @@ public class Produtos extends AppCompatActivity {
     //#FFEEE1 bege
     //#0F5929 verde escuro
     //#94E986 verde claro
-
+    String accessToken;
     private AdapterProduto adapter1;
     private RecyclerView recyclerProduto, recyclerProduto1;
     private CheckBox cbProduto;
@@ -62,8 +66,7 @@ public class Produtos extends AppCompatActivity {
         setContentView(R.layout.activity_produtos);
 
         recyclerProduto = findViewById(R.id.recycleProduto);
-
-
+        accessToken = getIntent().getStringExtra("accessToken");
 
         acessarListaProdutos();
 
@@ -76,21 +79,6 @@ public class Produtos extends AppCompatActivity {
         recyclerProduto.setAdapter(adapter1);
     }
 
-    private void ListarProduto(){
-        Produto produto = new Produto(1,"Marmita Strogonoff de Frango com Batatas",14.5, listaIngrediente[0], listImgProduto[1]);
-        listaProdutos.add(produto);
-
-        Produto pedacoBolo = new Produto (2,"Pedaço de bolo de Bolo Cholate com cobertura chocolate", 10.0, listaIngrediente[1],listImgProduto[0]);
-        listaProdutos.add(pedacoBolo);
-
-        Produto paoDeQueijo = new Produto(3,"Porção de pao de queijo", 5.00, listaIngrediente[1], listImgProduto[2]);
-        listaProdutos.add(paoDeQueijo);
-
-        Produto refriLataNormal = new Produto (4,"Refrigerante lata 350ml", 7.99, listaIngrediente[1], listImgProduto[0]);
-        listaProdutos.add(refriLataNormal);
-
-    }
-
     public void irParaOCarrinho(View view){
         listaProdutos = adapter1.getListaProdutos();
         List<Produto> produtosSelecionados = new ArrayList<>();
@@ -101,7 +89,7 @@ public class Produtos extends AppCompatActivity {
             }
         }
         if(produtosSelecionados.size() == 0){
-            Toast.makeText(this, "Nenhum produto selecionad", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nenhum produto selecionado", Toast.LENGTH_SHORT).show();
             return;
         }else{
             Intent i = new Intent(getApplicationContext(), Carrinho.class);
@@ -113,43 +101,48 @@ public class Produtos extends AppCompatActivity {
     }
 
     private void acessarListaProdutos(){
-        String url = "https://lt3dcj-3000.csb.app/produtos";
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONArray>() {
+        Map<String, String> headers = new HashMap<>();
+        //define os heades que a solicitação vai precisar
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        ConectorAPI.conexaoArrayGET(
+                "/rest/v1/produtos?select=*",
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        if(response.length() > 0){
+                            for(int i = 0; i< response.length();i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                int id = jsonObject.getInt("id_produto");
+                                String nomeProduto = jsonObject.getString("nome_produto");
+                                Double preco = jsonObject.getDouble("preco");
+                                String caminhoImagem = jsonObject.getString("caminho_imagem");
 
-                        if (response.length()>0){
-                            for(int i=0; i< response.length();i++){
-                                try{
-                                    JSONObject jsonObj = response.getJSONObject(i);
+                                //Pegas as categorias e armazena em uma lista;
 
-                                    int id = jsonObj.getInt("id_produto");
-                                    String nomeProduto = jsonObj.getString("nome_produto");
-                                    double preco = jsonObj.getDouble("preco");
+                                JSONArray arrayCategorias = jsonObject.getJSONArray("categoria");
+                                List<String> categorias = new ArrayList<>();
 
-                                    listaProdutos.add(new Produto(id,nomeProduto,preco, listaIngrediente[0], listImgProduto[0]));
-
-
-                                }catch (JSONException ex){
-
+                                if(arrayCategorias.length() >0){
+                                    for(int j = 0; j<arrayCategorias.length();j++){
+                                        JSONObject cat = arrayCategorias.getJSONObject(j);
+                                        categorias.add(cat.getString("nome_categoria"));
+                                    }
                                 }
+
+                                listaProdutos.add(new Produto(id,nomeProduto,preco,categorias,caminhoImagem));
                             }
-                            adapter1.notifyDataSetChanged();
                         }
+                        adapter1.notifyDataSetChanged();
                     }
-                },
-                new Response.ErrorListener() {
+
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onError(VolleyError error) {
 
                     }
-                }
-        );
-        RequestQueue filaRequest = Volley.newRequestQueue(Produtos.this);
-        filaRequest.add(request);
+                });
     }
 }

@@ -2,6 +2,8 @@ package com.example.comedoria;
 
 import android.widget.ImageView;
 
+import java.util.List;
+
 public class Produto {
 
     private String nome;
@@ -16,7 +18,9 @@ public class Produto {
         this.id = id;
     }
 
-    private int caminhoImg;
+    private List categorias;
+
+    private String caminhoImg;
 
     private String ingrediente;
 
@@ -32,13 +36,15 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public Produto(int id,String nome, double preco, String ingrediente, int caminhoImg) {
+
+    public Produto(int id,String nome, double preco, List categorias, String caminhoImg) {
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
         this.ingrediente = ingrediente;
         this.setSelecionado(false);
         this.id = id;
+        this.categorias = categorias;
     }
 
     public boolean isSelecionado() {
@@ -73,11 +79,11 @@ public class Produto {
         this.ingrediente = ingrediente;
     }
 
-    public int getCaminhoImg() {
+    public String getCaminhoImg() {
         return caminhoImg;
     }
 
-    public void setCaminhoImg(int caminhoImg) {
+    public void setCaminhoImg(String caminhoImg) {
         this.caminhoImg = caminhoImg;
     }
 }

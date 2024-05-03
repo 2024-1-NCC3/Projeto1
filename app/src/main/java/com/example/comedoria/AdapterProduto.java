@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +42,8 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         Produto produto = listaProdutos.get(position);
 
         holder.descricaoProduto.setText(produto.getNome());
-        holder.imgProduto.setImageResource(produto.getCaminhoImg());
+
+        Picasso.get().load(produto.getCaminhoImg()).into(holder.imgProduto);
         holder.cbProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()) );
 
         holder.cbProduto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
