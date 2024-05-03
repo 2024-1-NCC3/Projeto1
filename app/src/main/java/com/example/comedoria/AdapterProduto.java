@@ -23,6 +23,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     private List<Produto> listaProdutos;
     private android.content.Context context;
 
+
     public AdapterProduto(Context context, List<Produto> lista){
         this.listaProdutos = lista;
         this.context = context;
@@ -43,7 +44,6 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         Produto produto = listaProdutos.get(position);
 
         holder.descricaoProduto.setText(produto.getNome());
-
         Picasso.get().load(produto.getCaminhoImg()).into(holder.imgProduto);
 
         //Faz algo acontecer se clicar na imagem

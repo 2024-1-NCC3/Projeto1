@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -91,6 +93,9 @@ public class Carrinho extends AppCompatActivity {
                 .setMinute(Calendar.MINUTE)
                 .setTitleText("Selecione a hora de retirada")
                 .build();
+
+
+
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +107,9 @@ public class Carrinho extends AppCompatActivity {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 
                 txtHora.setText(simpleDateFormat.format(calendar.getTime()));
+
+
+                System.out.printf(txtHora.getText().toString());
             }
         });
 
@@ -189,6 +197,7 @@ public class Carrinho extends AppCompatActivity {
                                         //Se estever tudo certo, passa para a próxima página
                                         if(sucesso){
                                             Intent intent = new Intent(Carrinho.this, ComprovantePedido.class);
+                                            intent.putExtra("retirarProduto", txtHora.getText().toString());
                                             startActivity(intent);
                                         }
                                     }catch (JSONException ex){

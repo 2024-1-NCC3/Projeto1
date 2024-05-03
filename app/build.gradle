@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
 }
-
 android {
     namespace 'com.example.comedoria'
     compileSdk 34
@@ -20,8 +19,6 @@ android {
         properties.load(project.rootProject.file("keystore.properties").newDataInputStream())
         buildConfigField "String", "API_URL", "\"${properties.getProperty("API_URL")}\""
         buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
-
-
     }
 
     buildTypes {
