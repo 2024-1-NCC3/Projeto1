@@ -202,7 +202,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/verde_fundo_categoria"
-            android:onClick="finalizarPedido"
+            android:onClick="finalizarFirebase"
             android:text="Finalizar Pedido"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
