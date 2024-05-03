@@ -99,19 +99,11 @@ public class Produtos extends AppCompatActivity{
 
 
         spinnerOrdenar.setAdapter(adapterDropdown);
-        spinnerOrdenar.setOnItemSelectedListener(this);
+        //spinnerOrdenar.setOnItemSelectedListener(this);
 
         spinnerCatalogo = findViewById(R.id.spinner_categoria);
-        ArrayAdapter arrayAdapterCatalogo = ArrayAdapter.createFromResource(
-                this,
-                R.array.filtro_ordenar,
-                R.layout.color_spinner_layout
-        );
-
-        spinnerCatalogo.setAdapter(arrayAdapterCatalogo);
-        spinnerCatalogo.setOnItemSelectedListener(this);
-
-
+        spinnerCatalogo.setAdapter(adapterDropdown);
+        //spinnerCatalogo.setOnItemSelectedListener(this);
     }
 
     public void irParaOCarrinho(View view){

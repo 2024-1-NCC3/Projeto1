@@ -1,12 +1,6 @@
 <resources>
     <string name="app_name">Comedoria</string>
-    <string-array name="filtro_ordenar">
-        <item>Ordenar</item>
-        <item>Menor preço</item>
-        <item>Maior preço</item>
-        <item>A-Z</item>
-        <item>Z-A</item>
-    </string-array>
+
     <string name="title_activity_inicial">InicialActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
