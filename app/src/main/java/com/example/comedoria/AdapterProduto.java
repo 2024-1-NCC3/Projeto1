@@ -9,9 +9,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +43,21 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         Produto produto = listaProdutos.get(position);
 
         holder.descricaoProduto.setText(produto.getNome());
-        holder.imgProduto.setImageResource(produto.getCaminhoImg());
+
+        Picasso.get().load(produto.getCaminhoImg()).into(holder.imgProduto);
+
+        //Faz algo acontecer se clicar na imagem
+
+//        holder.imgProduto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String categorias = "";
+//                for(int i = 0; i < produto.getCategorias().size(); i++){
+//                    categorias += produto.getCategorias().get(i);
+//                };
+//                Toast.makeText(context, categorias, Toast.LENGTH_SHORT).show();
+//            }
+//        });
         holder.cbProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()) );
 
         holder.cbProduto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
