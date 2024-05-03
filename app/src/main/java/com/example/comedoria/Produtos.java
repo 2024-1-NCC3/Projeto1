@@ -107,7 +107,7 @@ public class Produtos extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*",
+                "/rest/v1/produtos?select=*,categoria(nome_categoria)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -116,6 +116,7 @@ public class Produtos extends AppCompatActivity {
                         if(response.length() > 0){
                             for(int i = 0; i< response.length();i++){
                                 JSONObject jsonObject = response.getJSONObject(i);
+
                                 int id = jsonObject.getInt("id_produto");
                                 String nomeProduto = jsonObject.getString("nome_produto");
                                 Double preco = jsonObject.getDouble("preco");
@@ -124,6 +125,7 @@ public class Produtos extends AppCompatActivity {
                                 //Pegas as categorias e armazena em uma lista;
 
                                 JSONArray arrayCategorias = jsonObject.getJSONArray("categoria");
+
                                 List<String> categorias = new ArrayList<>();
 
                                 if(arrayCategorias.length() >0){

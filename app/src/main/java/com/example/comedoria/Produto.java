@@ -20,6 +20,10 @@ public class Produto {
 
     private List categorias;
 
+    public List getCategorias() {
+        return categorias;
+    }
+
     private String caminhoImg;
 
     private String ingrediente;
