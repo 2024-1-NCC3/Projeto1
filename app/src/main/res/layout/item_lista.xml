@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@color/verde_categorias"
-                    android:fontFamily="@font/jetbrains_mono"
+                    android:fontFamily="@font/jetbrains_mono_thin"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="#000000"
