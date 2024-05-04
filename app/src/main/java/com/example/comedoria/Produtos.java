@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Produtos extends AppCompatActivity{
+public class Produtos extends AppCompatActivity {
 
     // Cores
     //#FF403832 Marrom
@@ -48,18 +48,13 @@ public class Produtos extends AppCompatActivity{
     //#94E986 verde claro
     String accessToken;
     private AdapterProduto adapter1;
+    private ArrayAdapter adapter2;
     private RecyclerView recyclerProduto;    
     private Spinner spinnerOrdenar, spinnerCatalogo;
 
     private List<Produto> listaProdutos = new ArrayList<>();
+    private List<String> listaCategorias = new ArrayList<>();
 
-
-    private int[] listImgProduto = {
-            R.drawable.imgstrogonofffrango,
-            R.drawable.strogonoffimgpq,
-            R.drawable.pao_de_queijo
-
-    };
 
     private String[] listaIngrediente = {
             "Frango, Creme de leite, arroz, alho, sal, ketchup, mostarda, molho ingles",
@@ -77,7 +72,8 @@ public class Produtos extends AppCompatActivity{
         recyclerProduto = findViewById(R.id.recycleProduto);
         accessToken = getIntent().getStringExtra("accessToken");
 
-        acessarListaProdutos();
+        //acessarListaProdutos();
+        filtrarPorCategoria("Todos");
 
         adapter1 = new AdapterProduto(this, listaProdutos);
 
@@ -89,21 +85,68 @@ public class Produtos extends AppCompatActivity{
 
         spinnerOrdenar = findViewById(R.id.spinner_ordenar);
 
-        List<String> categorias = new ArrayList<>();
-        categorias.add("Ofertas");
-        categorias.add("Salgados");
-        categorias.add("Marmitas");
-        categorias.add("Bebidas");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        AdapterDropdown adapterDropdown = new AdapterDropdown(this,categorias);
+        spinnerOrdenar = findViewById(R.id.spinner_ordenar);
+//        spinnerOrdenar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                String item = adapterView.getItemAtPosition(i).toString();
+//                Toast.makeText(Produtos.this, item, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//        ArrayAdapter arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,listaCategorias);
+//
+//        arrayAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+
+//        spinnerOrdenar.setAdapter(arrayAdapter);
 
 
-        spinnerOrdenar.setAdapter(adapterDropdown);
-        //spinnerOrdenar.setOnItemSelectedListener(this);
+        //Spinner spinner = findViewById(R.id.spinner);
 
-        spinnerCatalogo = findViewById(R.id.spinner_categoria);
-        spinnerCatalogo.setAdapter(adapterDropdown);
-        //spinnerCatalogo.setOnItemSelectedListener(this);
+        List<String> cate = new ArrayList<>();
+        cate.add("Marmitas");
+        cate.add("Ofertas");
+        cate.add("");
+
+        Log.i("ArrayNaMão", cate.toString());
+
+        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
+        adapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+
+        spinnerOrdenar.setAdapter(adapter2);
+        filtrarPorCategoria("Todos");
+        spinnerOrdenar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                filtrarPorCategoria(item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
+
+//        spinnerCatalogo = findViewById(R.id.spinner_categoria);
+//        ArrayAdapter arrayAdapterCatalogo = ArrayAdapter.createFromResource(
+//                this,
+//                R.array.filtro_catalago,
+//                R.layout.color_spinner_layout
+//        );
+//        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+//        spinnerCatalogo.setAdapter(arrayAdapterCatalogo);
+//        spinnerCatalogo.setOnItemSelectedListener(this);
     }
 
     public void irParaOCarrinho(View view){
@@ -127,45 +170,83 @@ public class Produtos extends AppCompatActivity{
         }
     }
 
-    private void acessarListaProdutos(){
+    private void pegarCategorias(List<Produto> produtos){
+
+        for(Produto produto: produtos){
+            for(int i = 0; i<produto.getCategorias().size();i++){
+                listaCategorias.add(produto.getCategorias().get(i).toString());
+            }
+        }
+    }
+
+    private void filtrarPorCategoria(String categoria){
         Map<String, String> headers = new HashMap<>();
+        String endpoint = "";
         //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
+        if(categoria.equals("Todos")){
+            endpoint = "/rest/v1/categoria?select=nome_categoria,produtos(id_produto,nome_produto,preco,caminho_imagem)";
+
+        }
+        else{
+            endpoint = "/rest/v1/categoria?nome_categoria=eq."+categoria+"&select=nome_categoria,produtos(id_produto,nome_produto,preco,caminho_imagem)";
+        }
+
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,categoria(nome_categoria)",
+                endpoint ,
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
+                        Log.i("Supabase",response.toString());
                         if(response.length() > 0){
+                            listaProdutos.clear();
+
                             for(int i = 0; i< response.length();i++){
-                                JSONObject jsonObject = response.getJSONObject(i);
+                                JSONObject ObjCategoria = response.getJSONObject(i);
+                                String nomeCategoria = ObjCategoria.getString("nome_categoria");
 
-                                int id = jsonObject.getInt("id_produto");
-                                String nomeProduto = jsonObject.getString("nome_produto");
-                                Double preco = jsonObject.getDouble("preco");
-                                String caminhoImagem = jsonObject.getString("caminho_imagem");
+                                JSONArray arrayProdutos = ObjCategoria.getJSONArray("produtos");
 
-                                //Pegas as categorias e armazena em uma lista;
+                                if(arrayProdutos.length() >0){
 
-                                JSONArray arrayCategorias = jsonObject.getJSONArray("categoria");
+                                    for(int j = 0; j< arrayProdutos.length();j++){
+                                        JSONObject prod = arrayProdutos.getJSONObject(j);
 
-                                List<String> categorias = new ArrayList<>();
+                                        int id = prod.getInt("id_produto");
+                                        String nomeProduto = prod.getString("nome_produto");
+                                        Double preco = prod.getDouble("preco");
+                                        String caminhoImagem = prod.getString("caminho_imagem");
 
-                                if(arrayCategorias.length() >0){
-                                    for(int j = 0; j<arrayCategorias.length();j++){
-                                        JSONObject cat = arrayCategorias.getJSONObject(j);
-                                        categorias.add(cat.getString("nome_categoria"));
+                                        boolean idExiste = false;
+
+                                        for(Produto produto: listaProdutos){
+                                            if(produto.getId() == id){
+                                                idExiste = true;
+                                            }
+                                        }
+
+                                        if(!idExiste){
+                                            listaProdutos.add(new Produto(nomeProduto,id,preco,caminhoImagem));
+                                        }
                                     }
                                 }
 
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,categorias,caminhoImagem));
+                                if(categoria.equals("Todos") && !listaCategorias.contains(nomeCategoria)){
+                                    listaCategorias.add(nomeCategoria);
+                                }
                             }
                         }
+                        if( !listaCategorias.contains("Todos")){
+                            listaCategorias.add("Todos");
+                        }
+
+                        Log.i("Supabase", listaCategorias.toString());
                         adapter1.notifyDataSetChanged();
+                        adapter2.notifyDataSetChanged();
                     }
 
                     @Override
@@ -174,4 +255,5 @@ public class Produtos extends AppCompatActivity{
                     }
                 });
     }
+
 }

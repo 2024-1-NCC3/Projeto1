@@ -51,6 +51,13 @@ public class Produto {
         this.categorias = categorias;
     }
 
+    public Produto(String nome, int id, double preco, String caminhoImg) {
+        this.nome = nome;
+        this.id = id;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+    }
+
     public boolean isSelecionado() {
         return selecionado;
     }
