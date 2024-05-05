@@ -14,10 +14,6 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
-            android:name=".testeSpinner"
-            android:exported="false" >
-        </activity>
-        <activity
             android:name=".Estoque"
             android:exported="false" />
         <activity
