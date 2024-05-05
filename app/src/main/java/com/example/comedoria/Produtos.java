@@ -66,69 +66,10 @@ public class Produtos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
-
-        recyclerProduto = findViewById(R.id.recycleProduto);
         accessToken = getIntent().getStringExtra("accessToken");
+        
+        iniciarPag();
 
-        adapterProduto = new AdapterProduto(this, listaFiltrada);
-
-        RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this,2);
-        recyclerProduto.setLayoutManager(layoutManager1);
-        recyclerProduto.setHasFixedSize(true);
-
-        recyclerProduto.setAdapter(adapterProduto);
-
-        // Configuração do Dropdown de ordenação
-
-        spinnerOrdenar = findViewById(R.id.spinner_ordenar);
-
-        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.filtro_ordenar,
-                R.layout.color_spinner_layout
-        );
-        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
-        spinnerOrdenar.setAdapter(arrayAdapter);
-        spinnerOrdenar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = adapterView.getItemAtPosition(i).toString();
-                ordernarLista(item);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-        // Configuração do Dropdown de filtragem
-        spinnerCategoria = findViewById(R.id.spinner_categoria);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        listaCategorias.add("Todos");
-        CarregarListaProdutos();
-
-        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
-        adapter2.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
-
-        spinnerCategoria.setAdapter(adapter2);
-
-        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String item = adapterView.getItemAtPosition(i).toString();
-                filtrarLista(item);
-                ordernarLista(spinnerOrdenar.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     public void irParaOCarrinho(View view){
@@ -261,6 +202,64 @@ public class Produtos extends AppCompatActivity {
         adapter2.notifyDataSetChanged();
     }
 
+    private void iniciarPag(){
+        listaCategorias.add("Todos");
+        CarregarListaProdutos();
+        //Configurações do recyclerView
+        recyclerProduto = findViewById(R.id.recycleProduto);
+        adapterProduto = new AdapterProduto(this, listaFiltrada);
+        RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this,2);
+        recyclerProduto.setLayoutManager(layoutManager1);
+        recyclerProduto.setHasFixedSize(true);
+        recyclerProduto.setAdapter(adapterProduto);
+
+        // Configuração do Dropdown de ordenação
+        spinnerOrdenar = findViewById(R.id.spinner_ordenar);
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.filtro_ordenar,
+                R.layout.color_spinner_layout
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+        spinnerOrdenar.setAdapter(arrayAdapter);
+        spinnerOrdenar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                ordernarLista(item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        // Configuração do Dropdown de filtragem
+        spinnerCategoria = findViewById(R.id.spinner_categoria);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
+        adapter2.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+        spinnerCategoria.setAdapter(adapter2);
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                filtrarLista(item);
+                ordernarLista(spinnerOrdenar.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
     //Comparadores para fazer a ordenação dos produtos
     class ComparadorPreco implements Comparator<Produto>{
 
@@ -275,4 +274,5 @@ public class Produtos extends AppCompatActivity {
             return produto.getNome().compareTo(t1.getNome());
         }
     }
+
 }
