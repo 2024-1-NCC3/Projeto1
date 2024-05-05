@@ -29,12 +29,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +50,10 @@ public class Produtos extends AppCompatActivity {
     //#0F5929 verde escuro
     //#94E986 verde claro
     String accessToken;
-    private AdapterProduto adapter1;
+    private AdapterProduto adapterProduto;
     private ArrayAdapter adapter2;
     private RecyclerView recyclerProduto;    
-    private Spinner spinnerOrdenar, spinnerCatalogo;
+    private Spinner spinnerOrdenar, spinnerCategoria;
 
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<Produto> listaFiltrada = new ArrayList<>();
@@ -64,58 +67,33 @@ public class Produtos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
 
-
-
         recyclerProduto = findViewById(R.id.recycleProduto);
         accessToken = getIntent().getStringExtra("accessToken");
 
-        adapter1 = new AdapterProduto(this, listaFiltrada);
+        adapterProduto = new AdapterProduto(this, listaFiltrada);
 
         RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this,2);
         recyclerProduto.setLayoutManager(layoutManager1);
         recyclerProduto.setHasFixedSize(true);
 
-        recyclerProduto.setAdapter(adapter1);
+        recyclerProduto.setAdapter(adapterProduto);
+
+        // Configuração do Dropdown de ordenação
 
         spinnerOrdenar = findViewById(R.id.spinner_ordenar);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerOrdenar = findViewById(R.id.spinner_ordenar);
-//        spinnerOrdenar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String item = adapterView.getItemAtPosition(i).toString();
-//                Toast.makeText(Produtos.this, item, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//        ArrayAdapter arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,listaCategorias);
-//
-//        arrayAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-
-//        spinnerOrdenar.setAdapter(arrayAdapter);
-
-
-        //Spinner spinner = findViewById(R.id.spinner);
-        listaCategorias.add("Todos");
-        CarregarListaProdutos();
-
-        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
-        adapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
-
-        spinnerOrdenar.setAdapter(adapter2);
-
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.filtro_ordenar,
+                R.layout.color_spinner_layout
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+        spinnerOrdenar.setAdapter(arrayAdapter);
         spinnerOrdenar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = adapterView.getItemAtPosition(i).toString();
-                filtrarLista(item);
+                ordernarLista(item);
             }
 
             @Override
@@ -124,15 +102,33 @@ public class Produtos extends AppCompatActivity {
             }
         });
 
-//        spinnerCatalogo = findViewById(R.id.spinner_categoria);
-//        ArrayAdapter arrayAdapterCatalogo = ArrayAdapter.createFromResource(
-//                this,
-//                R.array.filtro_catalago,
-//                R.layout.color_spinner_layout
-//        );
-//        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
-//        spinnerCatalogo.setAdapter(arrayAdapterCatalogo);
-//        spinnerCatalogo.setOnItemSelectedListener(this);
+
+        // Configuração do Dropdown de filtragem
+        spinnerCategoria = findViewById(R.id.spinner_categoria);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listaCategorias.add("Todos");
+        CarregarListaProdutos();
+
+        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
+        adapter2.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+
+        spinnerCategoria.setAdapter(adapter2);
+
+        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String item = adapterView.getItemAtPosition(i).toString();
+                filtrarLista(item);
+                ordernarLista(spinnerOrdenar.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     public void irParaOCarrinho(View view){
@@ -164,6 +160,27 @@ public class Produtos extends AppCompatActivity {
         }
     }
 
+    private void ordernarLista(String tipo){
+        switch(tipo){
+            case "Ordenar":
+                break;
+            case "Menor preço":
+                Collections.sort(listaFiltrada, new ComparadorPreco());
+                break;
+            case "Maior preço":
+                Collections.sort(listaFiltrada, new ComparadorPreco());
+                Collections.reverse(listaFiltrada);
+                break;
+            case "A-Z":
+                Collections.sort(listaFiltrada, new ComparadorNome());
+                break;
+            case "Z-A":
+                Collections.sort(listaFiltrada, new ComparadorNome());
+                Collections.reverse(listaFiltrada);
+                break;
+        }
+        adapterProduto.notifyDataSetChanged();
+    }
     public void filtrarLista(String categoria){
         listaFiltrada.clear();
 
@@ -180,8 +197,7 @@ public class Produtos extends AppCompatActivity {
                 }
             }
         }
-        Log.i("Lista filtrada:", listaFiltrada.toString());
-        adapter1.setFilteredList(listaFiltrada);
+        adapterProduto.setFilteredList(listaFiltrada);
 
     }
 
@@ -199,39 +215,7 @@ public class Produtos extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-                        if(response.length() > 0){
-                            //listaProdutos.clear();
-
-                            for(int i = 0; i< response.length();i++){
-                                JSONObject objProduto = response.getJSONObject(i);
-
-                                //String nomeCategoria = ObjCategoria.getString("nome_categoria");
-
-                                JSONArray arrayCategoria = objProduto.getJSONArray("categoria");
-
-                                int id = objProduto.getInt("id_produto");
-                                String nomeProduto = objProduto.getString("nome_produto");
-                                Double preco = objProduto.getDouble("preco");
-                                String caminhoImagem = objProduto.getString("caminho_imagem");
-                                List<String> categoriaProduto = new ArrayList<>();
-
-                                if(arrayCategoria.length() >0){
-                                    categoriaProduto.clear();
-                                    for(int j = 0; j< arrayCategoria.length();j++){
-                                        JSONObject cat = arrayCategoria.getJSONObject(j);
-                                        categoriaProduto.add(cat.getString("nome_categoria"));
-                                    }
-                                }
-
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem));
-
-                            }
-                        }
-                        pegarCategorias(listaProdutos);
-
-                        filtrarLista("Todos");
-
-                        adapter2.notifyDataSetChanged();
+                        converterJsonArray(response);
                     }
 
                     @Override
@@ -241,4 +225,54 @@ public class Produtos extends AppCompatActivity {
                 });
     }
 
+    private void converterJsonArray(JSONArray response) throws JSONException {
+        if(response.length() > 0){
+            //listaProdutos.clear();
+
+            for(int i = 0; i< response.length();i++){
+                JSONObject objProduto = response.getJSONObject(i);
+
+                //String nomeCategoria = ObjCategoria.getString("nome_categoria");
+
+                JSONArray arrayCategoria = objProduto.getJSONArray("categoria");
+
+                int id = objProduto.getInt("id_produto");
+                String nomeProduto = objProduto.getString("nome_produto");
+                Double preco = objProduto.getDouble("preco");
+                String caminhoImagem = objProduto.getString("caminho_imagem");
+                List<String> categoriaProduto = new ArrayList<>();
+
+                if(arrayCategoria.length() >0){
+                    categoriaProduto.clear();
+                    for(int j = 0; j< arrayCategoria.length();j++){
+                        JSONObject cat = arrayCategoria.getJSONObject(j);
+                        categoriaProduto.add(cat.getString("nome_categoria"));
+                    }
+                }
+
+                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem));
+
+            }
+        }
+        pegarCategorias(listaProdutos);
+
+        filtrarLista("Todos");
+
+        adapter2.notifyDataSetChanged();
+    }
+
+    //Comparadores para fazer a ordenação dos produtos
+    class ComparadorPreco implements Comparator<Produto>{
+
+        @Override
+        public int compare(Produto produto, Produto t1) {
+            return Double.compare(produto.getPreco(),t1.getPreco());
+        }
+    }
+    class ComparadorNome implements Comparator<Produto>{
+        @Override
+        public int compare(Produto produto, Produto t1) {
+            return produto.getNome().compareTo(t1.getNome());
+        }
+    }
 }

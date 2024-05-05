@@ -31,6 +31,7 @@
         android:layout_height="30dp"
         android:background="@drawable/borda_quatro_pontas_arrendondadas"
         android:minWidth="50dp"
+        android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
         android:spinnerMode="dropdown"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
