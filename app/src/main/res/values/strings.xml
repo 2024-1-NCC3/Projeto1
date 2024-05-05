@@ -6,4 +6,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_main2">MainActivity2</string>
+
+    <string-array name="filtro_ordenar">
+        <item>Ordenar</item>
+        <item>Menor preço</item>
+        <item>Maior preço</item>
+        <item>A-Z</item>
+        <item>Z-A</item>
+    </string-array>
 </resources>

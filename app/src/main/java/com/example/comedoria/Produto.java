@@ -10,27 +10,29 @@ public class Produto {
     private int id;
     private double preco;
 
-    public int getId() {
-        return id;
-    }
+    private List<String> categoria;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    private List categorias;
-
-    public List getCategorias() {
-        return categorias;
+    public List<String> getCategoria() {
+        return categoria;
     }
 
     private String caminhoImg;
 
     private String ingrediente;
 
-    private boolean selecionado;
+    private boolean selecionado = false;
 
     private int quantidade = 1;
+
+    private boolean aparecer = true;
+
+    public boolean isAparecer() {
+        return aparecer;
+    }
+
+    public void setAparecer(boolean aparecer) {
+        this.aparecer = aparecer;
+    }
 
     public int getQuantidade() {
         return quantidade;
@@ -40,15 +42,27 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
+    public int getId() {
+        return id;
+    }
 
-    public Produto(int id,String nome, double preco, List categorias, String caminhoImg) {
+    public void setId(int id) {
+        this.id = id;
+    }
+    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg) {
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
         this.ingrediente = ingrediente;
-        this.setSelecionado(false);
         this.id = id;
-        this.categorias = categorias;
+        this.categoria = categoria;
+    }
+
+    public Produto(String nome, int id, double preco, String caminhoImg) {
+        this.nome = nome;
+        this.id = id;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
     }
 
     public boolean isSelecionado() {

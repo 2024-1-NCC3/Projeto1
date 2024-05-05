@@ -18,7 +18,6 @@
             android:exported="false" />
         <activity
             android:name=".perfilAdm"
-
             android:exported="false" />
         <activity
             android:name=".ComprovantePedido"
