@@ -1,5 +1,7 @@
 package com.example.comedoria;
 
+import static com.example.comedoria.BuildConfig.API_KEY;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
