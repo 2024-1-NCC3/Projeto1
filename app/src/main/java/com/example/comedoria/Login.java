@@ -66,6 +66,8 @@ public class Login extends AppCompatActivity {
                 Map<String, String> headers = new HashMap<>();
 
                 String acessToken = response.getString("access_token");
+                JSONObject user = response.getJSONObject("user");
+                String idUsuario = user.getString("id");
 
                 headers.put("apikey", API_KEY);
                 headers.put("Authorization", "Bearer " + acessToken);
@@ -85,6 +87,7 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, PaginaInicial.class);
                                 intent.putExtra("accessToken", acessToken);
+                                intent.putExtra("idUsuario",idUsuario);
                                 startActivity(intent);
                             }else{
                                 //Todo: Conectar a página de funcionário
