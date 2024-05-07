@@ -49,10 +49,10 @@ public class Produtos extends AppCompatActivity {
     //#FFEEE1 bege
     //#0F5929 verde escuro
     //#94E986 verde claro
-    String accessToken;
+    String accessToken, idUsuario;
     private AdapterProduto adapterProduto;
     private ArrayAdapter adapter2;
-    private RecyclerView recyclerProduto;    
+    private RecyclerView recyclerProduto;
     private Spinner spinnerOrdenar, spinnerCategoria;
 
     private List<Produto> listaProdutos = new ArrayList<>();
@@ -67,7 +67,7 @@ public class Produtos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
         accessToken = getIntent().getStringExtra("accessToken");
-        
+        idUsuario = getIntent().getStringExtra("idUsuario");
         iniciarPag();
 
     }
@@ -88,6 +88,8 @@ public class Produtos extends AppCompatActivity {
             String produtosComoString = new Gson().toJson(produtosSelecionados);
 
             i.putExtra("produtosSelecionados", produtosComoString);
+            i.putExtra("accessToken", accessToken);
+            i.putExtra("idUsuario", idUsuario);
             startActivity(i);
         }
     }

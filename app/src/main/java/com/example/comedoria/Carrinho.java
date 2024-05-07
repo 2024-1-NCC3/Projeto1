@@ -1,5 +1,8 @@
 package com.example.comedoria;
 
+import static com.example.comedoria.BuildConfig.API_KEY;
+import static com.example.comedoria.BuildConfig.API_URL;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.gson.Gson;
@@ -39,6 +43,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Console;
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -50,24 +56,27 @@ import java.util.Map;
 
 public class Carrinho extends AppCompatActivity {
     TextView txtHora, txtData,txtTotal;
+    TextInputEditText inputObservacoes;
     RecyclerView recycleCarrinho;
     List<Produto> produtos;
+    String accessToken,idUsuario,idPedido,date,horas;
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
 
-    //Pega as chaves necessárias para acessar a API
-    private static final String API_URL = BuildConfig.API_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
 
+        accessToken = getIntent().getStringExtra("accessToken");
+        idUsuario = getIntent().getStringExtra("idUsuario");
 
         String arrayProdutos = getIntent().getStringExtra("produtosSelecionados");
         produtos = Arrays.asList(new Gson().fromJson(arrayProdutos, Produto[].class));
         txtTotal = findViewById(R.id.txtTotal);
         txtHora = findViewById(R.id.txtHora);
         txtData = findViewById(R.id.txtData);
+        inputObservacoes = findViewById(R.id.inputObservacoes);
         recycleCarrinho = findViewById(R.id.recylerCarrinho);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -98,15 +107,17 @@ public class Carrinho extends AppCompatActivity {
 
                 calendar.set(Calendar.HOUR_OF_DAY, hora);
                 calendar.set(Calendar.MINUTE, minuto);
+
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
 
-                txtHora.setText(simpleDateFormat.format(calendar.getTime()));
+                horas = simpleDateFormat.format(calendar.getTime());
+                txtHora.setText(horas);
 
 
                 System.out.printf(txtHora.getText().toString());
             }
         });
-
+        Timestamp time = new Timestamp(calendar.getTimeInMillis());
         picker.show(getSupportFragmentManager(),"tag");
     }
 
@@ -118,13 +129,7 @@ public class Carrinho extends AppCompatActivity {
         picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @Override
             public void onPositiveButtonClick(Long selection) {
-                String date = new SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(new Date(selection));
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(selection);
-                dia = calendar.get(Calendar.DAY_OF_MONTH);
-                mes = calendar.get(Calendar.MONTH);
-                ano = calendar.get(Calendar.YEAR);
+                date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(selection));
 
                 txtData.setText(date);
             }
@@ -145,7 +150,13 @@ public class Carrinho extends AppCompatActivity {
 
 
     public void finalizarPedido(View view) throws JSONException {
+
         double soma = 0;
+
+        if(date == null || horas == null){
+            Toast.makeText(this, "Por favor, selecione uma data e hora para retirada", Toast.LENGTH_SHORT).show();
+            return;
+        }
         for(Produto produto: produtos){
             soma += produto.getPreco() * produto.getQuantidade();
         }
@@ -153,83 +164,110 @@ public class Carrinho extends AppCompatActivity {
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
             return;
         }else{
-            //Retira qualquer produto que tenha quantidade 0
-            for(Produto produto: produtos){
-                if(produto.getQuantidade() == 0){
-                    produtos.remove(produto);
-                }
-            }
 
-            JSONObject body = montarRequisicao();
-            JSONArray req = new JSONArray();
+            Map<String, String> headers = new HashMap<>();
+            //define os heades que a solicitação vai precisar
+            headers.put("apikey", API_KEY);
+            headers.put("Authorization", "Bearer " + accessToken);
+            headers.put("Content-Type", "application/json");
+            headers.put("Prefer", "return=representation");
 
-            req.put(body);
 
-            //url para logar com senha
-            String url = API_URL + "/auth/v1/token?grant_type=password";
 
-            JsonArrayRequest request = new JsonArrayRequest(
-                    Request.Method.POST,
-                    url,
-                    req,
-                    new Response.Listener<JSONArray>() {
+            //Faz a requisição para criar um pedido no servidor
+            ConectorAPI.conexaoArrayPOST(
+                    "/rest/v1/pedido",
+                    headers,
+                    JsonNovoPedido(),
+                    getApplicationContext(),
+                    new ConectorAPI.VolleyArrayCallback() {
                         @Override
-                        public void onResponse(JSONArray response) {
-
-                            if (response.length()>0){
-                                for(int i=0; i< response.length();i++){
-                                    try{
-                                        JSONObject jsonObj = response.getJSONObject(i);
-                                        //Se o pedido ter uma resposta, verifica se teve sucesso
-
-                                        Boolean sucesso = jsonObj.getBoolean("sucesso");
-                                        String msg = jsonObj.getString("msg");
-                                        int pedido = jsonObj.getInt("pedido");
-
-                                        //Manda a mensagem de retorno, pra indicar o status
-                                        Toast.makeText(Carrinho.this, msg, Toast.LENGTH_SHORT).show();
-                                        //Se estever tudo certo, passa para a próxima página
-                                        if(sucesso){
-                                            Intent intent = new Intent(Carrinho.this, ComprovantePedido.class);
-                                            intent.putExtra("retirarProduto", txtHora.getText().toString());
-                                            startActivity(intent);
-                                        }
-                                    }catch (JSONException ex){
-
-                                    }
-                                }
-
-                            }
+                        public void onSuccess(JSONArray response) throws JSONException {
+                            idPedido = response.getJSONObject(0).getString("id_pedido");
+                            adicionarProdutosNoPedido();
                         }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
 
+                        @Override
+                        public void onError(VolleyError error) {
+                            //se a resposta for um erro, irá apresentar um Toast com o erro
+                            String body = null;
+                            try {
+                                body = new String(error.networkResponse.data, "utf-8");
+                            } catch (UnsupportedEncodingException e) {
+                                throw new RuntimeException(e);
+                            }
+                            JSONObject data = null;
+                            try {
+                                data = new JSONObject(body);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                            String message = data.optString("error_description");
+                            Toast.makeText(Carrinho.this, message, Toast.LENGTH_SHORT).show();
                         }
                     }
             );
-            RequestQueue filaRequest = Volley.newRequestQueue(Carrinho.this);
-            filaRequest.add(request);
         }
 
     }
 
-    private JSONObject montarRequisicao()throws JSONException{
-        JSONArray listReq = new JSONArray();
+    private JSONArray JsonNovoPedido() throws JSONException {
+        Log.i("SUpabase", date);
 
+        JSONObject solicitacao = new JSONObject();
+        solicitacao.put("status", "Aguardando Pagamento");
+        solicitacao.put("id_usuario", idUsuario);
+        solicitacao.put("hora_para_retirada", horas + ":00");
+        solicitacao.put("data_para_retirada", date);
+        solicitacao.put("observacoes", inputObservacoes.getText());
+
+
+        JSONArray req = new JSONArray();
+        req.put(solicitacao);
+
+        return req;
+    }
+    private void adicionarProdutosNoPedido() throws JSONException {
+
+
+        Map<String, String> headers = new HashMap<>();
+        //define os heades que a solicitação vai precisar
+        headers.put("apikey", API_KEY);
+        headers.put("Content-Type", "application/json");
+        headers.put("Authorization", "Bearer " + accessToken);
+        headers.put("Prefer", "return=representation");
+
+        ConectorAPI.conexaoArrayPOST(
+                "/rest/v1/detalhes_pedido",
+                headers,
+                JsonPedidosParaAdicionar(),
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        Toast.makeText(Carrinho.this, "Pedido feito com sucesso", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        Toast.makeText(Carrinho.this, "Erro", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    private JSONArray JsonPedidosParaAdicionar() throws JSONException {
+        JSONArray req = new JSONArray();
         for(Produto produto: produtos){
             JSONObject prod = new JSONObject();
+
             prod.put("id_produto", produto.getId());
-            prod.put("quantidade", produto.getQuantidade());
+            prod.put("id_pedido", idPedido);
+            prod.put("quantidade",produto.getQuantidade());
 
-            listReq.put(prod);
+            req.put(prod);
         }
-        JSONObject requisicao = new JSONObject();
-        requisicao.put("id_usuario", 50);
-        requisicao.put("modificado_por", "Vitor");
-        requisicao.put("produtos",listReq);
-
-        return requisicao;
+        return req;
     }
 }

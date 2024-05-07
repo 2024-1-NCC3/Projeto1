@@ -28,7 +28,7 @@ public class PaginaInicial extends AppCompatActivity {
     private RecyclerView recycleView;
     private List<Categoria> listaCategorias = new ArrayList<>();
     private AdapterCategoria adapter;
-    private String accessToken;
+    private String accessToken,idUsuario;
 
     private int[] listaImg = {
             R.drawable.promocao,
@@ -40,6 +40,7 @@ public class PaginaInicial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagina_inicial);
         accessToken = getIntent().getStringExtra("accessToken");
+        idUsuario = getIntent().getStringExtra("idUsuario");
 
         recycleView = findViewById(R.id.recycleView);
 
@@ -63,6 +64,7 @@ public class PaginaInicial extends AppCompatActivity {
     public void cardapio(View view){
         Intent cardapio = new Intent(this,Produtos.class);
         cardapio.putExtra("accessToken",accessToken);
+        cardapio.putExtra("idUsuario",idUsuario);
         startActivity(cardapio);
     }
     public void carrinho(){

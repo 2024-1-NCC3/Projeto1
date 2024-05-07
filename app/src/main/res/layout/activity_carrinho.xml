@@ -119,6 +119,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtObservacoes">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputObservacoes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -203,7 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/verde_fundo_categoria"
-            android:onClick="finalizarFirebase"
+            android:onClick="finalizarPedido"
             android:text="Finalizar Pedido"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
