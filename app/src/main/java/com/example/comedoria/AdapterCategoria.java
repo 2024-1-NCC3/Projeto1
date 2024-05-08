@@ -1,5 +1,6 @@
 package com.example.comedoria;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,11 @@ import java.util.List;
 
 public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyViewHolder> {
     private List<Categoria> listaCategorias;
+    private Context context;
 
-
-    public AdapterCategoria(List<Categoria> lista){
+    public AdapterCategoria(List<Categoria> lista, Context context){
         this.listaCategorias = lista;
+        this.context = context;
     }
 
 
@@ -39,6 +41,13 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
         if(!categoria.getAparecer()){
             holder.rootView.setVisibility(View.GONE);
         }
+
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((PaginaInicial)context).irParaProdutos(categoria.getNome());
+            }
+        });
 
         holder.descricaoCategoria.setText(categoria.getDescricao());
         //Cuida de carregar a imagem pela URL

@@ -49,7 +49,7 @@ public class Produtos extends AppCompatActivity {
     //#FFEEE1 bege
     //#0F5929 verde escuro
     //#94E986 verde claro
-    String accessToken, idUsuario;
+    String accessToken, idUsuario, categoriaSelecionada;
     private AdapterProduto adapterProduto;
     private ArrayAdapter adapter2;
     private RecyclerView recyclerProduto;
@@ -68,6 +68,7 @@ public class Produtos extends AppCompatActivity {
         setContentView(R.layout.activity_produtos);
         accessToken = getIntent().getStringExtra("accessToken");
         idUsuario = getIntent().getStringExtra("idUsuario");
+        categoriaSelecionada = getIntent().getStringExtra("CategoriaSelecionada");
         iniciarPag();
 
     }
@@ -199,9 +200,24 @@ public class Produtos extends AppCompatActivity {
         }
         pegarCategorias(listaProdutos);
 
-        filtrarLista("Todos");
+        if(categoriaSelecionada == null){
+            filtrarLista("Todos");
+        }else{
+            filtrarLista(categoriaSelecionada);
+            spinnerCategoria.setSelection(encontrarCategoria(categoriaSelecionada));
+        }
+
 
         adapter2.notifyDataSetChanged();
+    }
+
+    private int encontrarCategoria(String categoriaProcurada){
+        for(int i=0;i<listaCategorias.size();i++){
+            if(listaCategorias.get(i).equals(categoriaProcurada)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void iniciarPag(){
