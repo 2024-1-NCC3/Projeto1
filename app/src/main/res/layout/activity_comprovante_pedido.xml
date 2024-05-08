@@ -14,7 +14,7 @@
         android:id="@+id/tituloPedido"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/borda_arrendondada"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/bege"
