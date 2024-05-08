@@ -74,6 +74,8 @@ public class PaginaInicial extends AppCompatActivity {
     }
     public void usuario(View view){
         Intent usuario = new Intent(this,Perfil.class);
+        usuario.putExtra("idUsuario",idUsuario);
+        usuario.putExtra("accessToken", accessToken);
         startActivity(usuario);
     }
 
