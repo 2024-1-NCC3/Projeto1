@@ -89,6 +89,7 @@ public class Login extends AppCompatActivity {
                             }else{
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, perfilAdm.class);
+                                intent.putExtra("accessToken", acessToken);
                                 startActivity(intent);
                             }
                         }

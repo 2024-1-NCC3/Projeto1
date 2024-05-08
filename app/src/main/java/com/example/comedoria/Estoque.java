@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Adapter;
 
 import com.android.volley.VolleyError;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Estoque extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerEstoque;
     String accessToken;
     AdapterEstoque adapterEstoque;
     private List<Produto> listaProdutos = new ArrayList<>();
@@ -35,26 +36,28 @@ public class Estoque extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estoque);
 
-        recyclerView = findViewById(R.id.recyclerEstoque);
+        recyclerEstoque = findViewById(R.id.recyclerEstoque);
         accessToken = getIntent().getStringExtra("accessToken");
 
         acessarListaProdutos();
 
         adapterEstoque = new AdapterEstoque(this, listaProdutos);
-        RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLayoutManager(layoutManager1);
-        recyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerEstoque.setLayoutManager(layoutManager);
+        recyclerEstoque.setHasFixedSize(true);
+
+        recyclerEstoque.setAdapter(adapterEstoque);
     }
 
     private void acessarListaProdutos(){
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        //define os headers que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,categoria(nome_categoria)",
+                "/rest/v1/produtos?select=*,estoque(quantidade)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -64,25 +67,13 @@ public class Estoque extends AppCompatActivity {
                             for(int i = 0; i< response.length();i++){
                                 JSONObject jsonObject = response.getJSONObject(i);
 
-                                int id = jsonObject.getInt("id_produto");
                                 String nomeProduto = jsonObject.getString("nome_produto");
                                 Double preco = jsonObject.getDouble("preco");
+                                JSONObject estoque = jsonObject.getJSONObject("estoque");
+                                int quantidade = estoque.getInt("quantidade");
                                 String caminhoImagem = jsonObject.getString("caminho_imagem");
 
-                                //Pegas as categorias e armazena em uma lista;
-
-                                JSONArray arrayCategorias = jsonObject.getJSONArray("categoria");
-
-                                List<String> categorias = new ArrayList<>();
-
-                                if(arrayCategorias.length() >0){
-                                    for(int j = 0; j<arrayCategorias.length();j++){
-                                        JSONObject cat = arrayCategorias.getJSONObject(j);
-                                        categorias.add(cat.getString("nome_categoria"));
-                                    }
-                                }
-
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,categorias,caminhoImagem));
+                                listaProdutos.add(new Produto(nomeProduto,preco,caminhoImagem,quantidade));
                             }
                         }
                         adapterEstoque.notifyDataSetChanged();

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 public class perfilAdm extends AppCompatActivity {
 
     private ImageView btnEstoque;
+    private String accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,10 +18,13 @@ public class perfilAdm extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_adm);
 
         btnEstoque = findViewById(R.id.btnEstoque);
+
+        accessToken = getIntent().getStringExtra("accessToken");
     }
 
     public void IrPaginaEstoque(View view){
         Intent intent = new Intent(perfilAdm.this, Estoque.class);
+        intent.putExtra("accessToken", accessToken);
         startActivity(intent);
     }
 }

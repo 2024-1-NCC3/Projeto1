@@ -51,6 +51,16 @@ public class Produto {
         this.categorias = categorias;
     }
 
+    //Construtor usado para o Estoque
+    public Produto(String nome, double preco, String caminhoImg, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+        this.ingrediente = ingrediente;
+        this.setSelecionado(false);
+        this.quantidade = quantidade;
+    }
+
     public boolean isSelecionado() {
         return selecionado;
     }

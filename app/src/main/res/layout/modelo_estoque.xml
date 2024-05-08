@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:background="#FFEEE1"
     android:backgroundTint="#FFEEE1">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="409dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,7 +18,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="362dp"
             android:layout_height="match_parent"
             android:background="#FFEEE1">
 
@@ -25,12 +26,12 @@
                 android:id="@+id/imgProduto"
                 android:layout_width="130dp"
                 android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.093"
+                app:layout_constraintHorizontal_bias="0.052"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.093"
                 app:srcCompat="@drawable/marmita" />
 
             <TextView
@@ -43,10 +44,10 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/imgProduto"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.076" />
+                app:layout_constraintVertical_bias="0.104" />
 
             <TextView
                 android:id="@+id/textQuantidade"
@@ -63,51 +64,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/textTitulo"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
-                android:layout_width="107dp"
-                android:layout_height="20dp"
-                android:background="@drawable/container_quantidade"
-                android:backgroundTint="#FFFFFF"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="200dp"
+                android:layout_height="34dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.178"
-                app:layout_constraintStart_toEndOf="@+id/imgProduto"
-                app:layout_constraintTop_toBottomOf="@+id/textQuantidade"
-                app:layout_constraintVertical_bias="0.005">
+                app:layout_constraintTop_toBottomOf="@+id/textQuantidade">
 
-                <TextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textPreco"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="11,99"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="15dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textPreco"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/mais" />
-
-                <ImageView
-                    android:id="@+id/imageView12"
-                    android:layout_width="15dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textPreco"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/menos" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
