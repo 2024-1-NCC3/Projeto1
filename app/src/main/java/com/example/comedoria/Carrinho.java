@@ -246,7 +246,10 @@ public class Carrinho extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
                         Toast.makeText(Carrinho.this, "Pedido feito com sucesso", Toast.LENGTH_SHORT).show();
-
+                        Intent i = new Intent(Carrinho.this, ComprovantePedido.class);
+                        i.putExtra("accessToken", accessToken);
+                        i.putExtra("idPedido", idPedido);
+                        startActivity(i);
                     }
 
                     @Override
