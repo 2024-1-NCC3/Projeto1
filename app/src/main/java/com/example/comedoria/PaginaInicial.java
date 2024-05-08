@@ -72,8 +72,8 @@ public class PaginaInicial extends AppCompatActivity {
         Intent carrinho = new Intent();
         startActivity(carrinho);
     }
-    public void usuario(){
-        Intent usuario = new Intent();
+    public void usuario(View view){
+        Intent usuario = new Intent(this,Perfil.class);
         startActivity(usuario);
     }
 
