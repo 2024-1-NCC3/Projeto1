@@ -51,7 +51,7 @@ public class Produto {
         this.categorias = categorias;
     }
 
-    //Construtor usado para o Estoque
+    //Este construtor é para o estoque
     public Produto(String nome, double preco, String caminhoImg, int quantidade) {
         this.nome = nome;
         this.preco = preco;

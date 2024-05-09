@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +22,6 @@ import java.util.Locale;
 public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHolder> {
     private android.content.Context context;
     private List<Produto> listaProdutos;
-
 
     AdapterEstoque(Context context, List<Produto> lista){
         this.context = context;

@@ -42,7 +42,6 @@ public class Estoque extends AppCompatActivity {
         acessarListaProdutos();
 
         adapterEstoque = new AdapterEstoque(this, listaProdutos);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerEstoque.setLayoutManager(layoutManager);
         recyclerEstoque.setHasFixedSize(true);
