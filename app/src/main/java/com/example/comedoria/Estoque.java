@@ -42,14 +42,56 @@ public class Estoque extends AppCompatActivity {
         acessarListaProdutos();
 
         adapterEstoque = new AdapterEstoque(this, listaProdutos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this){
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         recyclerEstoque.setLayoutManager(layoutManager);
         recyclerEstoque.setHasFixedSize(true);
 
         recyclerEstoque.setAdapter(adapterEstoque);
+
+
     }
 
     private void acessarListaProdutos(){
+        Map<String, String> headers = new HashMap<>();
+        //define os headers que a solicitação vai precisar
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        ConectorAPI.conexaoArrayGET(
+                "/rest/v1/produtos?select=*,estoque(quantidade)",
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        if(response.length() > 0){
+                            for(int i = 0; i< response.length();i++){
+                                JSONObject jsonObject = response.getJSONObject(i);
+
+                                String nomeProduto = jsonObject.getString("nome_produto");
+                                Double preco = jsonObject.getDouble("preco");
+                                JSONObject estoque = jsonObject.getJSONObject("estoque");
+                                int quantidade = estoque.getInt("quantidade");
+                                String caminhoImagem = jsonObject.getString("caminho_imagem");
+
+                                listaProdutos.add(new Produto(nomeProduto,preco,caminhoImagem,quantidade));
+                            }
+                        }
+                        adapterEstoque.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+    }
+
+    public void enviar(){
         Map<String, String> headers = new HashMap<>();
         //define os headers que a solicitação vai precisar
         headers.put("apikey", API_KEY);
