@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class Perfil extends AppCompatActivity {
+public class erfil extends AppCompatActivity {
 
     RecyclerView recyclerHistorico;
     AdapterHistorico adapterHistorico;
