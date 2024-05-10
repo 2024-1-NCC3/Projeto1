@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.389"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputCategoria"
+            app:layout_constraintTop_toBottomOf="@+id/inputNome"
             app:layout_constraintVertical_bias="0.064" />
 
         <LinearLayout
@@ -62,7 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.737"
             app:layout_constraintStart_toEndOf="@+id/spinner2"
-            app:layout_constraintTop_toBottomOf="@+id/inputCategoria"
+            app:layout_constraintTop_toBottomOf="@+id/inputNome"
             app:layout_constraintVertical_bias="0.063">
 
             <ImageView
@@ -150,7 +150,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputCategoria"
+            android:id="@+id/inputNome"
             android:layout_width="272dp"
             android:layout_height="45dp"
             android:padding="5dp"
@@ -164,7 +164,7 @@
             app:layout_constraintVertical_bias="0.019">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputCategoria"
+                android:id="@+id/textInputNomeProduto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_claro_arrebondadado_stroke"
