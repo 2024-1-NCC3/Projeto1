@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -30,6 +32,10 @@ public class Perfil extends AppCompatActivity {
     List<Pedido> historico = new ArrayList<>();
     String accessToken, idUsuario;
     TextView txtSaldo;
+
+
+
+    private Spinner spinnerData, spinnerCategoria, spinnerTipo ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,9 @@ public class Perfil extends AppCompatActivity {
 
         pegarDadosUsuario();
         buscarHistorico();
+
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_perfil);
 
 
     }
@@ -148,4 +157,44 @@ public class Perfil extends AppCompatActivity {
         i.putExtra("accessToken", accessToken);
         startActivity(i);
     }
+
+//
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Verifica se o item de menu clicado é o item de pesquisa
+//        if (item.getItemId() == R.id.pesqui) {
+//            // Chama um método para mostrar um DatePickerDialog para selecionar a data
+//            showDatePickerDialog();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    // Método para exibir um DatePickerDialog para selecionar a data
+//    private void showDatePickerDialog() {
+//        // Obtém a data atual
+//        final Calendar calendar = Calendar.getInstance();
+//        int year = calendar.get(Calendar.YEAR);
+//        int month = calendar.get(Calendar.MONTH);
+//        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//        // Cria um DatePickerDialog com a data atual
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+//                (view, year1, monthOfYear, dayOfMonth1) -> {
+//                    // Quando uma data é selecionada, formate-a conforme necessário
+//                    // e atribua-a à variável guardaData
+//                    guardaData = String.format("%02d/%02d/%04d", dayOfMonth1, monthOfYear + 1, year1);
+//                    // Exemplo de exibição da data selecionada
+//                    Toast.makeText(getApplicationContext(), "Data selecionada: " + guardaData, Toast.LENGTH_SHORT).show();
+//                }, year, month, dayOfMonth);
+//
+//        // Mostra o DatePickerDialog
+//        datePickerDialog.show();
+//    }
+//
+//    // Método para obter a data guardada
+//    public String getGuardaData() {
+//        return guardaData;
+//    }
+
+
 }
