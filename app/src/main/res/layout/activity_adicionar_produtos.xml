@@ -48,13 +48,14 @@
         app:layout_constraintVertical_bias="0.0">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bntAdd"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:insetLeft="4dp"
             android:insetTop="4dp"
             android:insetRight="4dp"
             android:insetBottom="4dp"
+            android:onClick="adicionarNovoProduto"
             android:textAlignment="center"
             android:textStyle="bold"
             app:cornerRadius="50dp"
