@@ -2,9 +2,12 @@ package com.example.comedoria;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,9 +42,27 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Produto produto = listaProdutos.get(i);
         viewHolder.textTitle.setText(produto.getNome());
-        viewHolder.textQuantidade.setText("Quantidade: "+produto.getQuantidade()+"");
+        viewHolder.textQuantidade.setHint(produto.getQuantidade());
         Picasso.get().load(produto.getCaminhoImg()).into(viewHolder.imgProduto);
         viewHolder.textPreco.setHint(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()) );
+
+        viewHolder.textPreco.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                produto.setQuantidade(Integer.parseInt(viewHolder.textQuantidade.getText().toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
     @Override
@@ -55,17 +76,20 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView textTitle, textQuantidade;
+        TextView textTitle;
 
-        TextInputLayout textPreco;
+        TextInputEditText textPreco;
+
+        TextInputEditText textQuantidade;
         ImageView imgProduto;
+
 
         @SuppressLint("ResourceAsColor")
         public ViewHolder(View itemView){
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitulo);
             textQuantidade = itemView.findViewById(R.id.textQuantidade);
-            textPreco = itemView.findViewById(R.id.textPreco);
+            textPreco = itemView.findViewById(R.id.textPrecoEstoque);
             imgProduto = itemView.findViewById(R.id.imgProduto);
         }
     }

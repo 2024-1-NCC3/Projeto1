@@ -36,52 +36,53 @@
 
             <TextView
                 android:id="@+id/textTitulo"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_width="225dp"
+                android:layout_height="41dp"
                 android:fontFamily="@font/itim"
                 android:text="Marmita de Escondidinho de Frango com Batata Doce"
                 android:textColor="#0F5929"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.489"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/imgProduto"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.108" />
-
-            <TextView
-                android:id="@+id/textQuantidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/itim"
-                android:text="Quantidade: 05"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.169"
-                app:layout_constraintStart_toEndOf="@+id/imgProduto"
-                app:layout_constraintTop_toBottomOf="@+id/textTitulo"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.119" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textPreco"
+                android:id="@+id/txtPreco"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/imgProduto"
-                app:layout_constraintTop_toBottomOf="@+id/textQuantidade"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintStart_toEndOf="@+id/imgProduto">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputPreco"
+                    android:id="@+id/textPrecoEstoque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:textColor="#000000"
                     android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/textPreco"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.923"
+                app:layout_constraintStart_toEndOf="@+id/imgProduto"
+                app:layout_constraintTop_toBottomOf="@+id/textTitulo"
+                app:layout_constraintVertical_bias="0.571">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textQuantidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
