@@ -6,37 +6,43 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.example.comedoria.databinding.ActivityAdicionarProdutosBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Activity_Adicionar_Produtos extends AppCompatActivity {
 
-    private List<String> listar = new ArrayList<>();
-    private AdapterAddProduto adapterAddProduto;
-    private RecyclerView recyclerAddProduto;
+    private ActivityAdicionarProdutosBinding bindingAddProduto;
+
     private EditText inputNomeProduto, inputPreco, inputIngrediente, inputQnt;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adicionar_produtos);
+        bindingAddProduto = ActivityAdicionarProdutosBinding.inflate(getLayoutInflater());
+        setContentView(bindingAddProduto.getRoot());
 
 
-        adapterAddProduto = new AdapterAddProduto(this, listar);
 
-        inputNomeProduto = findViewById(R.id.inputNomeProduto);
-        inputPreco = findViewById(R.id.inputPreco);
-        inputIngrediente = findViewById(R.id.inputIngredientes);
-        inputQnt = findViewById(R.id.inputQnt);
+        /*
+        inputNomeProduto = findViewById(R.id.textInputNomeProduto);
+        inputPreco = findViewById(R.id.textInputPreco);
+        inputIngrediente = findViewById(R.id.textInputDingredientes);
+        inputQnt = findViewById(R.id.textInputQnt);
 
-        iniciarPag();
+        */
+
     }
 
     public void finalizarCadastroProduto() {
@@ -45,11 +51,13 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
         String ingrediente;
         int quantidade;
 
-
         nomeProduto = inputNomeProduto.getText().toString();
         preco = Double.parseDouble(inputPreco.getText().toString());
         ingrediente = inputIngrediente.getText().toString();
         quantidade = Integer.parseInt(inputQnt.getText().toString());
+
+        SharedPreferences sharedPref = getSharedPreferences(
+                getString(R.string.preference_file_key, Context.MODE_PRIVATE);
 
 
 
@@ -58,18 +66,8 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
 
     public void adicionarNovoProduto(View view) {
 
-    }
-
-    private void iniciarPag(){
-
-
-        //Configurações do recyclerView
-        recyclerAddProduto = findViewById(R.id.novoProduto);
-        recyclerAddProduto.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAddProduto.setAdapter(adapterAddProduto);
 
 
     }
-
 
 }
