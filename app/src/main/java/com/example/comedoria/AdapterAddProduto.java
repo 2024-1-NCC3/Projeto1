@@ -10,16 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterAddProduto extends RecyclerView.Adapter<AdapterAddProduto.MyViewHolder> {
 
-    private List<Produto> listaProduto;
+    private List<String> listar;
     private Context context;
 
-    public AdapterAddProduto(Context context, List<Produto> listaProduto) {
+    public AdapterAddProduto(Context context, List<String> listaProduto) {
         this.context = context;
-        this.listaProduto = listaProduto;
+        this.listar = listaProduto;
     }
 
     @NonNull
@@ -33,16 +35,16 @@ public class AdapterAddProduto extends RecyclerView.Adapter<AdapterAddProduto.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Produto produto = listaProduto.get(position);
-        holder.inputNomeProduto.setText(produto.getNome());
-        holder.inputPreco.setText(String.valueOf(produto.getPreco()));
-        holder.inputIngrediente.setText(produto.getIngrediente());
-        holder.inputQnt.setText(String.valueOf(produto.getQuantidade()));
+        String listarText = listar.get(position);
+        holder.inputNomeProduto.setText("");
+        holder.inputPreco.setText("");
+        holder.inputIngrediente.setText("");
+        holder.inputQnt.setText("");
     }
 
     @Override
     public int getItemCount() {
-        return listaProduto.size();
+        return listar.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
