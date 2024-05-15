@@ -62,7 +62,7 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
         ingrediente = inputIngrediente.getText().toString();
         quantidade = Integer.parseInt(inputQnt.getText().toString());
 
-        spinnerAddProduto.setSelection(tipo);
+        tipo = spinnerAddProduto.getSelectedItemPosition();
 
         switch (tipo) {
             case 0:
