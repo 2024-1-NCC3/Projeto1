@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -63,6 +65,20 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
             }
         });
 
+        viewHolder.cBPromocao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+
+        viewHolder.excluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     @Override
@@ -83,6 +99,10 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         TextInputEditText textQuantidade;
         ImageView imgProduto;
 
+        CheckBox cBPromocao;
+
+        Button excluir;
+
 
         @SuppressLint("ResourceAsColor")
         public ViewHolder(View itemView){
@@ -91,6 +111,8 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
             textQuantidade = itemView.findViewById(R.id.textQuantidade);
             textPreco = itemView.findViewById(R.id.textPrecoEstoque);
             imgProduto = itemView.findViewById(R.id.imgProduto);
+            cBPromocao = itemView.findViewById(R.id.cBPromocao);
+            excluir = itemView.findViewById(R.id.btnExcluir);
         }
     }
 }
