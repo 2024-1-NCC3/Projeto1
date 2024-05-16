@@ -2,16 +2,17 @@ package com.example.comedoria;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 
@@ -158,8 +159,32 @@ public class Perfil extends AppCompatActivity {
         startActivity(i);
     }
 
-//
-//    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.pesqui, menu);
+        MenuItem menuItem = menu.findItem(R.id.pesqui);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Pesqui");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Verifica se o item de menu clicado é o item de pesquisa
 //        if (item.getItemId() == R.id.pesqui) {
 //            // Chama um método para mostrar um DatePickerDialog para selecionar a data
