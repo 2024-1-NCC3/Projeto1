@@ -168,6 +168,7 @@ public class Carrinho extends AppCompatActivity {
             //url para logar com senha
             String url = API_URL + "/auth/v1/token?grant_type=password";
 
+
             JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.POST,
                     url,
@@ -192,6 +193,7 @@ public class Carrinho extends AppCompatActivity {
                                         if(sucesso){
                                             Intent intent = new Intent(Carrinho.this, ComprovantePedido.class);
                                             intent.putExtra("retirarProduto", txtHora.getText().toString());
+                                            intent.putExtra("numPedido",pedido);
                                             startActivity(intent);
                                         }
                                     }catch (JSONException ex){

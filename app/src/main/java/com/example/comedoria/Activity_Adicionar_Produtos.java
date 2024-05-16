@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -51,6 +52,14 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
         inputQnt = findViewById(R.id.textInputQnt);
         spinnerAddProduto = findViewById(R.id.spinnerAddProduto);
         imgAddProduto = (ImageView) findViewById(R.id.imgAddProduto);
+
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.filtro_categoria_add_produto,
+                R.layout.color_spinner_dropdown_layout
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
+        spinnerAddProduto.setAdapter(arrayAdapter);
 
     }
 
@@ -107,6 +116,8 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
             imgAddProduto.setImageURI(nSelectedUri);
         }
     }
+
+
 }
 
 
