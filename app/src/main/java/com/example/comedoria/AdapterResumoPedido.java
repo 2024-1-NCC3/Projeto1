@@ -42,14 +42,16 @@ public class AdapterResumoPedido extends RecyclerView.Adapter<AdapterResumoPedid
         this.contextResumo = contextResumo;
     }
 
-
+    public void setListaProduto(List<Produto> listaProduto){
+        this.listaResumo = listaProduto;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull AdapterResumoPedido.MyViewHolder holder, int position) {
         Produto produto = listaResumo.get(position);
 
         holder.nomeProduto.setText((produto.getNome()));
-        holder.quantidadeProduto.setText((produto.getQuantidade()));
+        holder.quantidadeProduto.setText((produto.getQuantidade() +""));
 
 
 

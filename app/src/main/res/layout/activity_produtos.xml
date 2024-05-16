@@ -26,7 +26,7 @@
 
 
     <Spinner
-        android:id="@+id/spinner_ordenar"
+        android:id="@+id/spinner_data"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.223"
-        app:layout_constraintStart_toEndOf="@+id/spinner_ordenar"
+        app:layout_constraintStart_toEndOf="@+id/spinner_data"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.019" />
 
@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_ordenar"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_data"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button

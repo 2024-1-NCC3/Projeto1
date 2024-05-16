@@ -3,33 +3,20 @@ package com.example.comedoria;
 import static com.example.comedoria.BuildConfig.API_KEY;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,10 +36,10 @@ public class Produtos extends AppCompatActivity {
     //#FFEEE1 bege
     //#0F5929 verde escuro
     //#94E986 verde claro
-    String accessToken;
+    String accessToken, idUsuario, categoriaSelecionada;
     private AdapterProduto adapterProduto;
     private ArrayAdapter adapter2;
-    private RecyclerView recyclerProduto;    
+    private RecyclerView recyclerProduto;
     private Spinner spinnerOrdenar, spinnerCategoria;
 
     private List<Produto> listaProdutos = new ArrayList<>();
@@ -67,7 +54,8 @@ public class Produtos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
         accessToken = getIntent().getStringExtra("accessToken");
-        
+        idUsuario = getIntent().getStringExtra("idUsuario");
+        categoriaSelecionada = getIntent().getStringExtra("CategoriaSelecionada");
         iniciarPag();
 
     }
@@ -88,6 +76,8 @@ public class Produtos extends AppCompatActivity {
             String produtosComoString = new Gson().toJson(produtosSelecionados);
 
             i.putExtra("produtosSelecionados", produtosComoString);
+            i.putExtra("accessToken", accessToken);
+            i.putExtra("idUsuario", idUsuario);
             startActivity(i);
         }
     }
@@ -197,9 +187,24 @@ public class Produtos extends AppCompatActivity {
         }
         pegarCategorias(listaProdutos);
 
-        filtrarLista("Todos");
+        if(categoriaSelecionada == null){
+            filtrarLista("Todos");
+        }else{
+            filtrarLista(categoriaSelecionada);
+            spinnerCategoria.setSelection(encontrarCategoria(categoriaSelecionada));
+        }
+
 
         adapter2.notifyDataSetChanged();
+    }
+
+    private int encontrarCategoria(String categoriaProcurada){
+        for(int i=0;i<listaCategorias.size();i++){
+            if(listaCategorias.get(i).equals(categoriaProcurada)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     private void iniciarPag(){
@@ -214,7 +219,7 @@ public class Produtos extends AppCompatActivity {
         recyclerProduto.setAdapter(adapterProduto);
 
         // Configuração do Dropdown de ordenação
-        spinnerOrdenar = findViewById(R.id.spinner_ordenar);
+        spinnerOrdenar = findViewById(R.id.spinner_data);
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.filtro_ordenar,

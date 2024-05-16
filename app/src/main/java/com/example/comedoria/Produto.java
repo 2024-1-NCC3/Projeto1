@@ -58,6 +58,12 @@ public class Produto {
         this.categoria = categoria;
     }
 
+    public Produto(String nome, double preco, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
     public Produto(String nome, int id, double preco, String caminhoImg) {
         this.nome = nome;
         this.id = id;
