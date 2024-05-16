@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,11 +10,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comedoria.Class.Produto;
+import com.example.comedoria.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

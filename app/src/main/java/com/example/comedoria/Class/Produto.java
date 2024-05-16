@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.Class;
 
 import android.widget.ImageView;
 

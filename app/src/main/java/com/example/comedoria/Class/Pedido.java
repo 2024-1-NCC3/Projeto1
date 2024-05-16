@@ -1,18 +1,19 @@
-package com.example.comedoria;
+package com.example.comedoria.Class;
 
 import java.util.List;
 
 public class Pedido {
     private String data;
+    private String hora;
     private String status;
     private List<String> produtos;
     private double total;
-
     private String id_pedido;
 
     public String getData() {
         return data;
     }
+    public String getHora(){return hora;}
 
     public String getStatus() {
         return status;
@@ -42,6 +43,14 @@ public class Pedido {
 
     public Pedido(String data, List<String> produtos, double total, String status, String id_pedido) {
         this.data = data;
+        this.produtos = produtos;
+        this.total = total;
+        this.status = status;
+        this.id_pedido = id_pedido;;
+    }
+    public Pedido(String data, String hora, List<String> produtos, double total, String status, String id_pedido) {
+        this.data = data;
+        this.hora = hora;
         this.produtos = produtos;
         this.total = total;
         this.status = status;

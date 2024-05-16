@@ -1,7 +1,6 @@
 package com.example.comedoria;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
-import static com.example.comedoria.BuildConfig.API_URL;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
+import com.example.comedoria.Adapter.AdapterCategoria;
+import com.example.comedoria.Class.Categoria;
 
 import org.json.JSONArray;
 import org.json.JSONException;

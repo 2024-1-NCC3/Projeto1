@@ -1,20 +1,19 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import com.example.comedoria.Carrinho;
+import com.example.comedoria.Class.Produto;
+import com.example.comedoria.R;
 
 import java.util.List;
 import java.util.Locale;

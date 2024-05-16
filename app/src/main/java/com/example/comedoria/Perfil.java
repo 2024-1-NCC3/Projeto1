@@ -3,17 +3,17 @@ package com.example.comedoria;
 import static com.example.comedoria.BuildConfig.API_KEY;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.example.comedoria.Adapter.AdapterHistorico;
+import com.example.comedoria.Class.Pedido;
 
 import org.json.JSONArray;
 import org.json.JSONException;

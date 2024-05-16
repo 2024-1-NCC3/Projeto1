@@ -8,27 +8,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Spinner;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import com.example.comedoria.Adapter.AdapterResumoPedido;
+import com.example.comedoria.Class.Comprovante;
+import com.example.comedoria.Class.Produto;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

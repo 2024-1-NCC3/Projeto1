@@ -17,7 +17,7 @@ public class Start extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(Start.this, Perfil.class);
+                Intent intent = new Intent(Start.this, PedidosTia.class);
                 startActivity(intent);
             }
         }, 2000);

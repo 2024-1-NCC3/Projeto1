@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.example.comedoria.R;
 
 import java.util.ArrayList;
 import java.util.List;

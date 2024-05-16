@@ -1,8 +1,6 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,41 +9,51 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comedoria.Class.Pedido;
+import com.example.comedoria.Perfil;
+import com.example.comedoria.R;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyViewHolder> {
+public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHolder> {
+    private List<Pedido> PedidosNaoCompletados;
+    private Context contextPedidos;
 
-    private List<Pedido> historico;
-    private Context contextPerfil;
-
-    public AdapterHistorico(List<Pedido> lista, Context contextPerfil){
-        this.historico = lista;
-        this.contextPerfil = contextPerfil;
+    public AdapterPedido(List<Pedido> lista, Context contextPerfil){
+        this.PedidosNaoCompletados = lista;
+        this.contextPedidos = contextPerfil;
     }
 
     @NonNull
     @Override
-    public AdapterHistorico.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemLista = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_historico, parent, false);
-        return new AdapterHistorico.MyViewHolder(itemLista);
+        return new MyViewHolder(itemLista);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterHistorico.MyViewHolder holder, int position) {
-        Pedido pedido = historico.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Pedido pedido = PedidosNaoCompletados.get(position);
 
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
 
+        String horaFormatada = "";
+
+        if(pedido.getHora() != null){
+            horaFormatada = pedido.getHora().substring(0,5);
+        }
+
+
         try {
             Date dataFormatada = formato.parse(pedido.getData());
-            holder.txtData.setText(meuFormato.format(dataFormatada));
+
+            holder.txtData.setText(meuFormato.format(dataFormatada) + "\n" + horaFormatada);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -56,7 +64,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((Perfil)contextPerfil).irParaPedido(pedido.getId_pedido());
+                //((Perfil)contextPedidos).irParaPedido(pedido.getId_pedido());
 
             }
         });
@@ -64,7 +72,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
 
     @Override
     public int getItemCount() {
-        return historico.size();
+        return PedidosNaoCompletados.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

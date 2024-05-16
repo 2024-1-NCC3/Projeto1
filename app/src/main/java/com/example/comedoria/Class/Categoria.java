@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.Class;
 
 public class Categoria {
     private String nome;

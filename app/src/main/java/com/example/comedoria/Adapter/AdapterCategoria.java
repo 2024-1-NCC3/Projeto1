@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comedoria.Class.Categoria;
+import com.example.comedoria.PaginaInicial;
+import com.example.comedoria.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

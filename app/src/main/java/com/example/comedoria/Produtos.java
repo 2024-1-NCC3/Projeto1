@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.comedoria.Adapter.AdapterProduto;
+import com.example.comedoria.Class.Produto;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
