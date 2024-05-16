@@ -68,6 +68,7 @@ public class AdapterResumoPedido extends RecyclerView.Adapter<AdapterResumoPedid
             super(itemView);
             nomeProduto = itemView.findViewById(R.id.descricaoResumoProduto);
             quantidadeProduto = itemView.findViewById(R.id.qntProduto);
+
         }
     }
 

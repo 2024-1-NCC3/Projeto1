@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+
 import java.util.List;
 import java.util.Locale;
 
@@ -92,6 +93,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
             cbProduto = itemView.findViewById(R.id.cbProduto);
             descricaoProduto = itemView.findViewById(R.id.descricaoProduto);
             imgProduto = itemView.findViewById(R.id.imageProduto);
+
 
 
         }

@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,7 +32,7 @@ import java.util.Map;
 
 public class ComprovantePedido extends AppCompatActivity {
 
-
+    String numPedido;
     TextView textData, tituloPedido, statusPedido;
     String accessToken,idPedido;
     Comprovante comprovante;
@@ -56,7 +53,7 @@ public class ComprovantePedido extends AppCompatActivity {
 
         buscarPedido(idPedido);
         textData = findViewById(R.id.textData);
-        tituloPedido = findViewById(R.id.tituloPedido);
+        tituloPedido = findViewById(R.id.tituloNumPedido);
         statusPedido = findViewById(R.id.statusPedido);
 
         adapterResumoPedido = new AdapterResumoPedido(produtos, this);
@@ -67,7 +64,10 @@ public class ComprovantePedido extends AppCompatActivity {
 
         recyclerResumo.setAdapter(adapterResumoPedido);
     }
+  
+        numPedido = getIntent().getStringExtra("numPedido");
 
+        tituloPedido.setText(numPedido);
     public void buscarPedido(String idPedido){
         Map<String, String> headers = new HashMap<>();
         //define os heades que a solicitação vai precisar
@@ -124,7 +124,6 @@ public class ComprovantePedido extends AppCompatActivity {
                 }
         );
     }
-
     private void interpretarJsonArray(JSONArray response){
 
     }
