@@ -4,12 +4,17 @@ import static com.example.comedoria.BuildConfig.API_KEY;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,8 +40,8 @@ public class Perfil extends AppCompatActivity {
     TextView txtSaldo;
 
 
+    private Spinner spinnerData, spinnerCategoria, spinnerTipo;
 
-    private Spinner spinnerData, spinnerCategoria, spinnerTipo ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +63,6 @@ public class Perfil extends AppCompatActivity {
         pegarDadosUsuario();
         buscarHistorico();
 
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_perfil);
-
 
     }
 
@@ -77,7 +79,7 @@ public class Perfil extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-                        if(response.length()>0){
+                        if (response.length() > 0) {
                             JSONObject usuario = response.getJSONObject(0);
                             double saldo = usuario.getDouble("saldo");
 
@@ -94,7 +96,7 @@ public class Perfil extends AppCompatActivity {
     }
 
 
-    private void buscarHistorico(){
+    private void buscarHistorico() {
         Map<String, String> headers = new HashMap<>();
         //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
@@ -108,7 +110,7 @@ public class Perfil extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-                        if(response.length()>0){
+                        if (response.length() > 0) {
                             interpretarJsonArray(response);
                         }
                     }
@@ -122,7 +124,7 @@ public class Perfil extends AppCompatActivity {
     }
 
     private void interpretarJsonArray(JSONArray response) throws JSONException {
-        for(int i =0;i<response.length();i++){
+        for (int i = 0; i < response.length(); i++) {
             JSONObject objetoPedido = response.getJSONObject(i);
             String data = objetoPedido.getString("data_para_retirada");
             String status = objetoPedido.getString("status");
@@ -133,7 +135,7 @@ public class Perfil extends AppCompatActivity {
             List<String> listaProdutos = new ArrayList<>();
             double total = 0;
 
-            for(int j =0; j< arrayProdutos.length();j++){
+            for (int j = 0; j < arrayProdutos.length(); j++) {
                 JSONObject produto = arrayProdutos.getJSONObject(j);
                 JSONObject detalhes = arrayQuantidade.getJSONObject(j);
 
@@ -152,74 +154,10 @@ public class Perfil extends AppCompatActivity {
         adapterHistorico.notifyDataSetChanged();
     }
 
-    public void irParaPedido(String idPedido){
+    public void irParaPedido(String idPedido) {
         Intent i = new Intent(this, ComprovantePedido.class);
-        i.putExtra("idPedido",idPedido);
+        i.putExtra("idPedido", idPedido);
         i.putExtra("accessToken", accessToken);
         startActivity(i);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.pesqui, menu);
-        MenuItem menuItem = menu.findItem(R.id.pesqui);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Pesqui");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    //    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Verifica se o item de menu clicado é o item de pesquisa
-//        if (item.getItemId() == R.id.pesqui) {
-//            // Chama um método para mostrar um DatePickerDialog para selecionar a data
-//            showDatePickerDialog();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    // Método para exibir um DatePickerDialog para selecionar a data
-//    private void showDatePickerDialog() {
-//        // Obtém a data atual
-//        final Calendar calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-//
-//        // Cria um DatePickerDialog com a data atual
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-//                (view, year1, monthOfYear, dayOfMonth1) -> {
-//                    // Quando uma data é selecionada, formate-a conforme necessário
-//                    // e atribua-a à variável guardaData
-//                    guardaData = String.format("%02d/%02d/%04d", dayOfMonth1, monthOfYear + 1, year1);
-//                    // Exemplo de exibição da data selecionada
-//                    Toast.makeText(getApplicationContext(), "Data selecionada: " + guardaData, Toast.LENGTH_SHORT).show();
-//                }, year, month, dayOfMonth);
-//
-//        // Mostra o DatePickerDialog
-//        datePickerDialog.show();
-//    }
-//
-//    // Método para obter a data guardada
-//    public String getGuardaData() {
-//        return guardaData;
-//    }
-
-
 }

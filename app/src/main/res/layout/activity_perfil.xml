@@ -41,10 +41,10 @@
         android:paddingEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/txtPedido"
@@ -79,7 +79,7 @@
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/verde_fundo_categoria"
             android:onClick="finalizarPedido"
-            android:text="Sair do Perfil"
+            android:text="Categorias"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -116,33 +116,50 @@
         </androidx.cardview.widget.CardView>
 
 
-        <Spinner
-            android:id="@+id/spinner_categoria"
+        <TextView
+            android:id="@+id/Resummo"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:layout_marginTop="188dp"
-            android:layout_marginBottom="448dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas"
-            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
-            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
+            android:text="Resumo"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <Spinner
-            android:id="@+id/spinner_tipo"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas"
-            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
-            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.202"
+            app:layout_constraintStart_toEndOf="@+id/Data"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.295" />
+
+        <TextView
+            android:id="@+id/Data"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="Data"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.064"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtObservacoes"
+            app:layout_constraintVertical_bias="0.044" />
+
+        <TextView
+            android:id="@+id/Total"
+            android:layout_width="81dp"
+            android:layout_height="28dp"
+            android:text="Total"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.729"
+            app:layout_constraintStart_toEndOf="@+id/Resummo"
+            app:layout_constraintTop_toBottomOf="@+id/txtObservacoes"
+            app:layout_constraintVertical_bias="0.048" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerHistorico"
