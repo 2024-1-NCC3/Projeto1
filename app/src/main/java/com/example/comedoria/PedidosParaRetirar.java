@@ -35,7 +35,7 @@ public class PedidosParaRetirar extends Fragment {
 
     AdapterPedido adapterPedido;
 
-    String accessToken = "eyJhbGciOiJIUzI1NiIsImtpZCI6Ilk4N0NObGFTRldpYUkwdWUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzE1ODg2MzA0LCJpYXQiOjE3MTU4ODI3MDQsImlzcyI6Imh0dHBzOi8vcXBrY2J4Ym56cWJ2bXhlbmpic3Muc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjFjZTczMTE2LTVlMDUtNDY3NC1iMDZlLTBlMDY2NTI0Mjk3YSIsImVtYWlsIjoicGVyZmlsZGF0aWFAZW1haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3MTU4ODI3MDR9XSwic2Vzc2lvbl9pZCI6IjM4N2I4ZmNjLWI0YTAtNGFiZC1iNTE0LWZkYzYyOThmMWQ3NiIsImlzX2Fub255bW91cyI6ZmFsc2V9.1nFu63e1KNZ3lXF-WzkEPsnDxi6FtrEz-PGo2irPEM4";
+    String accessToken = "eyJhbGciOiJIUzI1NiIsImtpZCI6Ilk4N0NObGFTRldpYUkwdWUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzE1OTc0NzYyLCJpYXQiOjE3MTU5NzExNjIsImlzcyI6Imh0dHBzOi8vcXBrY2J4Ym56cWJ2bXhlbmpic3Muc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjFjZTczMTE2LTVlMDUtNDY3NC1iMDZlLTBlMDY2NTI0Mjk3YSIsImVtYWlsIjoicGVyZmlsZGF0aWFAZW1haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3MTU5NzExNjJ9XSwic2Vzc2lvbl9pZCI6ImM0NmY3NmVlLTNmMGQtNDhiZC1iNWViLWZhOWQ0M2M1NTc0MiIsImlzX2Fub255bW91cyI6ZmFsc2V9.pXUhr7tZcce1B0NUp8hoxoL23cMymRv45eKNg4-j9Wc";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,7 +69,8 @@ public class PedidosParaRetirar extends Fragment {
                 "/rest/v1/pedido?status=eq.Aguardando Pagamento" +
                         "&select=status,observacoes,numero_pedido,id_pedido,data_para_retirada,hora_para_retirada" +
                         ",produtos(nome_produto,preco)" +
-                        ",detalhes_pedido(quantidade)",
+                        ",detalhes_pedido(quantidade)" +
+                        "&order=data_para_retirada.asc,hora_para_retirada.asc",
                 headers,
                 requireContext(),
                 new ConectorAPI.VolleyArrayCallback() {
