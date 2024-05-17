@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -17,9 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
-
-import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -44,9 +42,9 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Produto produto = listaProdutos.get(i);
         viewHolder.textTitle.setText(produto.getNome());
-        viewHolder.textQuantidade.setHint(produto.getQuantidade());
+        viewHolder.textQuantidade.setHint(""+produto.getQuantidade());
         Picasso.get().load(produto.getCaminhoImg()).into(viewHolder.imgProduto);
-        viewHolder.textPreco.setHint(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()) );
+        viewHolder.textPreco.setHint(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()));
 
         viewHolder.textPreco.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,7 +54,8 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                produto.setQuantidade(Integer.parseInt(viewHolder.textQuantidade.getText().toString()));
+                double preco = Double.parseDouble(charSequence.toString().replace("R$", "").trim());
+                produto.setPreco(preco);
             }
 
             @Override
@@ -68,15 +67,20 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         viewHolder.cBPromocao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    produto.getCategorias().add("Oferta");
+                }else{
+                    produto.getCategorias().remove("Oferta");
+                }
 
             }
+
         });
 
-        viewHolder.excluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        viewHolder.excluir.setOnClickListener(view -> {
+            listaProdutos.remove(i);
+            notifyItemRemoved(i);
+            notifyItemRangeChanged(i, listaProdutos.size());
         });
 
     }
@@ -101,7 +105,7 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
 
         CheckBox cBPromocao;
 
-        Button excluir;
+        TextView excluir;
 
 
         @SuppressLint("ResourceAsColor")

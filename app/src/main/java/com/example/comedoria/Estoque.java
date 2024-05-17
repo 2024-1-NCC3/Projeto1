@@ -2,35 +2,32 @@ package com.example.comedoria;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Adapter;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class Estoque extends AppCompatActivity {
     private RecyclerView recyclerEstoque;
     String accessToken;
     AdapterEstoque adapterEstoque;
+
+    Button btnAdicionarProduto, btnVoltar;
 
     List<Produto> produtos;
     private List<Produto> listaProdutos = new ArrayList<>();
@@ -41,6 +38,9 @@ public class Estoque extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estoque);
 
+        btnAdicionarProduto = findViewById(R.id.btnAdicionar);
+        btnVoltar = findViewById(R.id.btnVoltarEstoque);
+
         recyclerEstoque = findViewById(R.id.recyclerEstoque);
         accessToken = getIntent().getStringExtra("accessToken");
 
@@ -48,9 +48,7 @@ public class Estoque extends AppCompatActivity {
 
         adapterEstoque = new AdapterEstoque(this, listaProdutos);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this){
-            public boolean canScrollVertically() {
-                return false;
-            }
+
         };
 
         recyclerEstoque.setLayoutManager(layoutManager);
@@ -96,4 +94,27 @@ public class Estoque extends AppCompatActivity {
                     }
                 });
     }
+
+    recyclerEstoque.addOnScrollListener(new RecyclerView.OnScrollListener()
+    {
+        @Override
+        public void onScrolled(RecyclerView recyclerEstoque, int dx, int dy)
+        {
+            if (dy > 0 ||dy<0 && btnAdicionarProduto.isShown())
+            {
+                btnAdicionarProduto.hide();
+            }
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerEstoque, int newState)
+        {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE)
+            {
+                fab.show();
+            }
+
+            super.onScrollStateChanged(recyclerEstoque, newState);
+        }
+    });
 }

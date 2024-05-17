@@ -1,7 +1,5 @@
 package com.example.comedoria;
 
-import android.widget.ImageView;
-
 import java.util.List;
 
 public class Produto {

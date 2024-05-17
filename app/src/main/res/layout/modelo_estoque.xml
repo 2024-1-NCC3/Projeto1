@@ -54,7 +54,6 @@
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="96dp"
-                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.916"
@@ -72,13 +71,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                app:layout_constraintBottom_toTopOf="@+id/textPreco"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.923"
                 app:layout_constraintStart_toEndOf="@+id/imgProduto"
-                app:layout_constraintTop_toBottomOf="@+id/textTitulo"
-                app:layout_constraintVertical_bias="0.571">
+                app:layout_constraintTop_toBottomOf="@+id/textTitulo">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textQuantidade"
@@ -91,18 +87,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Promoção"
-                tools:layout_editor_absoluteX="166dp"
-                tools:layout_editor_absoluteY="205dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.56"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPreco"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/btnExcluir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/itim"
                 android:text="EXCLUIR"
                 android:textColor="#0F5929"
                 android:textStyle="bold"
-                tools:layout_editor_absoluteX="166dp"
-                tools:layout_editor_absoluteY="253dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cBPromocao"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
