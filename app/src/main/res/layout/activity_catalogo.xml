@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/home"
+        android:id="@+id/homebutt"
         android:layout_width="83dp"
         android:layout_height="72dp"
         android:clickable="true"

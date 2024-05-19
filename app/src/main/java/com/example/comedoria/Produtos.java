@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -74,6 +75,18 @@ public class Produtos extends AppCompatActivity {
         recyclerProduto.setHasFixedSize(true);
 
         recyclerProduto.setAdapter(adapter1);
+
+
+        ImageView homeButton = findViewById(R.id.homeimg);
+
+        homeButton.setOnClickListener(v -> {
+            // Crie um Intent para iniciar a HomeActivity
+            Intent intent = new Intent(Produtos.this, Teste.class);
+            // Inicie a HomeActivity
+            startActivity(intent);
+            // Finalize a atividade atual se necessário
+            finish();
+        });
     }
 
     private void ListarProduto(){

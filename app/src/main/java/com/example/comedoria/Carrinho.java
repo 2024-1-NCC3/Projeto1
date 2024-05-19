@@ -1,21 +1,14 @@
 package com.example.comedoria;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,7 +22,6 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,6 +60,17 @@ public class Carrinho extends AppCompatActivity {
         AdapterCarrinho adapter = new AdapterCarrinho(produtos, this);
         recycleCarrinho.setAdapter(adapter);
         atualizarTotal();
+
+        ImageView homeButton = findViewById(R.id.homebutt);
+
+        homeButton.setOnClickListener(v -> {
+            // Crie um Intent para iniciar a HomeActivity
+            Intent intent = new Intent(Carrinho.this, Teste.class);
+            // Inicie a HomeActivity
+            startActivity(intent);
+            // Finalize a atividade atual se necessário
+            finish();
+        });
     }
 
     public void selecionarHora(View view){

@@ -49,21 +49,17 @@ public class Teste extends AppCompatActivity {
         listaCategorias.add(categoria);
     }
 
-    public void log(){
-        Intent home = new Intent(Teste.this, Login.class);
-        startActivity(home);
-    }
 
     public void cardapio(){
-        Intent cardapio = new Intent();
+        Intent cardapio = new Intent(Teste.this, Produtos.class );
         startActivity(cardapio);
     }
     public void carrinho(){
-        Intent carrinho = new Intent();
+        Intent carrinho = new Intent(Teste.this, Carrinho.class);
         startActivity(carrinho);
     }
     public void usuario(){
-        Intent usuario = new Intent();
+        Intent usuario = new Intent(Teste.this, Perfil.class);
         startActivity(usuario);
     }
 }
