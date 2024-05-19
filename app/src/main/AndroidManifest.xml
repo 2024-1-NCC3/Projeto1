@@ -14,6 +14,12 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
+            android:name=".AdicionarSaldo2"
+            android:exported="false" />
+        <activity
+            android:name=".AdicionarSaldo"
+            android:exported="false" />
+        <activity
             android:name=".Perfil"
             android:exported="false" />
         <activity
