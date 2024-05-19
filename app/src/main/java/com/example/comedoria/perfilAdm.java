@@ -27,4 +27,10 @@ public class perfilAdm extends AppCompatActivity {
         intent.putExtra("accessToken", accessToken);
         startActivity(intent);
     }
+
+    public void IrAdicionarSaldo(View view){
+        Intent intent = new Intent(perfilAdm.this, AdicionarSaldo.class);
+        intent.putExtra("accessToken", accessToken);
+        startActivity(intent);
+    }
 }

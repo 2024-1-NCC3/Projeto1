@@ -33,6 +33,7 @@ public class AdicionarSaldo2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_saldo2);
+
         idCliente = getIntent().getStringExtra("IDCliente");
         accessToken = getIntent().getStringExtra("accessToken");
         nomeCliente = getIntent().getStringExtra("nomeCliente");

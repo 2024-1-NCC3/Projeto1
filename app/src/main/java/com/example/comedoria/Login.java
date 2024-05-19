@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity {
                 headers.put("Authorization", "Bearer " + acessToken);
 
                 ConectorAPI.conexaoArrayGET(
-                        "/rest/v1/usuarios?select=*",
+                        "/rest/v1/usuarios?select=*&id_user=eq." + idUsuario,
                         headers, getApplicationContext(),
                         new ConectorAPI.VolleyArrayCallback() {
                     @Override

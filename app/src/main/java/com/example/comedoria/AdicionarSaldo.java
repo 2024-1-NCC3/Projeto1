@@ -34,13 +34,13 @@ public class AdicionarSaldo extends AppCompatActivity {
     private AdapterSaldo adapterSaldo;
     private List<Cliente> listaCliente = new ArrayList<>();
     private List<Cliente> listaClienteAux = new ArrayList<>();
-    private String accessToken = "eyJhbGciOiJIUzI1NiIsImtpZCI6Ilk4N0NObGFTRldpYUkwdWUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzE2MTQ4Njk3LCJpYXQiOjE3MTYxNDUwOTcsImlzcyI6Imh0dHBzOi8vcXBrY2J4Ym56cWJ2bXhlbmpic3Muc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjFjZTczMTE2LTVlMDUtNDY3NC1iMDZlLTBlMDY2NTI0Mjk3YSIsImVtYWlsIjoicGVyZmlsZGF0aWFAZW1haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3MTYxNDUwOTd9XSwic2Vzc2lvbl9pZCI6IjBiMjU5YmNkLTlkNWQtNDY1MC1hZTg0LWY0YWYxZjRkNWY4MSIsImlzX2Fub255bW91cyI6ZmFsc2V9.jGKYZwzmSd2nuPcfGTJQAQZUV73If1M8wF2ZLkZRWM4";    @Override
+    private String accessToken;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_saldo);
 
+        accessToken = getIntent().getStringExtra("accessToken");
         adapterSaldo = new AdapterSaldo(listaClienteAux, this);
-
 
         recyclerSaldo = findViewById(R.id.recyclerSaldo);
         searchSaldo = findViewById(R.id.searchSaldo);
@@ -48,8 +48,9 @@ public class AdicionarSaldo extends AppCompatActivity {
         configurarPesquisa();
 
         recyclerSaldo.setAdapter(adapterSaldo);
-        popularListaClientes();
         recyclerSaldo.setLayoutManager(new LinearLayoutManager(this));
+        popularListaClientes();
+
     }
 
     private void configurarPesquisa(){
