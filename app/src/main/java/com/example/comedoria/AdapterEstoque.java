@@ -86,9 +86,9 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(compoundButton.isChecked()){
-                    produto.getCategorias().add("Oferta");
+                    produto.getCategoria().add("Oferta");
                 }else{
-                    produto.getCategorias().remove("Oferta");
+                    produto.getCategoria().remove("Oferta");
                 }
 
             }
