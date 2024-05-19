@@ -1,7 +1,5 @@
 package com.example.comedoria;
 
-import android.widget.ImageView;
-
 import java.util.List;
 
 public class Produto {
@@ -69,6 +67,17 @@ public class Produto {
         this.id = id;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
+    }
+
+    //Este construtor é para o estoque
+    public Produto(int id, String nome, double preco, String caminhoImg, int quantidade) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+        this.ingrediente = ingrediente;
+        this.setSelecionado(false);
+        this.quantidade = quantidade;
     }
 
     public boolean isSelecionado() {

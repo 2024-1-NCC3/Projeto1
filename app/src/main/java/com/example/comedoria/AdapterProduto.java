@@ -72,14 +72,13 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     }
     @Override
     public int getItemCount() {
-
         return listaProdutos.size();
     }
     public List<Produto> getListaProdutos(){
         return this.listaProdutos;
     }
 
-    public class MyViewHolder1 extends  RecyclerView.ViewHolder{
+    public class MyViewHolder1 extends RecyclerView.ViewHolder{
         TextView descricaoProduto;
         ImageView imgProduto;
         CheckBox cbProduto;
