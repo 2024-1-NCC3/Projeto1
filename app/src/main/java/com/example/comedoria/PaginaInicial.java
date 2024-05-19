@@ -28,23 +28,19 @@ public class PaginaInicial extends AppCompatActivity {
     private RecyclerView recycleView;
     private List<Categoria> listaCategorias = new ArrayList<>();
     private AdapterCategoria adapter;
-    private String accessToken;
+    private String accessToken,idUsuario;
 
-    private int[] listaImg = {
-            R.drawable.promocao,
-            R.drawable.bebidassazonais,
-            R.drawable.delivery_capa
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagina_inicial);
         accessToken = getIntent().getStringExtra("accessToken");
+        idUsuario = getIntent().getStringExtra("idUsuario");
 
         recycleView = findViewById(R.id.recycleView);
 
         carregarCategorias();
-        adapter = new AdapterCategoria(listaCategorias);
+        adapter = new AdapterCategoria(listaCategorias, this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recycleView.setLayoutManager(layoutManager);
@@ -61,16 +57,25 @@ public class PaginaInicial extends AppCompatActivity {
     }
 
     public void cardapio(View view){
+        irParaProdutos("Todos");
+    }
+    public void irParaProdutos(String categoria){
         Intent cardapio = new Intent(this,Produtos.class);
         cardapio.putExtra("accessToken",accessToken);
+        cardapio.putExtra("idUsuario",idUsuario);
+        cardapio.putExtra("CategoriaSelecionada",categoria);
+
         startActivity(cardapio);
     }
+
     public void carrinho(){
         Intent carrinho = new Intent();
         startActivity(carrinho);
     }
-    public void usuario(){
-        Intent usuario = new Intent();
+    public void usuario(View view){
+        Intent usuario = new Intent(this,Perfil.class);
+        usuario.putExtra("idUsuario",idUsuario);
+        usuario.putExtra("accessToken", accessToken);
         startActivity(usuario);
     }
 
@@ -82,7 +87,7 @@ public class PaginaInicial extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/categoria?select=*",
+                "/rest/v1/categoria?select=*&order=prioridade",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -118,5 +123,8 @@ public class PaginaInicial extends AppCompatActivity {
         });
 
     }
+    public String getAccessToken(){
+        return accessToken;
+    };
     }
 

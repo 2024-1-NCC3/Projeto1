@@ -2,6 +2,7 @@ package com.example.comedoria;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,10 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     private List<Produto> listaProdutos;
     private android.content.Context context;
 
-
+    public void setFilteredList(List<Produto> listaFiltrada){
+        listaProdutos = listaFiltrada;
+        notifyDataSetChanged();
+    };
     public AdapterProduto(Context context, List<Produto> lista){
         this.listaProdutos = lista;
         this.context = context;
@@ -35,7 +39,6 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         View itemLista = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_produto, parent, false);
         return new MyViewHolder1(itemLista);
-
     }
 
     @SuppressLint("ResourceAsColor")
@@ -43,28 +46,27 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder1 holder, int position) {
         Produto produto = listaProdutos.get(position);
 
+        if(!produto.isAparecer()){
+            holder.rootView.setVisibility(View.GONE);
+            holder.rootView.setLayoutParams(new ViewGroup.LayoutParams(0,0));
+        }else{
+            holder.rootView.setVisibility(View.VISIBLE);
+        }
+
         holder.descricaoProduto.setText(produto.getNome());
         Picasso.get().load(produto.getCaminhoImg()).into(holder.imgProduto);
 
-        //Faz algo acontecer se clicar na imagem
+        holder.cbProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()));
 
-//        holder.imgProduto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String categorias = "";
-//                for(int i = 0; i < produto.getCategorias().size(); i++){
-//                    categorias += produto.getCategorias().get(i);
-//                };
-//                Toast.makeText(context, categorias, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        holder.cbProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()) );
+        holder.cbProduto.setOnCheckedChangeListener(null);
 
+        holder.cbProduto.setChecked(produto.isSelecionado());
         holder.cbProduto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 produto.setSelecionado(!produto.isSelecionado());
-                notifyDataSetChanged();
+                Log.i("Checkboxes", produto.getNome());
+
             }
         });
     }
@@ -80,11 +82,12 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         TextView descricaoProduto;
         ImageView imgProduto;
         CheckBox cbProduto;
+        View rootView;
 
         @SuppressLint("ResourceAsColor")
         public MyViewHolder1(View itemView){
             super(itemView);
-
+            rootView = itemView;
             cbProduto = itemView.findViewById(R.id.cbProduto);
             descricaoProduto = itemView.findViewById(R.id.descricaoProduto);
             imgProduto = itemView.findViewById(R.id.imageProduto);
