@@ -16,8 +16,7 @@ public class Start extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                Intent intent = new Intent(Start.this, PedidosTia.class);
+                Intent intent = new Intent(Start.this, Login.class);
                 startActivity(intent);
             }
         }, 2000);
