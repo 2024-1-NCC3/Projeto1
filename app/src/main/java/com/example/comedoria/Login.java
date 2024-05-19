@@ -83,17 +83,17 @@ public class Login extends AppCompatActivity {
                             int papel = resposta.getInt("id_papel");
 
                             //se for cliente, vai para a página Inicial
-                            if( papel == 2){
+                            if(papel == 2){
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, PaginaInicial.class);
                                 intent.putExtra("accessToken", acessToken);
                                 intent.putExtra("idUsuario",idUsuario);
                                 startActivity(intent);
                             }else{
-                                //Todo: Conectar a página de funcionário
-                                Toast.makeText(Login.this, "Ir para a página de func", Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
-                                //Intent intent = new Intent(Login.this, PaginaInicial.class);
+                                Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Login.this, perfilAdm.class);
+                                intent.putExtra("accessToken", acessToken);
+                                startActivity(intent);
                             }
                         }
                     }
