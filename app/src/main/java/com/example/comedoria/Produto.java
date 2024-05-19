@@ -50,7 +50,8 @@ public class Produto {
     }
 
     //Este construtor é para o estoque
-    public Produto(String nome, double preco, String caminhoImg, int quantidade) {
+    public Produto(int id, String nome, double preco, String caminhoImg, int quantidade) {
+        this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;

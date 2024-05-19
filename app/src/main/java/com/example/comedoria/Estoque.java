@@ -1,17 +1,26 @@
 package com.example.comedoria;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
+import static com.example.comedoria.BuildConfig.API_URL;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +40,8 @@ public class Estoque extends AppCompatActivity {
 
     List<Produto> produtos;
     private List<Produto> listaProdutos = new ArrayList<>();
+
+    private static final String API_URL = BuildConfig.API_URL;
 
     @SuppressLint({"ResourceAsColor", "MissingInflatedId"})
     @Override
@@ -59,6 +70,71 @@ public class Estoque extends AppCompatActivity {
 
     }
 
+    public void atualizarEstoque(View view) throws JSONException {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("apikey", API_KEY);
+            headers.put("Authorization", "Bearer " + accessToken);
+            headers.put("Content-Type", "application/json");
+            headers.put("Prefer", "minimal");
+
+            JSONObject body = montarRequisicao();
+            JSONArray req = new JSONArray();
+
+            req.put(body);
+
+            //url para logar com senha
+            String url = API_URL + "/rest/v1/estoque?some_column=eq.someValue";
+
+            JsonArrayRequest request = new JsonArrayRequest(
+                    Request.Method.POST,
+                    url,
+                    req,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+
+                            if (response.length()>0){
+                                for(int i=0; i< response.length();i++){
+                                    try{
+                                        JSONObject jsonObj = response.getJSONObject(i);
+                                        //Se o pedido ter uma resposta, verifica se teve sucesso
+
+                                        Boolean sucesso = jsonObj.getBoolean("sucesso");
+                                        String msg = jsonObj.getString("msg");
+
+                                        //Manda a mensagem de retorno, pra indicar o status
+                                        Toast.makeText(Estoque.this, msg, Toast.LENGTH_SHORT).show();
+                                        //Se estever tudo certo, passa para a próxima página
+                                        if(sucesso){
+                                            Toast.makeText(Estoque.this, msg, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }catch (JSONException ex){
+
+                                    }
+                                }
+
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders(){
+                    return headers;
+                }
+            };
+
+        // Adicionar a solicitação à fila de solicitações
+        RequestQueue filaRequest = Volley.newRequestQueue(Estoque.this);
+        filaRequest.add(request);
+    }
+
+
     private void acessarListaProdutos(){
         Map<String, String> headers = new HashMap<>();
         //define os headers que a solicitação vai precisar
@@ -81,8 +157,9 @@ public class Estoque extends AppCompatActivity {
                                 JSONObject estoque = jsonObject.getJSONObject("estoque");
                                 int quantidade = estoque.getInt("quantidade");
                                 String caminhoImagem = jsonObject.getString("caminho_imagem");
+                                int id = jsonObject.getInt("id_produto");
 
-                                listaProdutos.add(new Produto(nomeProduto,preco,caminhoImagem,quantidade));
+                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade));
                             }
                         }
                         adapterEstoque.notifyDataSetChanged();
@@ -95,26 +172,25 @@ public class Estoque extends AppCompatActivity {
                 });
     }
 
-    recyclerEstoque.addOnScrollListener(new RecyclerView.OnScrollListener()
-    {
-        @Override
-        public void onScrolled(RecyclerView recyclerEstoque, int dx, int dy)
-        {
-            if (dy > 0 ||dy<0 && btnAdicionarProduto.isShown())
-            {
-                btnAdicionarProduto.hide();
-            }
+    private JSONObject montarRequisicao()throws JSONException{
+        JSONArray listReq = new JSONArray();
+
+        for(Produto produto: listaProdutos){
+            JSONObject prod = new JSONObject();
+            prod.put("id_produto", produto.getId());
+            prod.put("preco", produto.getPreco());
+            prod.put("quantidade", produto.getQuantidade());
+
+            listReq.put(prod);
         }
 
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerEstoque, int newState)
-        {
-            if (newState == RecyclerView.SCROLL_STATE_IDLE)
-            {
-                fab.show();
-            }
+        JSONObject requisicao = new JSONObject();
+        requisicao.put("id_usuario", 50);
+        requisicao.put("modificado_por", "Vitor");
+        requisicao.put("produtos",listReq);
 
-            super.onScrollStateChanged(recyclerEstoque, newState);
-        }
-    });
+        Log.i("Lista atualizada", requisicao.toString());
+        return requisicao;
+    }
+
 }

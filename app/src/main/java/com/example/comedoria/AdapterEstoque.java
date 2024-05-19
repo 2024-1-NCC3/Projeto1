@@ -64,6 +64,24 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
             }
         });
 
+        viewHolder.textQuantidade.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int quantidade = Integer.parseInt(charSequence.toString().replace("R$", "").trim());
+                produto.setQuantidade(quantidade);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         viewHolder.cBPromocao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
