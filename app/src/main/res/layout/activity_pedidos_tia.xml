@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/borda_arrendondada">
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro">
 
         <TextView
             android:id="@+id/txtTituloListaPedidoTia"

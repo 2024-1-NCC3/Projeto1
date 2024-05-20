@@ -65,10 +65,7 @@ public class ComprovantePedido extends AppCompatActivity {
 
         recyclerResumo.setAdapter(adapterResumoPedido);
     }
-  
-        numPedido = getIntent().getStringExtra("numPedido");
 
-        tituloPedido.setText(numPedido);
     public void buscarPedido(String idPedido){
         Map<String, String> headers = new HashMap<>();
         //define os heades que a solicitação vai precisar
