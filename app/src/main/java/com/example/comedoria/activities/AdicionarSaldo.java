@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -11,11 +11,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
+import com.example.comedoria.Adapter.AdapterSaldo;
+import com.example.comedoria.Class.Cliente;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 import com.google.android.material.search.SearchView;
 
 import org.json.JSONArray;

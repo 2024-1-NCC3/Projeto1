@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comedoria.R;
 
 public class Start extends AppCompatActivity {
 

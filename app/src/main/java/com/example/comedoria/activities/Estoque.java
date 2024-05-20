@@ -1,10 +1,8 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
-import static com.example.comedoria.BuildConfig.API_URL;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +19,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.comedoria.Adapter.AdapterEstoque;
+import com.example.comedoria.BuildConfig;
+import com.example.comedoria.Class.Produto;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

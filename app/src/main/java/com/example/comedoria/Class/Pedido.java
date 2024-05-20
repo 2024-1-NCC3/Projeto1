@@ -9,6 +9,16 @@ public class Pedido {
     private List<String> produtos;
     private double total;
     private String id_pedido;
+    private String nomeCliente;
+    private int numeroPedido;
+
+    public int getNumeroPedido() {
+        return numeroPedido;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
 
     public String getData() {
         return data;
@@ -48,12 +58,14 @@ public class Pedido {
         this.status = status;
         this.id_pedido = id_pedido;;
     }
-    public Pedido(String data, String hora, List<String> produtos, double total, String status, String id_pedido) {
+    public Pedido(String data, String hora, List<String> produtos, double total, String status, String id_pedido, String nomeCliente, int numeroPedido) {
         this.data = data;
         this.hora = hora;
         this.produtos = produtos;
         this.total = total;
         this.status = status;
-        this.id_pedido = id_pedido;;
+        this.id_pedido = id_pedido;
+        this.nomeCliente = nomeCliente;
+        this.numeroPedido = numeroPedido;
     }
 }

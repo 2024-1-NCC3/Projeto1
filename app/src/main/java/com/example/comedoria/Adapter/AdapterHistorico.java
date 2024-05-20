@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comedoria.Class.Pedido;
-import com.example.comedoria.Perfil;
+import com.example.comedoria.activities.Perfil;
 import com.example.comedoria.R;
 
 import java.text.ParseException;

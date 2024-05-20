@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -12,12 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;

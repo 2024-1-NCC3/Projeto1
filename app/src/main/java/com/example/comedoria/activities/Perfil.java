@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -9,21 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.VolleyError;
 import com.example.comedoria.Adapter.AdapterHistorico;
 import com.example.comedoria.Class.Pedido;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

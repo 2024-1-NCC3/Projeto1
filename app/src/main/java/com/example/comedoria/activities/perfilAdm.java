@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.comedoria.R;
 
 public class perfilAdm extends AppCompatActivity {
 
@@ -30,6 +32,12 @@ public class perfilAdm extends AppCompatActivity {
 
     public void IrAdicionarSaldo(View view){
         Intent intent = new Intent(perfilAdm.this, AdicionarSaldo.class);
+        intent.putExtra("accessToken", accessToken);
+        startActivity(intent);
+    }
+
+    public void IrPedidosTia(View view){
+        Intent intent = new Intent(perfilAdm.this, PedidosTia.class);
         intent.putExtra("accessToken", accessToken);
         startActivity(intent);
     }

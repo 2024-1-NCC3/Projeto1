@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -15,6 +15,8 @@ import com.android.volley.VolleyError;
 import com.example.comedoria.Adapter.AdapterResumoPedido;
 import com.example.comedoria.Class.Comprovante;
 import com.example.comedoria.Class.Produto;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 
 
 import org.json.JSONArray;

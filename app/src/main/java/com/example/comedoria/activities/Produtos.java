@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.comedoria.Adapter.AdapterProduto;
 import com.example.comedoria.Class.Produto;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

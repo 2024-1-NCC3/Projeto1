@@ -1,16 +1,17 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import com.example.comedoria.activities.AdicionarSaldo;
+import com.example.comedoria.Class.Cliente;
+import com.example.comedoria.R;
 
 import java.util.List;
 

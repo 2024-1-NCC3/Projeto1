@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.comedoria.Class.Produto;
+import com.example.comedoria.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +27,7 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
     private android.content.Context context;
     private List<Produto> listaProdutos;
 
-    AdapterEstoque(Context context, List<Produto> lista){
+    public AdapterEstoque(Context context, List<Produto> lista){
         this.context = context;
         this.listaProdutos = lista;
     }

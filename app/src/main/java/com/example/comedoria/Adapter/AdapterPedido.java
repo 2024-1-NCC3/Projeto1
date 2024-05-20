@@ -10,8 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comedoria.Class.Pedido;
-import com.example.comedoria.Perfil;
 import com.example.comedoria.R;
+import com.example.comedoria.fragments.PedidosParaRetirar;
+import com.example.comedoria.fragments.PedidosRetirados;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,11 +22,16 @@ import java.util.Locale;
 
 public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHolder> {
     private List<Pedido> PedidosNaoCompletados;
-    private Context contextPedidos;
+    private PedidosParaRetirar pedidosParaRetirar;
+    private PedidosRetirados pedidosRetirados;
 
-    public AdapterPedido(List<Pedido> lista, Context contextPerfil){
+    public AdapterPedido(List<Pedido> lista, PedidosParaRetirar fragment){
         this.PedidosNaoCompletados = lista;
-        this.contextPedidos = contextPerfil;
+        this.pedidosParaRetirar = fragment;
+    }
+    public AdapterPedido(List<Pedido> lista, PedidosRetirados fragment){
+        this.PedidosNaoCompletados = lista;
+        this.pedidosRetirados = fragment;
     }
 
     @NonNull
@@ -64,7 +70,13 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //((Perfil)contextPedidos).irParaPedido(pedido.getId_pedido());
+                if(pedidosRetirados == null ){
+                    pedidosParaRetirar.irParaConfirmarPedido(pedido);
+                }
+                else if(pedidosParaRetirar == null){
+                    // TODO: 19/05/2024 fazer a tela para mostrar detalhes de pedidos já confirmados
+                }
+
 
             }
         });

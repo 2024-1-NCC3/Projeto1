@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.comedoria.R;
+import com.example.comedoria.Adapter.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -57,4 +59,6 @@ public class PedidosTia extends AppCompatActivity {
         });
 
     }
+
+
 }

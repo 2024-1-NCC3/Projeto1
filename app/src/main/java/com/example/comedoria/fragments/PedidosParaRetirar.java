@@ -1,7 +1,8 @@
-package com.example.comedoria;
+package com.example.comedoria.fragments;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,10 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.example.comedoria.Adapter.AdapterPedido;
 import com.example.comedoria.Class.Pedido;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.ConfirmarPedido;
+import com.example.comedoria.R;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +39,14 @@ public class PedidosParaRetirar extends Fragment {
     private List<Pedido> pedidosNaoFinalizados = new ArrayList<>();
 
     AdapterPedido adapterPedido;
+    String accessToken ;
 
-    String accessToken = "eyJhbGciOiJIUzI1NiIsImtpZCI6Ilk4N0NObGFTRldpYUkwdWUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzE2MTUzNDY5LCJpYXQiOjE3MTYxNDk4NjksImlzcyI6Imh0dHBzOi8vcXBrY2J4Ym56cWJ2bXhlbmpic3Muc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjFjZTczMTE2LTVlMDUtNDY3NC1iMDZlLTBlMDY2NTI0Mjk3YSIsImVtYWlsIjoicGVyZmlsZGF0aWFAZW1haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3MTYxNDk4Njl9XSwic2Vzc2lvbl9pZCI6Ijk3YmNiZTdmLWI1MzYtNGJjMi05OWEyLTZjYjg4YzQxNzUyYSIsImlzX2Fub255bW91cyI6ZmFsc2V9.OwGy5Ujx8X5CkstgcbEIVUjZCypRtahdKPxyDCL5fSo";
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        accessToken = getActivity().getIntent().getStringExtra("accessToken");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +58,7 @@ public class PedidosParaRetirar extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerPedidosParaRetirar = view.findViewById(R.id.recyclerPedidosParaRetirar);
-        adapterPedido = new AdapterPedido(pedidosNaoFinalizados,getContext());
+        adapterPedido = new AdapterPedido(pedidosNaoFinalizados,this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -67,9 +78,10 @@ public class PedidosParaRetirar extends Fragment {
 
         ConectorAPI.conexaoArrayGET(
                 "/rest/v1/pedido?status=eq.Aguardando Pagamento" +
-                        "&select=status,observacoes,numero_pedido,id_pedido,data_para_retirada,hora_para_retirada" +
+                        "&select=status,observacoes,numero_pedido,id_pedido,data_para_retirada,hora_para_retirada,numero_pedido" +
                         ",produtos(nome_produto,preco)" +
-                        ",detalhes_pedido(quantidade)" +
+                        ",detalhes_pedido(quantidade)," +
+                        "usuarios(primeiro_nome,ultimo_nome)" +
                         "&order=data_para_retirada.asc,hora_para_retirada.asc",
                 headers,
                 requireContext(),
@@ -89,7 +101,7 @@ public class PedidosParaRetirar extends Fragment {
         );
     }
     private void interpretarJsonArray(JSONArray response) throws JSONException {
-        Log.i("Lista", pedidosNaoFinalizados.toString());
+        pedidosNaoFinalizados.clear();
         for(int i =0;i<response.length();i++){
             Log.i("Reposta",response.toString());
 
@@ -101,6 +113,18 @@ public class PedidosParaRetirar extends Fragment {
             String idPedido = objetoPedido.getString("id_pedido");
             JSONArray arrayProdutos = objetoPedido.getJSONArray("produtos");
             JSONArray arrayQuantidade = objetoPedido.getJSONArray("detalhes_pedido");
+            JSONObject usuario = objetoPedido.getJSONObject("usuarios");
+            String primeiroNome = usuario.getString("primeiro_nome");
+            String ultimoNome = usuario.getString("ultimo_nome");
+            int numeroPedido = objetoPedido.getInt("numero_pedido");
+
+            String nome = "";
+            if(ultimoNome == null || ultimoNome == "null"){
+                nome = primeiroNome;
+            }else{
+                nome = primeiroNome + " " + ultimoNome;
+            }
+
 
             List<String> listaProdutos = new ArrayList<>();
             double total = 0;
@@ -118,9 +142,24 @@ public class PedidosParaRetirar extends Fragment {
                 listaProdutos.add(nomeProduto);
             }
 
-            Pedido pedido = new Pedido(data, hora, listaProdutos, total, status, idPedido);
+            Pedido pedido = new Pedido(data, hora, listaProdutos, total, status, idPedido, nome, numeroPedido);
             pedidosNaoFinalizados.add(pedido);
         }
         adapterPedido.notifyDataSetChanged();
+    }
+    public void irParaConfirmarPedido(Pedido pedido){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(pedido);
+
+        Intent i = new Intent(getContext(), ConfirmarPedido.class);
+        i.putExtra("pedido", jsonString);
+        i.putExtra("accessToken", accessToken);
+        startActivity(i);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        buscarPedidosNaoFinalizados();
     }
 }

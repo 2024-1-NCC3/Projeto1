@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comedoria.Class.Categoria;
-import com.example.comedoria.PaginaInicial;
+import com.example.comedoria.activities.PaginaInicial;
 import com.example.comedoria.R;
 import com.squareup.picasso.Picasso;
 

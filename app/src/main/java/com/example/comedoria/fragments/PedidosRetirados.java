@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.fragments;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import com.android.volley.VolleyError;
 import com.example.comedoria.Adapter.AdapterPedido;
 import com.example.comedoria.Class.Pedido;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +36,12 @@ public class PedidosRetirados extends Fragment {
     private List<Pedido> pedidosRetirados = new ArrayList<>();
 
     AdapterPedido adapterPedido;
-
-    String accessToken = "eyJhbGciOiJIUzI1NiIsImtpZCI6Ilk4N0NObGFTRldpYUkwdWUiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzE2MTU1NjA1LCJpYXQiOjE3MTYxNTIwMDUsImlzcyI6Imh0dHBzOi8vcXBrY2J4Ym56cWJ2bXhlbmpic3Muc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6IjFjZTczMTE2LTVlMDUtNDY3NC1iMDZlLTBlMDY2NTI0Mjk3YSIsImVtYWlsIjoicGVyZmlsZGF0aWFAZW1haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3MTYxNTIwMDV9XSwic2Vzc2lvbl9pZCI6IjljNDY4NWM2LWExNDktNDNiMy1hZDI3LWRjODdiN2ExYTUwMSIsImlzX2Fub255bW91cyI6ZmFsc2V9.D97MmpOYMTYlsjeXPa0ykD5j-b7i7d_V6e8PeLiZngw";    @Override
+    String accessToken;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        accessToken = getActivity().getIntent().getStringExtra("accessToken");
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -46,7 +52,7 @@ public class PedidosRetirados extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerPedidosRetirados = view.findViewById(R.id.recyclerRetirados);
-        adapterPedido = new AdapterPedido(pedidosRetirados,getContext());
+        adapterPedido = new AdapterPedido(pedidosRetirados,this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -66,9 +72,10 @@ public class PedidosRetirados extends Fragment {
 
         ConectorAPI.conexaoArrayGET(
                 "/rest/v1/pedido?status=eq.Retirado" +
-                        "&select=status,observacoes,numero_pedido,id_pedido,data_para_retirada,hora_para_retirada" +
+                        "&select=status,observacoes,numero_pedido,id_pedido,data_para_retirada,hora_para_retirada,numero_pedido" +
                         ",produtos(nome_produto,preco)" +
-                        ",detalhes_pedido(quantidade)" +
+                        ",detalhes_pedido(quantidade)," +
+                        "usuarios(primeiro_nome,ultimo_nome)" +
                         "&order=data_para_retirada.asc,hora_para_retirada.asc",
                 headers,
                 requireContext(),
@@ -101,6 +108,19 @@ public class PedidosRetirados extends Fragment {
             JSONArray arrayProdutos = objetoPedido.getJSONArray("produtos");
             JSONArray arrayQuantidade = objetoPedido.getJSONArray("detalhes_pedido");
 
+            JSONObject usuario = objetoPedido.getJSONObject("usuarios");
+            String primeiroNome = usuario.getString("primeiro_nome");
+            String ultimoNome = usuario.getString("ultimo_nome");
+
+            int numeroPedido = objetoPedido.getInt("numero_pedido");
+
+            String nome = "";
+            if(ultimoNome == null || ultimoNome == "null"){
+                nome = primeiroNome;
+            }else{
+                nome = primeiroNome + " " + ultimoNome;
+            }
+
             List<String> listaProdutos = new ArrayList<>();
             double total = 0;
 
@@ -117,7 +137,7 @@ public class PedidosRetirados extends Fragment {
                 listaProdutos.add(nomeProduto);
             }
 
-            Pedido pedido = new Pedido(data, hora, listaProdutos, total, status, idPedido);
+            Pedido pedido = new Pedido(data, hora, listaProdutos, total, status, idPedido,nome, numeroPedido);
             pedidosRetirados.add(pedido);
         }
         adapterPedido.notifyDataSetChanged();

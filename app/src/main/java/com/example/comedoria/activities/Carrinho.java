@@ -1,4 +1,4 @@
-package com.example.comedoria;
+package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
@@ -17,6 +17,8 @@ import com.android.volley.VolleyError;
 
 import com.example.comedoria.Adapter.AdapterCarrinho;
 import com.example.comedoria.Class.Produto;
+import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
