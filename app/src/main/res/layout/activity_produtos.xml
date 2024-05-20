@@ -13,10 +13,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borda_arrendondada"
+        android:fontFamily="@font/itim"
+        android:padding="15dp"
         android:text="Produtos"
         android:textAlignment="center"
         android:textColor="@color/bege"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -27,13 +29,15 @@
 
     <Spinner
         android:id="@+id/spinner_data"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
         android:background="@drawable/borda_quatro_pontas_arrendondadas"
         android:minWidth="50dp"
+        android:padding="5dp"
         android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
         android:spinnerMode="dropdown"
-        android:textColor="@color/black"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.032"
@@ -43,23 +47,26 @@
 
     <Spinner
         android:id="@+id/spinner_categoria"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/borda_quatro_pontas_arrendondadas"
         android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
         android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recycleProduto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.223"
+        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toEndOf="@+id/spinner_data"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintVertical_bias="0.65" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleProduto"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
         android:scrollbars="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btnCarrinho"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,16 +95,30 @@
         android:layout_margin="16dp"
         android:layout_marginTop="560dp"
         android:backgroundTint="@color/verde_fundo_categoria"
+        android:contentDescription="@string/app_name"
+        android:onClick="voltarInicio"
         android:src="@drawable/botaodeinicio"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/recycleProduto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="1.0"
-        android:contentDescription="@string/app_name"
+        app:rippleColor="#FFFFFF"
         tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:onClick="voltarTelaProdutos"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/voltar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

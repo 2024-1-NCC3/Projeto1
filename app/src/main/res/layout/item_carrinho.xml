@@ -10,36 +10,43 @@
 
     <TextView
         android:id="@+id/txtNomeProduto"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/itim"
         android:singleLine="false"
         android:text="Nome do produto"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layoutQuantidade"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtSoma"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/itim"
         android:text="R$ 00,00"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/layoutQuantidade"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/layoutQuantidade"
-        app:layout_constraintTop_toTopOf="@+id/layoutQuantidade" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutQuantidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/txtNomeProduto"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtSoma"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txtNomeProduto"
-        app:layout_constraintTop_toTopOf="@+id/txtNomeProduto">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgRetirar"
@@ -54,6 +61,7 @@
             android:id="@+id/txtQuantidade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
             android:text="No"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -69,4 +77,5 @@
             app:layout_constraintTop_toTopOf="@+id/txtQuantidade"
             app:srcCompat="@mipmap/add" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

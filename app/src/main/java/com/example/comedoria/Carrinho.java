@@ -148,6 +148,17 @@ public class Carrinho extends AppCompatActivity {
         txtTotal.setText(String.format(Locale.getDefault(), "R$ %.2f", soma));
     }
 
+    public void voltarTelaCarrinho(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
 
     public void finalizarPedido(View view) throws JSONException {
 

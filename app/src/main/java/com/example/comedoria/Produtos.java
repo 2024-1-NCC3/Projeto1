@@ -156,6 +156,17 @@ public class Produtos extends AppCompatActivity {
                 });
     }
 
+    public void voltarTelaProdutos(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
     private void converterJsonArray(JSONArray response) throws JSONException {
         if(response.length() > 0){
             //listaProdutos.clear();

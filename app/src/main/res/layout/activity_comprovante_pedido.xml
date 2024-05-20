@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bege"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     android:paddingBottom="5dp"
     tools:context=".ComprovantePedido">
 
@@ -15,10 +13,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borda_arrendondada"
+        android:fontFamily="@font/itim"
+        android:padding="15dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/bege"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,9 +42,10 @@
             android:id="@+id/statusPedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
             android:text="Ainda não retirado"
             android:textColor="#F60909"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.507"
@@ -70,8 +71,9 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/itim"
         android:text="Resumo"
-        android:textColor="@color/verde_fundo_categoria"
+        android:textColor="#0F5929"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,13 +84,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerResumo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/MarroComedoriaTia"
+        android:layout_width="389dp"
+        android:layout_height="199dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/borda_quatro_pontas_arrendondadas"
+        android:backgroundTint="#403832"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
         app:layout_constraintVertical_bias="0.0">
@@ -99,10 +103,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.125">
+            app:layout_constraintVertical_bias="0.0">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -129,6 +133,7 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/verde_fundo_categoria"
         android:contentDescription="@string/app_name"
+        android:onClick="voltarInicio"
         android:src="@drawable/botaodeinicio"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -139,17 +144,17 @@
         app:layout_constraintVertical_bias="0.96"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="#0F5929"
-        android:text="Voltar para incio"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:onClick="voltarTelaComprovante"
+        app:layout_constraintBottom_toBottomOf="@+id/tituloPedido"
+        app:layout_constraintEnd_toEndOf="@+id/tituloPedido"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/voltar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

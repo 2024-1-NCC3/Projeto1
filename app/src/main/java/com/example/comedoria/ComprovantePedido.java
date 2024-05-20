@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -123,6 +124,17 @@ public class ComprovantePedido extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    public void voltarTelaComprovante(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
     private void interpretarJsonArray(JSONArray response){
