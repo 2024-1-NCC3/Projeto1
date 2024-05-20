@@ -35,7 +35,7 @@
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/borda_inferior_arredondada"
+            android:background="@drawable/borda_inferior_arredondada_verde_claro"
             android:backgroundTint="#94E986"
             android:elevation="@dimen/cardview_compat_inset_shadow">
 

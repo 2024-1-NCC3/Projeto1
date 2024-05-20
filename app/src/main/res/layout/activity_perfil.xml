@@ -10,7 +10,6 @@
         android:id="@+id/layoutBarraSuperior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/borda_arrendondada"
         android:backgroundTint="#0F5929"
         android:padding="15dp"
         android:background="@drawable/borda_arrendondada_inferior_verde_escuro"

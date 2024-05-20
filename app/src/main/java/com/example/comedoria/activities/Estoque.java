@@ -3,6 +3,7 @@ package com.example.comedoria.activities;
 import static com.example.comedoria.BuildConfig.API_KEY;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.comedoria.Activity_Adicionar_Produtos;
 import com.example.comedoria.Adapter.AdapterEstoque;
 import com.example.comedoria.BuildConfig;
 import com.example.comedoria.Class.Produto;
@@ -194,6 +196,11 @@ public class Estoque extends AppCompatActivity {
 
         Log.i("Lista atualizada", requisicao.toString());
         return requisicao;
+    }
+
+    public void IrTelaCadastroProduto(View view){
+        Intent i = new Intent(Estoque.this, Activity_Adicionar_Produtos.class);
+        startActivity(i);
     }
 
 }

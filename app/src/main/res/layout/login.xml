@@ -11,7 +11,6 @@
     android:paddingTop="0dp"
     android:paddingEnd="0dp"
     android:paddingRight="0dp"
-    tools:context=".Login"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="46dp">
 

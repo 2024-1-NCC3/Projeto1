@@ -7,15 +7,160 @@
     android:background="@color/bege"
     tools:context=".Activity_Adicionar_Produtos">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputQnt"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="Quantidade"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
+        app:layout_constraintVertical_bias="0.014">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputPreco"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:hint="Preço"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:boxStrokeColor="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toEndOf="@+id/inputQnt"
+        app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
+        app:layout_constraintVertical_bias="0.015">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputPreco"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="12sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputNomeProduto"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome Produto"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:boxStrokeColor="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/imgAddProduto"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.029">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputNomeProduto"
+            android:layout_width="214dp"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinnerAddProduto"
+        android:layout_width="214dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="432dp"
+        android:background="@drawable/borda_spinner"
+        android:dropDownSelector="@color/verde_fundo_categoria"
+        android:entries="@array/filtro_categoria_add_produto"
+        android:popupBackground="#0F5929"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.419"
+        app:layout_constraintStart_toEndOf="@+id/imgAddProduto"
+        app:layout_constraintTop_toBottomOf="@+id/inputQnt"
+        app:layout_constraintVertical_bias="0.264" />
+
+    <ImageView
+        android:id="@+id/imgAddProduto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="102dp"
+
+
+        android:layout_marginEnd="245dp"
+        android:layout_marginBottom="479dp"
+        android:accessibilityLiveRegion="assertive"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@color/verde_fundo_categoria"
+        android:contextClickable="false"
+        android:cropToPadding="false"
+        android:onClick="CarregarImage"
+        android:radius="4dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bebidas"
+        tools:srcCompat="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputIngredientes"
+        android:layout_width="379dp"
+        android:layout_height="104dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="Ingredientes"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:boxStrokeColor="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddProduto"
+        app:layout_constraintVertical_bias="0.033">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputDingredientes"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
+        android:fontFamily="@font/itim"
+        android:padding="15dp"
         android:text="Adicionar Produtos"
         android:textAlignment="center"
         android:textColor="@color/bege"
-        android:textSize="25sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -23,189 +168,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="0dp"
-        android:layout_height="430dp"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.255">
-
-        <ImageView
-            android:id="@+id/imgAddProduto"
-            android:layout_width="264dp"
-            android:layout_height="191dp"
-            android:accessibilityLiveRegion="assertive"
-            android:adjustViewBounds="false"
-            android:backgroundTint="@color/verde_fundo_categoria"
-            android:contextClickable="false"
-            android:cropToPadding="false"
-
-
-            android:onClick="CarregarImage"
-            android:radius="4dp"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/bebidas"
-            tools:srcCompat="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro" />
-
-        <Spinner
-            android:id="@+id/spinnerAddProduto"
-            android:layout_width="117dp"
-            android:layout_height="54dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
-            android:dropDownSelector="@color/verde_fundo_categoria"
-            android:entries="@array/filtro_categoria_add_produto"
-            android:popupBackground="@color/verde_fundo_categoria"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="143dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.067"
-            app:layout_constraintStart_toEndOf="@+id/spinnerAddProduto"
-            app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputQnt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColorHint="@color/verde_fundo_categoria">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputQnt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/input_claro_arrebondadado_stroke"
-                    android:hint="Quantidade"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/verde_fundo_categoria"
-                    android:textColorHighlight="@color/verde_fundo_categoria"
-                    android:textColorHint="@color/verde_fundo_categoria"
-                    android:textColorLink="@color/verde_fundo_categoria" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputPreco"
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:padding="5dp"
-            android:textColorHint="@color/verde_fundo_categoria"
-            app:boxStrokeColor="@color/verde_fundo_categoria"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout4"
-            app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputPreco"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_claro_arrebondadado_stroke"
-                android:drawableTint="@color/verde_fundo_categoria"
-                android:foregroundTint="@color/verde_fundo_categoria"
-                android:hint="Preço"
-                android:inputType="numberDecimal"
-                android:shadowColor="@color/verde_fundo_categoria"
-                android:textColorHighlight="@color/verde_fundo_categoria"
-                android:textColorHint="@color/verde_fundo_categoria"
-                android:textColorLink="@color/verde_fundo_categoria"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputIngredientes"
-            android:layout_width="403dp"
-            android:layout_height="102dp"
-            android:padding="5dp"
-            android:textColorHint="@color/verde_fundo_categoria"
-            app:boxStrokeColor="@color/verde_fundo_categoria"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-            app:layout_constraintVertical_bias="0.609">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputDingredientes"
-                android:layout_width="match_parent"
-                android:layout_height="91dp"
-                android:background="@drawable/input_claro_arrebondadado_stroke"
-                android:drawableTint="@color/verde_fundo_categoria"
-                android:foregroundTint="@color/verde_fundo_categoria"
-                android:hint="Ingredientes"
-                android:shadowColor="@color/verde_fundo_categoria"
-                android:textColorHighlight="@color/verde_fundo_categoria"
-                android:textColorHint="@color/verde_fundo_categoria"
-                android:textColorLink="@color/verde_fundo_categoria"
-                android:textSize="12sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputNomeProduto"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:padding="5dp"
-            android:textColorHint="@color/verde_fundo_categoria"
-            app:boxStrokeColor="@color/verde_fundo_categoria"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgAddProduto"
-            app:layout_constraintVertical_bias="0.021">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputNomeProduto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/input_claro_arrebondadado_stroke"
-                android:drawableTint="@color/verde_fundo_categoria"
-                android:foregroundTint="@color/verde_fundo_categoria"
-                android:hint="Nome Produto"
-                android:shadowColor="@color/verde_fundo_categoria"
-                android:textColorHighlight="@color/verde_fundo_categoria"
-                android:textColorHint="@color/verde_fundo_categoria"
-                android:textColorLink="@color/verde_fundo_categoria"
-                android:textSize="12sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <Button
         android:id="@+id/btn_finalizar"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:onClick="finalizarCadastroProduto"
         android:text="Finalizar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerAddProduto"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerAddProduto"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@+id/spinnerAddProduto"
+        app:layout_constraintTop_toTopOf="@+id/spinnerAddProduto"
+        app:srcCompat="@drawable/seta_spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
