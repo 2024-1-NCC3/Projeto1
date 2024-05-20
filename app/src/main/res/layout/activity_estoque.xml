@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFEEE1"
-    tools:context=".Estoque">
+    tools:context=".activities.Estoque">
 
     <ScrollView
         android:layout_width="match_parent"

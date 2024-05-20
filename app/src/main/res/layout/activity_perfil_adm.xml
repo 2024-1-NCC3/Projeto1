@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFEEE1"
-    tools:context=".perfilAdm">
+    tools:context=".activities.perfilAdm">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutPerfil"
@@ -84,6 +84,7 @@
             android:layout_height="50dp"
             android:background="@drawable/rounded_button"
             android:backgroundTint="#94E986"
+            android:onClick="IrPedidosTia"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
