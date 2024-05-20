@@ -11,10 +11,10 @@
     tools:context=".activities.ComprovantePedido">
 
     <TextView
-        android:id="@+id/tituloPedido"
+        android:id="@+id/tituloNumPedido"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/borda_arrendondada"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/bege"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloPedido"
+        app:layout_constraintTop_toBottomOf="@+id/tituloNumPedido"
         app:layout_constraintVertical_bias="0.064">
 
         <TextView
@@ -54,15 +54,17 @@
 
         <ImageView
             android:id="@+id/imgQRcode"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="201dp"
+            android:layout_height="193dp"
+            android:layout_marginTop="15dp"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/statusPedido"
-            app:srcCompat="@drawable/imgstrogonofffrango" />
+            app:srcCompat="@drawable/imgstrogonofffrango"
+            tools:srcCompat="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,6 +72,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="Resumo"
         android:textColor="@color/verde_fundo_categoria"
         android:textSize="20sp"
