@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#403832"
-    tools:context=".Carrinho">
+    tools:context=".activities.Carrinho">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBarraSuperior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/borda_arrendondada"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -122,9 +121,9 @@
             android:layout_height="30dp"
             android:layout_marginTop="188dp"
             android:layout_marginBottom="448dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas"
-            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
-            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
+            android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
+            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
+            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -134,9 +133,9 @@
             android:id="@+id/spinner_tipo"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas"
-            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
-            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
+            android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
+            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
+            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
