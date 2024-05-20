@@ -161,38 +161,17 @@ public class Carrinho extends AppCompatActivity {
 
 
 
-            JsonArrayRequest request = new JsonArrayRequest(
-                    Request.Method.POST,
-                    url,
-                    req,
-                    new Response.Listener<JSONArray>() {
+            //Faz a requisição para criar um pedido no servidor
+            ConectorAPI.conexaoArrayPOST(
+                    "/rest/v1/pedido",
+                    headers,
+                    JsonNovoPedido(),
+                    getApplicationContext(),
+                    new ConectorAPI.VolleyArrayCallback() {
                         @Override
-                        public void onResponse(JSONArray response) {
-
-                            if (response.length()>0){
-                                for(int i=0; i< response.length();i++){
-                                    try{
-                                        JSONObject jsonObj = response.getJSONObject(i);
-                                        //Se o pedido ter uma resposta, verifica se teve sucesso
-
-                                        Boolean sucesso = jsonObj.getBoolean("sucesso");
-                                        String msg = jsonObj.getString("msg");
-                                        int pedido = jsonObj.getInt("pedido");
-
-                                        //Manda a mensagem de retorno, pra indicar o status
-                                        Toast.makeText(Carrinho.this, msg, Toast.LENGTH_SHORT).show();
-                                        //Se estever tudo certo, passa para a próxima página
-                                        if(sucesso){
-                                            Intent intent = new Intent(Carrinho.this, ComprovantePedido.class);
-                                            intent.putExtra("retirarProduto", txtHora.getText().toString());
-                                            intent.putExtra("numPedido",pedido);
-                                            startActivity(intent);
-                                        }
-                                    }catch (JSONException ex){
-
-                                    }
-                                }
-                            }
+                        public void onSuccess(JSONArray response) throws JSONException {
+                            idPedido = response.getJSONObject(0).getString("id_pedido");
+                            adicionarProdutosNoPedido();
                         }
 
                         @Override
