@@ -139,5 +139,38 @@ public class ConectorAPI {
         RequestQueue filaRequest = Volley.newRequestQueue(context);
         filaRequest.add(request);
     }
+
+    public static void conexaoArrayPATCH(String endpoint, Map<String, String> headers, JSONArray corpoSolicitacao,
+                                        Context context, VolleyArrayCallback callback){
+        String url = API_URL + endpoint;
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.PATCH,
+                url,
+                corpoSolicitacao,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onError(error);
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+        RequestQueue filaRequest = Volley.newRequestQueue(context);
+        filaRequest.add(request);
+    }
 }
 

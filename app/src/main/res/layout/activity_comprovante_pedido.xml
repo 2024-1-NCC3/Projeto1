@@ -8,7 +8,7 @@
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingBottom="5dp"
-    tools:context=".ComprovantePedido">
+    tools:context=".activities.ComprovantePedido">
 
     <TextView
         android:id="@+id/tituloNumPedido"
@@ -148,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#0F5929"
-        android:text="Voltar para incio"
+        android:text="Voltar para o início"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
