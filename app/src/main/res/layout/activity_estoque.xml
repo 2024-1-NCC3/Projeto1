@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFEEE1"
-    tools:context=".Estoque">
+    tools:context=".activities.Estoque">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,8 +20,8 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/borda_arrendondada"
-                android:fontFamily="@font/itim"
+                android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
+                android:fontFamily="sans-serif"
                 android:padding="15dp"
                 android:text="Estoque"
                 android:textAlignment="center"

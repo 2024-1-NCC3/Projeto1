@@ -8,6 +8,33 @@
     tools:context=".Carrinho">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+    tools:context=".activities.Carrinho">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBarraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtTituloCarrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Carrinho"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutConteudo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
