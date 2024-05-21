@@ -52,13 +52,12 @@
         android:layout_marginLeft="14dp"
         android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         android:minWidth="50dp"
-        android:padding="5dp"
         android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         android:spinnerMode="dropdown"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
         app:layout_constraintVertical_bias="0.016" />
@@ -70,12 +69,10 @@
         android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
-        app:layout_constraintBottom_toTopOf="@+id/recycleProduto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toEndOf="@+id/spinner_data"
-        app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
-        app:layout_constraintVertical_bias="0.611" />
+        app:layout_constraintTop_toTopOf="@+id/spinner_data" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleProduto"
@@ -84,44 +81,52 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
         android:scrollbars="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnCarrinho"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_data"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_data" />
 
-    <Button
-        android:id="@+id/btnCarrinho"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/verde_fundo_categoria"
-        android:onClick="irParaOCarrinho"
-        android:text="Ir para o carrinho"
+        android:background="#99000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnFlutuante"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/verde_fundo_categoria"
-        android:contentDescription="@string/app_name"
-        android:onClick="voltarInicio"
-        android:src="@drawable/botao_de_inicio"
-        app:elevation="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/recycleProduto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="#FFFFFF"
-        tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/btnCarrinho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/verde_fundo_categoria"
+            android:onClick="irParaOCarrinho"
+            android:text="Ir para o carrinho"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnFlutuante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/verde_fundo_categoria"
+            android:contentDescription="@string/app_name"
+            android:onClick="voltarInicio"
+            android:src="@drawable/botaodeinicio"
+            android:tint="@color/white"
+            app:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="#FFFFFF"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

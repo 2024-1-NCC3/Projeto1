@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -49,6 +52,7 @@ public class Carrinho extends AppCompatActivity {
     String accessToken,idUsuario,idPedido,date,horas;
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
+    FloatingActionButton fabHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,9 @@ public class Carrinho extends AppCompatActivity {
         txtData = findViewById(R.id.txtData);
         inputObservacoes = findViewById(R.id.inputObservacoes);
         recycleCarrinho = findViewById(R.id.recylerCarrinho);
+
+        fabHome = findViewById(R.id.btnFlutuante);
+        fabHome.setImageTintList(ColorStateList.valueOf(Color.WHITE));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recycleCarrinho.setLayoutManager(layoutManager);

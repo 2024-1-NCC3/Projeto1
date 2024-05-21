@@ -26,7 +26,7 @@ public class ConectorAPI {
     //Interface para respostas JsonObject
     public interface VolleySingleCallback {
         void onSuccess(JSONObject response) throws JSONException;
-        void onError(VolleyError error);
+        void onError(VolleyError error) throws JSONException;
     }
     //Interface para respostas JsonArray
     public interface VolleyArrayCallback {
@@ -57,7 +57,11 @@ public class ConectorAPI {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError(error);
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         ){

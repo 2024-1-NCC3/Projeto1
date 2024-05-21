@@ -12,9 +12,9 @@
         android:id="@+id/tituloNumPedido"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
         android:fontFamily="@font/itim"
         android:padding="15dp"
-        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
         android:text="TextView"
         android:textAlignment="center"
         android:textColor="@color/bege"
@@ -87,13 +87,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerResumo"
-        android:layout_width="389dp"
+        android:layout_width="0dp"
         android:layout_height="199dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         android:backgroundTint="#403832"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,10 +104,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleResumo"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/textData"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.473"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
@@ -121,31 +122,10 @@
             android:textColor="@color/bege"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.026"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycleResumo"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnFlutuante"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/verde_fundo_categoria"
-        android:contentDescription="@string/app_name"
-        android:onClick="voltarInicio"
-        android:src="@drawable/botaodeinicio"
-        app:elevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96"
-        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -158,12 +138,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/voltar" />
+
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#0F5929"
+        android:onClick="voltarInicio"
         android:text="Voltar para o início"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
