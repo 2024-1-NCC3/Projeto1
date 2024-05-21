@@ -30,9 +30,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ComprovantePedido extends AppCompatActivity {
@@ -112,7 +116,15 @@ public class ComprovantePedido extends AppCompatActivity {
                             tituloPedido.setText("Pedido nº " +comprovante.getNumeroPedido());
                             statusPedido.setText(comprovante.getStatus());
 
-                            textData.setText("Retirar as: " + comprovante.getDataRetirada() + " " +comprovante.getHoraRetirada());
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
+                            try {
+                                Date dataFormatada = formato.parse(comprovante.getDataRetirada());
+                                textData.setText("Retirar as: " + meuFormato.format(dataFormatada) +
+                                        " "+comprovante.getHoraRetirada());
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
 
                             adapterResumoPedido.setListaProduto(comprovante.getListaProdutos());
                             adapterResumoPedido.notifyDataSetChanged();

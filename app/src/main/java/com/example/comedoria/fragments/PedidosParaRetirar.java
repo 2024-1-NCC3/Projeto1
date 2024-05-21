@@ -103,7 +103,6 @@ public class PedidosParaRetirar extends Fragment {
     private void interpretarJsonArray(JSONArray response) throws JSONException {
         pedidosNaoFinalizados.clear();
         for(int i =0;i<response.length();i++){
-            Log.i("Reposta",response.toString());
 
             JSONObject objetoPedido = response.getJSONObject(i);
 

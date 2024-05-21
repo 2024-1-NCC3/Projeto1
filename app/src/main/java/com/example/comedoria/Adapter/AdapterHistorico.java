@@ -67,9 +67,6 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
         TextPaint paintStatus = holder.txtStatus.getPaint();
         float charWidthStatus = paintStatus.measureText("Aguardando ");
         holder.txtStatus.setWidth((int) (charWidthStatus));
-        Log.i("Tamanho do status:", charWidthStatus + "");
-
-        Log.i("Tamanho do status:", String.valueOf((int) (paintStatus.measureText(holder.txtStatus.getText().toString()))));
 
         TextPaint paintTotal = holder.txtTotal.getPaint();
         float charWidthTotal = paintTotal.measureText("R$ 000,00");
