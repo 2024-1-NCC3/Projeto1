@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.comedoria.R;
 import com.example.comedoria.Adapter.ViewPagerAdapter;
@@ -58,6 +60,17 @@ public class PedidosTia extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void voltarTelaPedidos(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
 

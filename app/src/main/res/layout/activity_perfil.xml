@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtTituloCarrinho"
+            android:id="@+id/txtTituloProdutos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/itim"

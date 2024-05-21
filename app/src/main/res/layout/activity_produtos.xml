@@ -8,24 +8,42 @@
     android:background="@color/bege"
     tools:context=".activities.Produtos">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/borda_arredondada_sem_cor"
-        android:fontFamily="@font/itim"
-        android:padding="15dp"
-        android:text="Produtos"
-        android:textAlignment="center"
-        android:textColor="@color/bege"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBarraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtTituloProdutos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
+            android:text="Produtos"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:onClick="voltarTelaProdutos"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/voltar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Spinner
         android:id="@+id/spinner_data"
@@ -40,10 +58,10 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
+        app:layout_constraintVertical_bias="0.016" />
 
     <Spinner
         android:id="@+id/spinner_categoria"
@@ -54,10 +72,10 @@
         android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         app:layout_constraintBottom_toTopOf="@+id/recycleProduto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toEndOf="@+id/spinner_data"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
+        app:layout_constraintVertical_bias="0.611" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleProduto"
@@ -93,32 +111,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:layout_marginTop="560dp"
         android:backgroundTint="@color/verde_fundo_categoria"
         android:contentDescription="@string/app_name"
         android:onClick="voltarInicio"
-        android:src="@drawable/botaodeinicio"
+        android:src="@drawable/botao_de_inicio"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/recycleProduto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="1.0"
         app:rippleColor="#FFFFFF"
         tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:onClick="voltarTelaProdutos"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/voltar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
