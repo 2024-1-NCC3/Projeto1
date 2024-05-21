@@ -61,6 +61,8 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
 
         if(pedido.getStatus().equals("Retirado")){
             holder.txtStatus.setTextColor(Color.parseColor("#ff669900"));
+        } else if (pedido.getStatus().equals("Aguardando Pagamento")) {
+            holder.txtStatus.setTextColor(Color.parseColor("#ffffbb33"));
         }
 
         //Determina a largura do Status como fixa

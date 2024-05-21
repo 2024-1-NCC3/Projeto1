@@ -148,7 +148,7 @@ public class Produtos extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,categoria(nome_categoria)" ,
+                "/rest/v1/produtos?select=*,categoria(nome_categoria),estoque(quantidade)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -190,6 +190,10 @@ public class Produtos extends AppCompatActivity {
                 String nomeProduto = objProduto.getString("nome_produto");
                 Double preco = objProduto.getDouble("preco");
                 String caminhoImagem = objProduto.getString("caminho_imagem");
+
+                JSONObject estoque = objProduto.getJSONObject("estoque");
+                int quantidade = estoque.getInt("quantidade");
+
                 List<String> categoriaProduto = new ArrayList<>();
 
                 if(arrayCategoria.length() >0){
@@ -200,7 +204,7 @@ public class Produtos extends AppCompatActivity {
                     }
                 }
 
-                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem));
+                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidade));
 
             }
         }

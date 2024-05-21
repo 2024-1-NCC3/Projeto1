@@ -68,6 +68,7 @@ public class Carrinho extends AppCompatActivity {
 
         String arrayProdutos = getIntent().getStringExtra("produtosSelecionados");
         produtos = Arrays.asList(new Gson().fromJson(arrayProdutos, Produto[].class));
+
         txtTotal = findViewById(R.id.txtTotal);
         txtHora = findViewById(R.id.txtHora);
         txtData = findViewById(R.id.txtData);
@@ -242,6 +243,14 @@ public class Carrinho extends AppCompatActivity {
 
     }
 
+    private boolean verificaEstoqueESaldo(){
+
+        return false;
+    }
+
+    private boolean verificarEstoque(){
+
+    };
     private JSONArray JsonNovoPedido() throws JSONException {
         Log.i("SUpabase", date);
 

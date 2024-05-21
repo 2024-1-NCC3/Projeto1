@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,13 +58,19 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
         holder.botaoAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                produto.setQuantidade(produto.getQuantidade() + 1);
-                notifyDataSetChanged();
+                if(produto.getQuantidade() + 1 <= produto.getEstoque()){
 
-                if(contextCarrinho instanceof Carrinho){
-                    ((Carrinho)contextCarrinho).atualizarLista(listaCarrinho);
-                    ((Carrinho)contextCarrinho).atualizarTotal();
+                    produto.setQuantidade(produto.getQuantidade() + 1);
+                    notifyDataSetChanged();
+
+                    if(contextCarrinho instanceof Carrinho){
+                        ((Carrinho)contextCarrinho).atualizarLista(listaCarrinho);
+                        ((Carrinho)contextCarrinho).atualizarTotal();
+                    }
+                }else{
+                    Toast.makeText(contextCarrinho, "Desculpe, não temos essa quantidade disponível", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
