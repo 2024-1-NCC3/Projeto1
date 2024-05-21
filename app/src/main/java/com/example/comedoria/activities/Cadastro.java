@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class Cadastro extends AppCompatActivity {
 
-    private EditText inputNome, inputSobrenome, inputCpf,
+    private EditText inputNome, inputSobrenome,
             inputEmail, inputSenha,inputConfirmarEmail, inputConfirmarSenha;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class Cadastro extends AppCompatActivity {
 
         inputNome = findViewById(R.id.txtNome);
         inputSobrenome = findViewById(R.id.txtSobrenome);
-        inputCpf = findViewById(R.id.txtCpf);
         inputEmail = findViewById(R.id.txtEmail);
         inputConfirmarEmail = findViewById(R.id.txtConfirmarEmail);
         inputSenha = findViewById(R.id.txtSenha);
@@ -85,7 +84,6 @@ public class Cadastro extends AppCompatActivity {
 
                             dadosSolicitacao.put("primeiro_nome", inputNome.getText());
                             dadosSolicitacao.put("ultimo_nome", inputSobrenome.getText());
-                            dadosSolicitacao.put("id_papel", 2);
                             dadosSolicitacao.put("id_user", id);
 
                             ConectorAPI.conexaoSinglePOST(
@@ -102,9 +100,9 @@ public class Cadastro extends AppCompatActivity {
                                         @Override
                                         //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
 
-                                        public void onError(VolleyError error) {
-                                            Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                                            finish();
+                                        public void onError(VolleyError error) throws JSONException {
+
+                                            relacionarUsuarioPapel(id, headerCliente);
                                         }
                                     }
                             );
@@ -154,6 +152,33 @@ public class Cadastro extends AppCompatActivity {
         }
 
         return true;
+    }
+    private void relacionarUsuarioPapel(String id, Map<String, String> headerCliente) throws JSONException {
+        JSONObject dadosSolicitacao = new JSONObject();
+
+        dadosSolicitacao.put("id_user", id);
+
+        ConectorAPI.conexaoSinglePOST(
+                "/rest/v1/usuarios_papel",
+                dadosSolicitacao,
+                headerCliente,
+                getApplicationContext(),
+                new ConectorAPI.VolleySingleCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) throws JSONException {
+                        Toast.makeText(Cadastro.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
+
+                    public void onError(VolleyError error) {
+
+                        Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+        );
     }
     public void cancelar(View view){
         finish();

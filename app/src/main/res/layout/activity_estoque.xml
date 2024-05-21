@@ -14,19 +14,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
-            <TextView
-                android:id="@+id/textView4"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutBarraSuperior"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
-                android:fontFamily="sans-serif"
                 android:padding="15dp"
-                android:text="Estoque"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/txtTituloProdutos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/itim"
+                    android:text="Estoque"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:onClick="voltarTelaEstoque"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.01"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/voltar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerEstoque"
@@ -40,33 +66,36 @@
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/botao_geral"
+                android:gravity="center"
                 android:onClick="atualizarEstoque"
                 android:text="Confirmar Alterações" />
 
             <Button
                 android:id="@+id/btnAdicionar"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/botao_geral"
+                android:onClick="IrTelaCadastroProduto"
                 android:text="Adicionar Produtos" />
 
             <Button
                 android:id="@+id/btnVoltarEstoque"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/botao_geral"
+                android:onClick="voltarTelaEstoque"
                 android:text="Voltar" />
 
         </LinearLayout>

@@ -1,6 +1,10 @@
 package com.example.comedoria.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.text.TextPaint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +45,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
     public void onBindViewHolder(@NonNull AdapterHistorico.MyViewHolder holder, int position) {
         Pedido pedido = historico.get(position);
 
+
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
 
@@ -53,6 +58,20 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
         holder.txtProdutos.setText(pedido.produtosComoString());
         holder.txtTotal.setText(String.format(Locale.getDefault(), "R$ %.2f", pedido.getTotal()));
         holder.txtStatus.setText(pedido.getStatus());
+
+        if(pedido.getStatus().equals("Retirado")){
+            holder.txtStatus.setTextColor(Color.parseColor("#ff669900"));
+        }
+
+        //Determina a largura do Status como fixa
+        TextPaint paintStatus = holder.txtStatus.getPaint();
+        float charWidthStatus = paintStatus.measureText("Aguardando ");
+        holder.txtStatus.setWidth((int) (charWidthStatus));
+
+        TextPaint paintTotal = holder.txtTotal.getPaint();
+        float charWidthTotal = paintTotal.measureText("R$ 000,00");
+        holder.txtTotal.setWidth((int) (charWidthTotal));
+
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
