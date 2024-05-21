@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +39,7 @@ public class Perfil extends AppCompatActivity {
     AdapterHistorico adapterHistorico;
     List<Pedido> historico = new ArrayList<>();
     String accessToken, idUsuario;
-    TextView txtSaldo;
+    TextView txtSaldo, lblData, lblResumo, lblTotal;
 
 
 
@@ -52,6 +54,20 @@ public class Perfil extends AppCompatActivity {
 
         recyclerHistorico = findViewById(R.id.recyclerHistorico);
         txtSaldo = findViewById(R.id.txtSaldo);
+        lblData = findViewById(R.id.lblData);
+        lblTotal = findViewById(R.id.lblTotal);
+
+        TextPaint paintData = lblData.getPaint();
+        float tamanhoData = paintData.measureText("00/00/00");
+        lblData.setWidth((int) (tamanhoData));
+
+        TextPaint paintResumo = lblTotal.getPaint();
+        float tamanhoTotal = paintResumo.measureText("Aguardando ");
+        lblTotal.setWidth((int) (tamanhoTotal));
+
+
+
+
         adapterHistorico = new AdapterHistorico(historico, this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -107,7 +123,9 @@ public class Perfil extends AppCompatActivity {
 
         ConectorAPI.conexaoArrayGET(
                 "/rest/v1/pedido?id_usuario=eq." + idUsuario + "&select=status,observacoes," +
-                        "numero_pedido,id_pedido,data_para_retirada,hora_para_retirada,produtos(nome_produto,preco),detalhes_pedido(quantidade)",
+                        "numero_pedido,id_pedido,data_para_retirada,hora_para_retirada," +
+                        "produtos(nome_produto,preco),detalhes_pedido(quantidade)" +
+                        "&order=data_para_retirada.desc",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -188,6 +206,9 @@ public class Perfil extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void sair(View view){
+        finish();
+    }
 
     //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Verifica se o item de menu clicado é o item de pesquisa

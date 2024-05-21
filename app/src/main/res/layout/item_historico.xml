@@ -28,7 +28,7 @@
                 android:layout_marginStart="16dp"
                 android:text="data"
                 android:textColor="@color/bege"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,38 +36,50 @@
                 android:id="@+id/txtProdutosHistorico"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
                 android:text="produtos"
-                android:textAlignment="viewStart"
+                android:textAlignment="center"
                 android:textColor="@color/bege"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/txtStatusHistorico"
+                app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/txtDataHistorico"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txtTotalHistorico"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="R$ 000.00"
-                android:textColor="@color/bege"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/txtStatusHistorico"
-                app:layout_constraintStart_toStartOf="@+id/txtStatusHistorico"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtStatusHistorico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
-                android:text="aguardandoPagamento"
-                android:textColor="@android:color/holo_orange_light"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTotalHistorico"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/txtStatusHistorico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aguardando Pagamento"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/holo_orange_light"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTotalHistorico" />
+
+                <TextView
+                    android:id="@+id/txtTotalHistorico"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="R$ 000,00"
+                    android:textAlignment="center"
+                    android:textColor="@color/bege"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/txtStatusHistorico"
+                    app:layout_constraintStart_toStartOf="@+id/txtStatusHistorico"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
