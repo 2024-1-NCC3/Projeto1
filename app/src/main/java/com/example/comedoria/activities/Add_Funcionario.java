@@ -2,15 +2,13 @@ package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
 import com.example.comedoria.ConectorAPI;
@@ -22,27 +20,30 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cadastro extends AppCompatActivity {
 
-    private EditText inputNome, inputSobrenome, inputCpf,
-            inputEmail, inputSenha,inputConfirmarEmail, inputConfirmarSenha;
+public class Add_Funcionario extends AppCompatActivity {
 
+    private EditText inputNomeFun, inputSobrenomeFun, inputCpfFun,
+
+    inputEmailFun, inputSenhaFun,inputConfirmarEmailFun, inputConfirmarSenhaFun;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro);
+        setContentView(R.layout.activity_add_funcionario);
 
-        inputNome = findViewById(R.id.txtNome);
-        inputSobrenome = findViewById(R.id.txtSobrenome);
-        inputCpf = findViewById(R.id.txtCpf);
-        inputEmail = findViewById(R.id.txtEmail);
-        inputConfirmarEmail = findViewById(R.id.txtConfirmarEmail);
-        inputSenha = findViewById(R.id.txtSenha);
-        inputConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
+        inputNomeFun = findViewById(R.id.txtNome);
+        inputSobrenomeFun = findViewById(R.id.txtSobrenome);
+        inputCpfFun = findViewById(R.id.txtCpf);
+        inputEmailFun = findViewById(R.id.txtEmail);
+        inputConfirmarEmailFun = findViewById(R.id.txtConfirmarEmail);
+        inputSenhaFun = findViewById(R.id.txtSenha);
+        inputConfirmarSenhaFun = findViewById(R.id.txtConfirmarSenha);
 
     }
 
     public void Cadastrar(View view){
-        if(verificarCampos()){
+        if(verificarCamposFun()){
             JSONObject dadosCadastro = new JSONObject();
             JSONObject dadosCliente = new JSONObject();
 
@@ -50,8 +51,8 @@ public class Cadastro extends AppCompatActivity {
 
 
             try {
-                dadosCadastro.put("email", inputEmail.getText());
-                dadosCadastro.put("password", inputSenha.getText());
+                dadosCadastro.put("email", inputEmailFun.getText());
+                dadosCadastro.put("password", inputSenhaFun.getText());
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -84,8 +85,8 @@ public class Cadastro extends AppCompatActivity {
 
                             JSONObject dadosSolicitacao = new JSONObject();
 
-                            dadosSolicitacao.put("primeiro_nome", inputNome.getText());
-                            dadosSolicitacao.put("ultimo_nome", inputSobrenome.getText());
+                            dadosSolicitacao.put("primeiro_nome", inputNomeFun.getText());
+                            dadosSolicitacao.put("ultimo_nome", inputSobrenomeFun.getText());
                             dadosSolicitacao.put("id_papel", 2);
                             dadosSolicitacao.put("id_user", id);
 
@@ -97,14 +98,14 @@ public class Cadastro extends AppCompatActivity {
                                     new ConectorAPI.VolleySingleCallback() {
                                         @Override
                                         public void onSuccess(JSONObject response) throws JSONException {
-                                            Toast.makeText(Cadastro.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Add_Funcionario.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
                                         //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
 
                                         public void onError(VolleyError error) {
-                                            Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Add_Funcionario.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
                                             finish();
                                         }
                                     }
@@ -121,43 +122,49 @@ public class Cadastro extends AppCompatActivity {
 
 
     }
-    private boolean verificarCampos(){
+
+    private boolean verificarCamposFun(){
         //Verifica se o campo Nome não está vazio
-        if(inputNome.getText().toString().trim().equals("")){
+        if(inputNomeFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha o Nome", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se o campo Sobrenome não está vazio
-        if(inputSobrenome.getText().toString().trim().equals("")){
+        if(inputSobrenomeFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha o sobrenome", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se o campo Email não está vazio
-        if(inputEmail.getText().toString().trim().equals("")){
+        if(inputEmailFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha o email", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se o campo senha não está vazio
-        if(inputSenha.getText().toString().trim().equals("")){
+        if(inputSenhaFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha a senha", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //Verifica se email e confirmar email são iguais
-        if(!inputEmail.getText().toString().trim().equals(inputConfirmarEmail.getText().toString().trim())){
+        if(!inputEmailFun.getText().toString().trim().equals(inputConfirmarEmailFun.getText().toString().trim())){
             Toast.makeText(this, "Os emails não são iguais", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se senha e confirmar senha são iguais
-        if(!inputConfirmarSenha.getText().toString().trim().equals(inputSenha.getText().toString().trim())){
+        if(!inputConfirmarSenhaFun.getText().toString().trim().equals(inputSenhaFun.getText().toString().trim())){
             Toast.makeText(this, "As senhas não são iguais", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         return true;
     }
-    public void cancelar(View view){
-        Intent i = new Intent(getApplicationContext(), Login.class);
+
+
+
+
+    public void CancelarCasdastroFun(View view){
+        Intent i = new Intent(getApplicationContext(), perfilAdm.class);
         startActivity(i);
     }
+
 }

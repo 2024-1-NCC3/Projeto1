@@ -9,7 +9,6 @@
     <string name="title_activity_main2">MainActivity2</string>
 
 
-
     <string-array name="filtro_ordenar">
         <item>Ordenar</item>
         <item>Menor preço</item>
