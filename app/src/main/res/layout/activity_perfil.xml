@@ -4,31 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#403832"
-    tools:context=".Carrinho">
+    tools:context=".activities.Perfil">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBarraSuperior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/borda_arrendondada"
+        android:backgroundTint="#0F5929"
+        android:padding="15dp"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtTituloCarrinho"
+            android:id="@+id/txtTituloProdutos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/itim"
             android:text="Perfil"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:onClick="sair"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/voltar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -48,29 +61,33 @@
 
         <TextView
             android:id="@+id/txtPedido"
-            android:layout_width="57dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="36dp"
+            android:layout_width="67dp"
+            android:layout_height="26dp"
+            android:fontFamily="@font/itim"
             android:text="Saldo:"
             android:textColor="@color/verde_fundo_categoria"
-            android:textSize="20sp"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.088" />
 
         <TextView
             android:id="@+id/txtObservacoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
             android:text="Histórico:"
             android:textColor="@color/verde_fundo_categoria"
-            android:textSize="20sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.121"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.219" />
+            app:layout_constraintVertical_bias="0.223" />
 
         <Button
             android:id="@+id/Perfil"
@@ -78,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:backgroundTint="@color/verde_fundo_categoria"
-            android:onClick="finalizarPedido"
+            android:onClick="sair"
             android:text="Sair do Perfil"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +103,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/txtPedido"
@@ -97,13 +114,16 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#403832">
 
                 <TextView
                     android:id="@+id/txtSaldo"
-                    android:layout_width="92dp"
-                    android:layout_height="25dp"
-                    android:background="#403832"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/itim"
                     android:text="R$ 00.00"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
@@ -116,43 +136,51 @@
         </androidx.cardview.widget.CardView>
 
 
-        <Spinner
-            android:id="@+id/spinner_categoria"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="188dp"
-            android:layout_marginBottom="448dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas"
-            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
-            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <Spinner
-            android:id="@+id/spinner_tipo"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:background="@drawable/borda_quatro_pontas_arrendondadas"
-            android:dropDownSelector="@drawable/borda_quatro_pontas_arrendondadas"
-            android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.295" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerHistorico"
             android:layout_width="0dp"
-            android:layout_height="239dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/Perfil"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.555" />
+            app:layout_constraintTop_toBottomOf="@+id/lblData"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/lblData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Data"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="@+id/recyclerHistorico"
+            app:layout_constraintTop_toBottomOf="@+id/txtObservacoes" />
+
+        <TextView
+            android:id="@+id/lblResumoPerfil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Resumo"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toStartOf="@+id/lblTotal"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/lblData"
+            app:layout_constraintTop_toTopOf="@+id/lblData" />
+
+        <TextView
+            android:id="@+id/lblTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingRight="4dp"
+            android:text="Total"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerHistorico"
+            app:layout_constraintTop_toTopOf="@+id/lblResumoPerfil" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
