@@ -21,9 +21,11 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 
 import com.example.comedoria.Adapter.AdapterCarrinho;
+import com.example.comedoria.Class.Estoque;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
+import com.example.comedoria.VolleyCallback;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,7 +58,11 @@ public class Carrinho extends AppCompatActivity {
     String accessToken,idUsuario,idPedido,date,horas;
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
+
+    Map<Integer, Estoque> relacaoProdutoEstoque = new HashMap<>();
+    double saldo;
     FloatingActionButton fabHome;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,61 +202,248 @@ public class Carrinho extends AppCompatActivity {
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
             return;
         }else{
+            verificarEstoque(new VolleyCallback() {
+                @Override
+                public void onResponse(boolean sucesso) throws JSONException {
+                    if(sucesso){
+                        verificarSaldo(new VolleyCallback() {
+                            @Override
+                            public void onResponse(boolean sucesso) throws JSONException {
+                                if(sucesso){
+                                    criarPedido();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
 
-            Map<String, String> headers = new HashMap<>();
-            //define os heades que a solicitação vai precisar
-            headers.put("apikey", API_KEY);
-            headers.put("Authorization", "Bearer " + accessToken);
-            headers.put("Content-Type", "application/json");
-            headers.put("Prefer", "return=representation");
+
+        }
+
+    }
+
+
+    private void verificarSaldo( final VolleyCallback saldoCallback){
+        Map<String, String> headers = new HashMap<>();
+
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        ConectorAPI.conexaoArrayGET(
+                "/rest/v1/usuarios?select=*",
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        JSONObject objCliente = response.getJSONObject(0);
+                        saldo = objCliente.getDouble("saldo");
+                        double total = 0;
+
+                        for(Produto produto: produtos){
+                            total += produto.getPreco() * produto.getQuantidade();
+                        }
+
+                        if(saldo < total){
+                            Toast.makeText(getApplicationContext(), "Saldo insuficiente", Toast.LENGTH_SHORT).show();
+                            saldoCallback.onResponse(false);
+                        }else{
+                            saldoCallback.onResponse(true);
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) throws JSONException {
+                        saldoCallback.onResponse(false);
+                    }
+                }
+
+        );
+
+    }
+    private void verificarEstoque(final VolleyCallback estoqueCallBack){
+        String produtosDoPedido = "";
+        for(Produto produto:produtos){
+            produtosDoPedido += produto.getId() +",";
+        }
+        produtosDoPedido = produtosDoPedido.substring(0,produtosDoPedido.length()-1);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        ConectorAPI.conexaoArrayGET(
+                "/rest/v1/produtos?select=*," +
+                        "categoria(nome_categoria)," +
+                        "estoque(id_estoque,quantidade)" +
+                        "&id_produto=in.(" + produtosDoPedido + ")",
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+
+
+                        for(int i = 0; i<response.length();i++){
+                            JSONObject objEstoque = response.getJSONObject(i);
+                            int idProduto = objEstoque.getInt("id_produto");
+                            JSONObject estoque = objEstoque.getJSONObject("estoque");
+                            int idEstoque = estoque.getInt("id_estoque");
+                            int quantidadeEstoque = estoque.getInt("quantidade");
+
+                            relacaoProdutoEstoque.put(idProduto,new Estoque(idEstoque,quantidadeEstoque));
+                        }
+
+                        for(Produto produto:produtos){
+                            //Se a quantidade selecionada for maior que o estoque da tia, retorna falso
+                            if(produto.getQuantidade() > relacaoProdutoEstoque.get(produto.getId()).getQuantidade() ){
+                                Toast.makeText(getApplicationContext(), "Não temos mais o produto: " + produto.getNome() +" em estoque.", Toast.LENGTH_SHORT).show();
+                                estoqueCallBack.onResponse(false);
+                                return;
+                            };
+                        }
+                        estoqueCallBack.onResponse(true);
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) throws JSONException {
+                        estoqueCallBack.onResponse(false);
+                    }
+                }
+
+        );
+
+    }
+
+    private void criarPedido() throws JSONException {
+        Map<String, String> headers = new HashMap<>();
+        //define os heades que a solicitação vai precisar
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+        headers.put("Content-Type", "application/json");
+        headers.put("Prefer", "return=representation");
 
 
 
-            //Faz a requisição para criar um pedido no servidor
-            ConectorAPI.conexaoArrayPOST(
-                    "/rest/v1/pedido",
+        //Faz a requisição para criar um pedido no servidor
+        ConectorAPI.conexaoArrayPOST(
+                "/rest/v1/pedido",
+                headers,
+                JsonNovoPedido(),
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        idPedido = response.getJSONObject(0).getString("id_pedido");
+                        adicionarProdutosNoPedido();
+                        reduzirEstoque();
+                        reduzirSaldo();
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+                        //se a resposta for um erro, irá apresentar um Toast com o erro
+                        String body = null;
+                        try {
+                            body = new String(error.networkResponse.data, "utf-8");
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                        JSONObject data = null;
+                        try {
+                            data = new JSONObject(body);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        String message = data.optString("error_description");
+                        Toast.makeText(Carrinho.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    private void reduzirSaldo() throws JSONException {
+        double total = 0.0;
+        Map<String, String> headers = new HashMap<>();
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+        headers.put("Content-Type", "application/json");
+        headers.put("Prefer", "return=representation");
+
+
+        for(Produto produto: produtos){
+            total+= produto.getQuantidade() * produto.getPreco();
+        }
+
+        JSONObject objCorpo = new JSONObject();
+        objCorpo.put("saldo", saldo - total);
+
+        JSONArray req = new JSONArray();
+        req.put(objCorpo);
+
+
+        ConectorAPI.conexaoArrayPATCH(
+                "/rest/v1/usuarios?id_user=eq." + idUsuario,
+                headers,
+                req,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) throws JSONException {
+
+                    }
+                }
+
+
+        );
+    }
+
+    private void reduzirEstoque() throws JSONException {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+        headers.put("Content-Type", "application/json");
+        headers.put("Prefer", "return=representation");
+
+        for(Produto produto: produtos){
+            JSONObject objCorpo = new JSONObject();
+            int quantidadePedido = produto.getQuantidade();
+            int quantidadeEstoque = relacaoProdutoEstoque.get(produto.getId()).getQuantidade();
+
+            objCorpo.put("quantidade", quantidadeEstoque - quantidadePedido );
+
+            JSONArray req = new JSONArray();
+            req.put(objCorpo);
+
+            ConectorAPI.conexaoArrayPATCH(
+                    "/rest/v1/estoque?id_estoque=eq." + relacaoProdutoEstoque.get(produto.getId()).getIdEstoque(),
                     headers,
-                    JsonNovoPedido(),
+                    req,
                     getApplicationContext(),
                     new ConectorAPI.VolleyArrayCallback() {
                         @Override
                         public void onSuccess(JSONArray response) throws JSONException {
-                            idPedido = response.getJSONObject(0).getString("id_pedido");
-                            adicionarProdutosNoPedido();
+
                         }
 
                         @Override
-                        public void onError(VolleyError error) {
-                            //se a resposta for um erro, irá apresentar um Toast com o erro
-                            String body = null;
-                            try {
-                                body = new String(error.networkResponse.data, "utf-8");
-                            } catch (UnsupportedEncodingException e) {
-                                throw new RuntimeException(e);
-                            }
-                            JSONObject data = null;
-                            try {
-                                data = new JSONObject(body);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                            String message = data.optString("error_description");
-                            Toast.makeText(Carrinho.this, message, Toast.LENGTH_SHORT).show();
+                        public void onError(VolleyError error) throws JSONException {
+
                         }
                     }
+
+
             );
         }
 
     }
 
-    private boolean verificaEstoqueESaldo(){
-
-        return false;
-    }
-
-    private boolean verificarEstoque(){
-
-    };
     private JSONArray JsonNovoPedido() throws JSONException {
         Log.i("SUpabase", date);
 
