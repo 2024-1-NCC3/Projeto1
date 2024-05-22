@@ -53,20 +53,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.012" />
 
-        <ImageView
-            android:id="@+id/imgQRcode"
-            android:layout_width="201dp"
-            android:layout_height="193dp"
-            android:layout_marginTop="15dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/statusPedido"
-            app:srcCompat="@drawable/imgstrogonofffrango"
-            tools:srcCompat="@color/black" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

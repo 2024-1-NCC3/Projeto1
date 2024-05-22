@@ -214,4 +214,15 @@ public class Estoque extends AppCompatActivity {
         finish();
     }
 
+    public void irModificarProduto(int idProduto, String nome, String caminhoImg, int quantidade, double preco){
+        Intent i = new Intent(this, modificar_produto.class);
+        i.putExtra("idProduto", idProduto);
+        i.putExtra("imgProduto", caminhoImg);
+        i.putExtra("nomeProduto", nome);
+        i.putExtra("precoProduto", preco);
+        i.putExtra("quantidadeProduto", quantidade);
+        i.putExtra("accessToken", accessToken);
+        startActivity(i);
+    }
+
 }
