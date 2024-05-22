@@ -440,10 +440,10 @@ public class Carrinho extends AppCompatActivity {
 
 
             );
+
         }
 
     }
-
     private JSONArray JsonNovoPedido() throws JSONException {
         Log.i("SUpabase", date);
 
