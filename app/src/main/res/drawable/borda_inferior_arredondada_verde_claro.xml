@@ -3,7 +3,7 @@
     android:shape="rectangle" >
     <stroke android:width="0.9dp"
         android:color="@android:color/transparent" />
-    <solid android:color="@color/verde_categorias" />
+    <solid android:color="#94E986" />
     <!-- shape property for the view based on the value particular view would be drawn -->
     <corners android:topLeftRadius="0dp"
         android:topRightRadius="0dp"

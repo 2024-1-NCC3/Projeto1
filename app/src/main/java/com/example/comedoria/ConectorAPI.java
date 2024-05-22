@@ -26,7 +26,7 @@ public class ConectorAPI {
     //Interface para respostas JsonObject
     public interface VolleySingleCallback {
         void onSuccess(JSONObject response) throws JSONException;
-        void onError(VolleyError error);
+        void onError(VolleyError error) throws JSONException;
     }
     //Interface para respostas JsonArray
     public interface VolleyArrayCallback {
@@ -57,7 +57,11 @@ public class ConectorAPI {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError(error);
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         ){
@@ -112,6 +116,39 @@ public class ConectorAPI {
         String url = API_URL + endpoint;
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.POST,
+                url,
+                corpoSolicitacao,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        callback.onError(error);
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+        RequestQueue filaRequest = Volley.newRequestQueue(context);
+        filaRequest.add(request);
+    }
+
+    public static void conexaoArrayPATCH(String endpoint, Map<String, String> headers, JSONArray corpoSolicitacao,
+                                        Context context, VolleyArrayCallback callback){
+        String url = API_URL + endpoint;
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.PATCH,
                 url,
                 corpoSolicitacao,
                 new Response.Listener<JSONArray>() {
