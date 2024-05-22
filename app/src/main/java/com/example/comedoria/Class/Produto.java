@@ -4,119 +4,116 @@ import java.util.List;
 
 public class Produto {
 
-    private String nome;
-    private int id;
-    private double preco;
+    private int id; // ID único do produto
+    private String nome; // Nome do produto
+    private double preco; // Preço do produto
+    private List<String> categoria; // Lista de categorias do produto
+    private String caminhoImg; // Caminho da imagem do produto
+    private String ingrediente; // Ingrediente do produto (pode ser nulo)
+    private boolean selecionado = false; // Indica se o produto está selecionado
+    private int quantidade = 1; // Quantidade do produto (padrão: 1)
+    private boolean aparecer = true; // Indica se o produto deve aparecer (padrão: true)
 
-    private List<String> categoria;
-
-    public List<String> getCategoria() {
-        return categoria;
-    }
-
-    private String caminhoImg;
-
-    private String ingrediente;
-
-    private boolean selecionado = false;
-
-    private int quantidade = 1;
-
-    private boolean aparecer = true;
-
-    public boolean isAparecer() {
-        return aparecer;
-    }
-
-    public void setAparecer(boolean aparecer) {
-        this.aparecer = aparecer;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    // Construtor da classe Produto
+    public Produto(int id, String nome, double preco, List<String> categoria, String caminhoImg) {
         this.id = id;
-    }
-    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg) {
         this.nome = nome;
         this.preco = preco;
-        this.caminhoImg = caminhoImg;
-        this.ingrediente = ingrediente;
-        this.id = id;
         this.categoria = categoria;
-    }
-
-    public Produto(String nome, double preco, int quantidade) {
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
-    }
-
-    public Produto(String nome, int id, double preco, String caminhoImg) {
-        this.nome = nome;
-        this.id = id;
-        this.preco = preco;
         this.caminhoImg = caminhoImg;
     }
 
-    //Este construtor é para o estoque
+    // Construtor alternativo da classe Produto (utilizado para o estoque)
     public Produto(int id, String nome, double preco, String caminhoImg, int quantidade) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
-        this.ingrediente = ingrediente;
-        this.setSelecionado(false);
         this.quantidade = quantidade;
     }
 
-    public boolean isSelecionado() {
-        return selecionado;
+    // Método getter para o ID do produto
+    public int getId() {
+        return id;
     }
 
-    public void setSelecionado(boolean selecionado) {
-        this.selecionado = selecionado;
+    // Método setter para o ID do produto
+    public void setId(int id) {
+        this.id = id;
     }
 
+    // Método getter para o nome do produto
     public String getNome() {
         return nome;
     }
 
+    // Método setter para o nome do produto
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    // Método getter para o preço do produto
     public double getPreco() {
         return preco;
     }
 
+    // Método setter para o preço do produto
     public void setPreco(double preco) {
         this.preco = preco;
     }
 
-    public String getIngrediente() {
-        return ingrediente;
+    // Método getter para a lista de categorias do produto
+    public List<String> getCategoria() {
+        return categoria;
     }
 
-    public void setIngrediente(String ingrediente) {
-        this.ingrediente = ingrediente;
-    }
-
+    // Método getter para o caminho da imagem do produto
     public String getCaminhoImg() {
         return caminhoImg;
     }
 
+    // Método setter para o caminho da imagem do produto
     public void setCaminhoImg(String caminhoImg) {
         this.caminhoImg = caminhoImg;
+    }
+
+    // Método getter para o ingrediente do produto
+    public String getIngrediente() {
+        return ingrediente;
+    }
+
+    // Método setter para o ingrediente do produto
+    public void setIngrediente(String ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    // Método getter para indicar se o produto está selecionado
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    // Método setter para indicar se o produto está selecionado
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
+    }
+
+    // Método getter para a quantidade do produto
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    // Método setter para a quantidade do produto
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    // Método getter para indicar se o produto deve aparecer
+    public boolean isAparecer() {
+        return aparecer;
+    }
+
+    // Método setter para indicar se o produto deve aparecer
+    public void setAparecer(boolean aparecer) {
+        this.aparecer = aparecer;
     }
 }
