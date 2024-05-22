@@ -2,9 +2,12 @@ package com.example.comedoria.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Patterns;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +37,7 @@ public class Login extends AppCompatActivity {
         //Atribuir os inputs para login
         txtInput = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
+        definirListenerDoEmail();
     }
     public void cadastro(View view){
         Intent i = new Intent(this, Cadastro.class);
@@ -50,6 +54,8 @@ public class Login extends AppCompatActivity {
 
         dadosDeSolicitacao.put("email", txtInput.getText());
         dadosDeSolicitacao.put("password", txtSenha.getText());
+
+
 
         ConectorAPI.conexaoSinglePOST(
                 "/auth/v1/token?grant_type=password",
@@ -123,5 +129,20 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+    private void definirListenerDoEmail(){
+        txtInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    txtInput.setError("Email inválido");
+                }
+            }
+        });
+    }
 }

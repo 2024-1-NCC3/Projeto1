@@ -304,4 +304,5 @@ public class Carrinho extends AppCompatActivity {
         }
         return req;
     }
+
 }

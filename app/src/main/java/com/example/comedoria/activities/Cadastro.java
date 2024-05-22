@@ -4,6 +4,9 @@ import static com.example.comedoria.BuildConfig.API_KEY;
 
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -36,6 +39,8 @@ public class Cadastro extends AppCompatActivity {
         inputConfirmarEmail = findViewById(R.id.txtConfirmarEmail);
         inputSenha = findViewById(R.id.txtSenha);
         inputConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
+
+        definirListenerDoEmail();
 
     }
 
@@ -182,5 +187,36 @@ public class Cadastro extends AppCompatActivity {
     }
     public void cancelar(View view){
         finish();
+    }
+
+    private void definirListenerDoEmail(){
+        inputEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputEmail.setError("Email inválido");
+                }
+            }
+        });
+        inputConfirmarEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputConfirmarEmail.setError("Email inválido");
+                }
+            }
+        });
     }
 }
