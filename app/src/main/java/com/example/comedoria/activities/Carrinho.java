@@ -7,7 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -21,6 +26,7 @@ import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -32,6 +38,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -42,13 +49,14 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Carrinho extends AppCompatActivity {
-    TextView txtHora, txtData,txtTotal;
+    TextView txtHora, txtData,txtTotal, txtTituloQuantidade, txtTituloSoma, txtTituloHorario;
     TextInputEditText inputObservacoes;
     RecyclerView recycleCarrinho;
     List<Produto> produtos;
     String accessToken,idUsuario,idPedido,date,horas;
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
+    FloatingActionButton fabHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,24 @@ public class Carrinho extends AppCompatActivity {
         txtData = findViewById(R.id.txtData);
         inputObservacoes = findViewById(R.id.inputObservacoes);
         recycleCarrinho = findViewById(R.id.recylerCarrinho);
+        txtTituloQuantidade = findViewById(R.id.txtTituloQuantidade);
+        txtTituloSoma = findViewById(R.id.txtTituloSoma);
+        txtTituloHorario = findViewById(R.id.txtTituloHorario);
+
+        fabHome = findViewById(R.id.btnFlutuante);
+        fabHome.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+
+        //seta a largura do título quantidade corretamente
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.remove);
+        int larguraIcon = bitmap.getWidth();
+
+        TextPaint paintQuantidade = txtTituloHorario.getPaint();
+        float tamanhoQuantidade = paintQuantidade.measureText("000");
+        txtTituloQuantidade.setWidth((int) (tamanhoQuantidade) + (larguraIcon *2));
+
+        float tamanhoSoma = paintQuantidade.measureText("R$ 0000,00 ");
+        txtTituloSoma.setWidth((int) (tamanhoSoma));
+
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recycleCarrinho.setLayoutManager(layoutManager);
@@ -79,8 +105,8 @@ public class Carrinho extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(Calendar.HOUR_OF_DAY)
-                .setMinute(Calendar.MINUTE)
+                .setHour(calendar.get(Calendar.HOUR_OF_DAY))
+                .setMinute(calendar.get(Calendar.MINUTE))
                 .setTitleText("Selecione a hora de retirada")
                 .build();
 
@@ -118,7 +144,14 @@ public class Carrinho extends AppCompatActivity {
             public void onPositiveButtonClick(Long selection) {
                 date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(selection));
 
-                txtData.setText(date);
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
+                try {
+                    Date dataFormatada = formato.parse(date);
+                    txtData.setText(meuFormato.format(dataFormatada));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         picker.show(getSupportFragmentManager(),"tag");
@@ -133,6 +166,17 @@ public class Carrinho extends AppCompatActivity {
             soma+= produto.getPreco() * produto.getQuantidade();
         }
         txtTotal.setText(String.format(Locale.getDefault(), "R$ %.2f", soma));
+    }
+
+    public void voltarTelaCarrinho(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -206,7 +250,7 @@ public class Carrinho extends AppCompatActivity {
         solicitacao.put("id_usuario", idUsuario);
         solicitacao.put("hora_para_retirada", horas + ":00");
         solicitacao.put("data_para_retirada", date);
-        solicitacao.put("observacoes", inputObservacoes.getText());
+        solicitacao.put("observacoes", inputObservacoes.getText().toString());
 
 
         JSONArray req = new JSONArray();

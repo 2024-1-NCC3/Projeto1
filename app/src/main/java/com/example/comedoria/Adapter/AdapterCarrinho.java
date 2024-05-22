@@ -2,6 +2,7 @@ package com.example.comedoria.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,15 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
         holder.nomeProduto.setText(produto.getNome());
         holder.precoProduto.setText(String.format(Locale.getDefault(), "R$ %.2f", (produto.getPreco() * produto.getQuantidade())) );
         holder.quantidadeProduto.setText(produto.getQuantidade()+"");
+
+        TextPaint paintQuantidade = holder.quantidadeProduto.getPaint();
+        float charWidthQuantidade = paintQuantidade.measureText("000");
+        holder.quantidadeProduto.setWidth((int) (charWidthQuantidade));
+
+        TextPaint paintPreco = holder.precoProduto.getPaint();
+        float charWidthPreco = paintPreco.measureText("R$ 0000,00");
+        holder.precoProduto.setWidth((int) (charWidthPreco));
+
 
         holder.botaoAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override

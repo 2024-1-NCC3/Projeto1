@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +22,7 @@ import com.example.comedoria.Adapter.AdapterProduto;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -46,6 +49,7 @@ public class Produtos extends AppCompatActivity {
     private RecyclerView recyclerProduto;
     private Spinner spinnerOrdenar, spinnerCategoria;
 
+    FloatingActionButton fabHome;
     private List<Produto> listaProdutos = new ArrayList<>();
     private List<Produto> listaFiltrada = new ArrayList<>();
     private List<String> listaCategorias = new ArrayList<>();
@@ -160,6 +164,17 @@ public class Produtos extends AppCompatActivity {
                 });
     }
 
+    public void voltarTelaProdutos(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
     private void converterJsonArray(JSONArray response) throws JSONException {
         if(response.length() > 0){
             //listaProdutos.clear();
@@ -216,6 +231,9 @@ public class Produtos extends AppCompatActivity {
         CarregarListaProdutos();
         //Configurações do recyclerView
         recyclerProduto = findViewById(R.id.recycleProduto);
+        fabHome = findViewById(R.id.btnFlutuante);
+        fabHome.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+
         adapterProduto = new AdapterProduto(this, listaFiltrada);
         RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(this,2);
         recyclerProduto.setLayoutManager(layoutManager1);

@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,15 +23,20 @@ import com.example.comedoria.Class.Comprovante;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ComprovantePedido extends AppCompatActivity {
@@ -108,7 +116,15 @@ public class ComprovantePedido extends AppCompatActivity {
                             tituloPedido.setText("Pedido nº " +comprovante.getNumeroPedido());
                             statusPedido.setText(comprovante.getStatus());
 
-                            textData.setText("Retirar as: " + comprovante.getDataRetirada() + " " +comprovante.getHoraRetirada());
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
+                            try {
+                                Date dataFormatada = formato.parse(comprovante.getDataRetirada());
+                                textData.setText("Retirar as: " + meuFormato.format(dataFormatada) +
+                                        " "+comprovante.getHoraRetirada());
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
 
                             adapterResumoPedido.setListaProduto(comprovante.getListaProdutos());
                             adapterResumoPedido.notifyDataSetChanged();
@@ -122,15 +138,26 @@ public class ComprovantePedido extends AppCompatActivity {
                 }
         );
     }
+
+
+    public void voltarTelaComprovante(View view){
+        finish();
+    }
+
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+
+    
     private void interpretarJsonArray(JSONArray response){
 
     }
     public void atualizarLista(List<Produto> listaAtualizada){
         this.produtos = listaAtualizada;
     }
-
-
-
-
 
 }
