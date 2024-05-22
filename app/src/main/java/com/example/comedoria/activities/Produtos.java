@@ -192,7 +192,7 @@ public class Produtos extends AppCompatActivity {
                 String caminhoImagem = objProduto.getString("caminho_imagem");
 
                 JSONObject estoque = objProduto.getJSONObject("estoque");
-                int quantidade = estoque.getInt("quantidade");
+                int quantidadeEstoque = estoque.getInt("quantidade");
 
                 List<String> categoriaProduto = new ArrayList<>();
 
@@ -204,7 +204,7 @@ public class Produtos extends AppCompatActivity {
                     }
                 }
 
-                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidade));
+                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidadeEstoque));
 
             }
         }
@@ -305,5 +305,6 @@ public class Produtos extends AppCompatActivity {
             return produto.getNome().compareTo(t1.getNome());
         }
     }
+
 
 }

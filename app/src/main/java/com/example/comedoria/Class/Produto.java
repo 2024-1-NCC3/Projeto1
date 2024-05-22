@@ -13,6 +13,11 @@ public class Produto {
     }
 
     private int estoque;
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
     private List<String> categoria;
 
     public List<String> getCategoria() {

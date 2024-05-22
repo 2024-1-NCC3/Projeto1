@@ -57,6 +57,7 @@ public class Carrinho extends AppCompatActivity {
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
     FloatingActionButton fabHome;
+    double total, saldo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,61 +197,152 @@ public class Carrinho extends AppCompatActivity {
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
             return;
         }else{
-
-            Map<String, String> headers = new HashMap<>();
-            //define os heades que a solicitação vai precisar
-            headers.put("apikey", API_KEY);
-            headers.put("Authorization", "Bearer " + accessToken);
-            headers.put("Content-Type", "application/json");
-            headers.put("Prefer", "return=representation");
+            if(verificaEstoqueESaldo()){
+                // Se Saldo for maior ou igual ao total, e a quantidade menor ou igual ao estoque
 
 
+                Map<String, String> headers = new HashMap<>();
+                //define os heades que a solicitação vai precisar
+                headers.put("apikey", API_KEY);
+                headers.put("Authorization", "Bearer " + accessToken);
+                headers.put("Content-Type", "application/json");
+                headers.put("Prefer", "return=representation");
 
-            //Faz a requisição para criar um pedido no servidor
-            ConectorAPI.conexaoArrayPOST(
-                    "/rest/v1/pedido",
-                    headers,
-                    JsonNovoPedido(),
-                    getApplicationContext(),
-                    new ConectorAPI.VolleyArrayCallback() {
-                        @Override
-                        public void onSuccess(JSONArray response) throws JSONException {
-                            idPedido = response.getJSONObject(0).getString("id_pedido");
-                            adicionarProdutosNoPedido();
-                        }
 
-                        @Override
-                        public void onError(VolleyError error) {
-                            //se a resposta for um erro, irá apresentar um Toast com o erro
-                            String body = null;
-                            try {
-                                body = new String(error.networkResponse.data, "utf-8");
-                            } catch (UnsupportedEncodingException e) {
-                                throw new RuntimeException(e);
+
+                //Faz a requisição para criar um pedido no servidor
+                ConectorAPI.conexaoArrayPOST(
+                        "/rest/v1/pedido",
+                        headers,
+                        JsonNovoPedido(),
+                        getApplicationContext(),
+                        new ConectorAPI.VolleyArrayCallback() {
+                            @Override
+                            public void onSuccess(JSONArray response) throws JSONException {
+                                idPedido = response.getJSONObject(0).getString("id_pedido");
+                                adicionarProdutosNoPedido();
                             }
-                            JSONObject data = null;
-                            try {
-                                data = new JSONObject(body);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                //se a resposta for um erro, irá apresentar um Toast com o erro
+                                String body = null;
+                                try {
+                                    body = new String(error.networkResponse.data, "utf-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                JSONObject data = null;
+                                try {
+                                    data = new JSONObject(body);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                String message = data.optString("error_description");
+                                Toast.makeText(Carrinho.this, message, Toast.LENGTH_SHORT).show();
                             }
-                            String message = data.optString("error_description");
-                            Toast.makeText(Carrinho.this, message, Toast.LENGTH_SHORT).show();
                         }
-                    }
-            );
+                );
+            }
         }
 
     }
 
     private boolean verificaEstoqueESaldo(){
+        if(verificarSaldo() && verificarEstoque()){
+            return true;
+        }else{
+            return false;
+        }
 
-        return false;
     }
 
-    private boolean verificarEstoque(){
+    private boolean verificarSaldo(){
+        Map<String, String> headers = new HashMap<>();
 
-    };
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        ConectorAPI.conexaoArrayGET(
+                "/rest/v1/usuarios?select=*",
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+                        JSONObject objCliente = response.getJSONObject(0);
+                        saldo = objCliente.getDouble("saldo");
+                         total = 0;
+                         for(Produto produto: produtos){
+                             total += produto.getPreco()*produto.getQuantidade();
+                         }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                }
+
+        );
+        if(saldo < total){
+            Toast.makeText(this, "Saldo insuficiente", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            return true;
+        }
+    }
+    private boolean verificarEstoque(){
+        Map<Integer,Integer> relacaoEstoque = new HashMap<>();
+        String produtosDoPedido = "";
+        for(Produto produto:produtos){
+            produtosDoPedido += produto.getId() +",";
+        }
+        produtosDoPedido = produtosDoPedido.substring(0,produtosDoPedido.length()-1);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        ConectorAPI.conexaoArrayGET(
+                "/rest/v1/produtos?select=*," +
+                        "categoria(nome_categoria)," +
+                        "estoque(quantidade)" +
+                        "&id_produto=in.(" + produtosDoPedido + ")",
+                headers,
+                getApplicationContext(),
+                new ConectorAPI.VolleyArrayCallback() {
+                    @Override
+                    public void onSuccess(JSONArray response) throws JSONException {
+
+
+                        for(int i = 0; i<response.length();i++){
+                            JSONObject objEstoque = response.getJSONObject(i);
+                            int idProduto = objEstoque.getInt("id_produto");
+                            JSONObject estoque = objEstoque.getJSONObject("estoque");
+                            int quantidadeEstoque = estoque.getInt("quantidade");
+
+                            relacaoEstoque.put(idProduto,quantidadeEstoque);
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                }
+
+        );
+
+        for(Produto produto:produtos){
+            //Se a quantidade selecionada for maior que o estoque da tia, retorna falso
+            if(produto.getQuantidade() > relacaoEstoque.get(produto.getId()) ){
+                Toast.makeText(this, "Não temos mais o produto: " + produto.getNome() +" em estoque.", Toast.LENGTH_SHORT).show();
+                return false;
+            };
+        }
+        return true;
+    }
     private JSONArray JsonNovoPedido() throws JSONException {
         Log.i("SUpabase", date);
 
