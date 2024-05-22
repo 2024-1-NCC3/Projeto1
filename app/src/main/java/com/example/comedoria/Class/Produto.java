@@ -8,6 +8,16 @@ public class Produto {
     private int id;
     private double preco;
 
+    public int getEstoque() {
+        return estoque;
+    }
+
+    private int estoque;
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
     private List<String> categoria;
 
     public List<String> getCategoria() {
@@ -47,13 +57,14 @@ public class Produto {
     public void setId(int id) {
         this.id = id;
     }
-    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg) {
+    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg, int estoque) {
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
         this.ingrediente = ingrediente;
         this.id = id;
         this.categoria = categoria;
+        this.estoque = estoque;
     }
 
     public Produto(String nome, double preco, int quantidade) {
