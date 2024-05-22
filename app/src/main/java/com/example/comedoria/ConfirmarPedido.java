@@ -2,11 +2,15 @@ package com.example.comedoria;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,6 +21,9 @@ import com.example.comedoria.Adapter.AdapterConfirmar;
 import com.example.comedoria.Class.Pedido;
 import com.example.comedoria.Class.Produto;
 import com.google.gson.Gson;
+import com.journeyapps.barcodescanner.CaptureActivity;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,6 +109,7 @@ public class ConfirmarPedido extends AppCompatActivity {
 
     }
     public void confirmarRetirada(View view) throws JSONException {
+        scanCode();
 
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
@@ -140,4 +148,42 @@ public class ConfirmarPedido extends AppCompatActivity {
 
         return retorno;
     }
+
+    private void scanCode(){
+        ScanOptions options = new ScanOptions();
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
+        if(result.getContents() != null){
+            String id_pedido = pedido.getId_pedido();
+            if((result.getContents()).equals(id_pedido)){
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmarPedido.this);
+                builder.setTitle("QRCode certo");
+                builder.setMessage(result.getContents());
+                Log.i("código pedido", result.getContents());
+                Log.i("id pedido", pedido.getId_pedido());
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+            }
+            else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmarPedido.this);
+                builder.setTitle("QRCode errado");
+                builder.setMessage(result.getContents());
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+            }
+        }
+    });
 }
