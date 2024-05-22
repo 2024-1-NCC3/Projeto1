@@ -10,31 +10,51 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Um adaptador para exibir produtos em um RecyclerView.
+ */
 public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHolder1> {
     private List<Produto> listaProdutos;
     private android.content.Context context;
 
+    /**
+     * Define uma nova lista filtrada de produtos e notifica o RecyclerView para atualizar.
+     *
+     * @param listaFiltrada A lista filtrada de produtos.
+     */
     public void setFilteredList(List<Produto> listaFiltrada){
         listaProdutos = listaFiltrada;
         notifyDataSetChanged();
     };
+
+    /**
+     * Construtor do AdapterProduto.
+     *
+     * @param context O contexto onde o adapter será usado.
+     * @param lista   A lista de produtos a ser exibida.
+     */
     public AdapterProduto(Context context, List<Produto> lista){
         this.listaProdutos = lista;
         this.context = context;
     }
-    @NonNull
 
+    /**
+     * Cria novas instâncias de MyViewHolder1, associando-as ao layout card_produto.
+     *
+     * @param parent   O ViewGroup pai onde a nova View será adicionada após ser anexada a uma ViewHolder.
+     * @param viewType O tipo de view do novo View.
+     * @return Uma nova instância de MyViewHolder1.
+     */
+    @NonNull
     @Override
     public MyViewHolder1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemLista = LayoutInflater.from(parent.getContext())
@@ -42,6 +62,12 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         return new MyViewHolder1(itemLista);
     }
 
+    /**
+     * Atualiza o conteúdo de um ViewHolder para refletir o item na posição dada.
+     *
+     * @param holder   O ViewHolder que deve ser atualizado para representar o conteúdo do item na posição dada no conjunto de dados.
+     * @param position A posição do item dentro dos dados.
+     */
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder1 holder, int position) {
@@ -71,21 +97,40 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
             }
         });
     }
+
+    /**
+     * Retorna o número total de itens no conjunto de dados mantido pelo adaptador.
+     *
+     * @return O número total de itens.
+     */
     @Override
     public int getItemCount() {
-
         return listaProdutos.size();
     }
+
+    /**
+     * Retorna a lista de produtos.
+     *
+     * @return A lista de produtos.
+     */
     public List<Produto> getListaProdutos(){
         return this.listaProdutos;
     }
 
+    /**
+     * Classe ViewHolder que representa os itens de dados e as views sobrepostas a eles.
+     */
     public class MyViewHolder1 extends  RecyclerView.ViewHolder{
         TextView descricaoProduto;
         ImageView imgProduto;
         CheckBox cbProduto;
         View rootView;
 
+        /**
+         * Construtor de MyViewHolder1.
+         *
+         * @param itemView A view inflada a ser usada como item de um RecyclerView.
+         */
         @SuppressLint("ResourceAsColor")
         public MyViewHolder1(View itemView){
             super(itemView);
@@ -93,13 +138,6 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
             cbProduto = itemView.findViewById(R.id.cbProduto);
             descricaoProduto = itemView.findViewById(R.id.descricaoProduto);
             imgProduto = itemView.findViewById(R.id.imageProduto);
-
-
-
         }
-
-
     }
-
-
 }
