@@ -111,32 +111,7 @@ public class ConfirmarPedido extends AppCompatActivity {
     public void confirmarRetirada(View view) throws JSONException {
         scanCode();
 
-        Map<String, String> headers = new HashMap<>();
-        headers.put("apikey", API_KEY);
-        headers.put("Authorization", "Bearer " + accessToken);
-        headers.put("Content-Type", "application/json");
-        headers.put("Prefer", "return=representation");
 
-        ConectorAPI.conexaoArrayPATCH(
-                "/rest/v1/pedido?id_pedido=eq." + pedido.getId_pedido(),
-                headers,
-                gerarJSONArrayConfirmacao(),
-                getApplicationContext(),
-                new ConectorAPI.VolleyArrayCallback() {
-                    @Override
-                    public void onSuccess(JSONArray response) throws JSONException {
-                        Toast.makeText(ConfirmarPedido.this, "Pedido Confirmado", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(VolleyError error) {
-
-                    }
-                }
-
-
-        );
     }
 
     private JSONArray gerarJSONArrayConfirmacao() throws JSONException {
@@ -159,8 +134,8 @@ public class ConfirmarPedido extends AppCompatActivity {
 
     ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
         if(result.getContents() != null){
-            String id_pedido = pedido.getId_pedido();
-            if((result.getContents()).equals(id_pedido)){
+            String numPedido = String.valueOf(pedido.getNumeroPedido());
+            if(result.getContents() == numPedido){
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmarPedido.this);
                 builder.setTitle("QRCode certo");
                 builder.setMessage(result.getContents());

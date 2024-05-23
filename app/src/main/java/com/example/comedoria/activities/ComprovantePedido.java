@@ -174,7 +174,7 @@ public class ComprovantePedido extends AppCompatActivity {
     }
 
     public void generateQR(){
-        String textQr = String.valueOf(comprovante.getNumeroPedido()).toString();
+        String textQr = String.valueOf(comprovante.getNumeroPedido());
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(textQr, BarcodeFormat.QR_CODE, 700, 700);
