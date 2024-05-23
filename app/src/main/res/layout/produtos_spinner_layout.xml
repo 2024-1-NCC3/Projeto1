@@ -4,5 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Ordenar"
-    android:textColor="@color/verde_fundo_categoria"
+    android:textColor="@color/bege"
     android:textSize="20sp" />

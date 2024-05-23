@@ -4,14 +4,24 @@ public class Categoria {
     private String nome;
     private String Descricao;
     private String caminho;
-
     private Boolean aparecer;
+
+    private int idCategoria;
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
 
     public Categoria(String nome, String descricao, String caminho, boolean aparecer) {
         this.nome = nome;
         Descricao = descricao;
         this.caminho = caminho;
         this.aparecer = aparecer;
+    }
+
+    public Categoria(String nome, int idCategoria) {
+        this.nome = nome;
+        this.idCategoria = idCategoria;
     }
 
     public Boolean getAparecer() {
@@ -43,5 +53,10 @@ public class Categoria {
 
     public void setCaminho(String caminho) {
         this.caminho = caminho;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

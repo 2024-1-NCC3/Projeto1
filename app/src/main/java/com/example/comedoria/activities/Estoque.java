@@ -147,7 +147,7 @@ public class Estoque extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,estoque(quantidade)",
+                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -200,6 +200,7 @@ public class Estoque extends AppCompatActivity {
 
     public void IrTelaCadastroProduto(View view){
         Intent i = new Intent(Estoque.this, Activity_Adicionar_Produtos.class);
+        i.putExtra("accessToken", accessToken);
         startActivity(i);
     }
 
@@ -223,6 +224,44 @@ public class Estoque extends AppCompatActivity {
         i.putExtra("quantidadeProduto", quantidade);
         i.putExtra("accessToken", accessToken);
         startActivity(i);
+    }
+    // TODO: 22/05/2024 Receber dados dos campos para atualizar o estoque
+    private void alterarEstoque() throws JSONException {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("apikey", API_KEY);
+        headers.put("Authorization", "Bearer " + accessToken);
+        headers.put("Content-Type", "application/json");
+        headers.put("Prefer", "return=representation");
+
+        for(Produto produto: produtos){
+            JSONObject objCorpo = new JSONObject();
+
+            //objCorpo.put("quantidade", /*quantidadeEstoque*/);
+
+            JSONArray req = new JSONArray();
+            req.put(objCorpo);
+
+            ConectorAPI.conexaoArrayPATCH(
+                    "/rest/v1/estoque?id_estoque=eq."  /*+ idEstoque */,
+                    headers,
+                    req,
+                    getApplicationContext(),
+                    new ConectorAPI.VolleyArrayCallback() {
+                        @Override
+                        public void onSuccess(JSONArray response) throws JSONException {
+                            Toast.makeText(Estoque.this, "Estoque alterado", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) throws JSONException {
+
+                        }
+                    }
+
+
+            );
+
+        }
     }
 
 }

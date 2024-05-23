@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ConectorAPI {
+    public RequestQueue requestQueue;
     //Interface para respostas JsonObject
     public interface VolleySingleCallback {
         void onSuccess(JSONObject response) throws JSONException;
@@ -38,7 +39,8 @@ public class ConectorAPI {
     //Json Object
     //Com corpo de solicitação
     public static void conexaoSinglePOST(String endpoint, JSONObject dadosDeSolicitacao,
-                                   Map<String, String> headers,Context context, VolleySingleCallback callback){
+                                   Map<String, String> headers,
+                                         Context context,VolleySingleCallback callback){
         String url = API_URL + endpoint;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
