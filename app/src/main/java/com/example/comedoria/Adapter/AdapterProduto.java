@@ -79,7 +79,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         holder.imgProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((Produtos)context).abrirIngredientes(produto.getId(), produto.getNome(), produto.getCaminhoImg(),
+                ((Produtos)context).abrirIngredientes(produto.getNome(), produto.getCaminhoImg(),
                         produto.getIngrediente());
             }
         });

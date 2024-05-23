@@ -313,10 +313,9 @@ public class Produtos extends AppCompatActivity {
         }
     }
 
-    public void abrirIngredientes(int idProduto, String nome, String caminhoImg, String ingredientes){
+    public void abrirIngredientes(String nome, String caminhoImg, String ingredientes){
         LayoutInflater inflater = getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(nome);
         View view = inflater.inflate(R.layout.sample, null);
         ImageView imageView = view.findViewById(R.id.dialog_imageview);
 
@@ -324,9 +323,11 @@ public class Produtos extends AppCompatActivity {
                 .load(caminhoImg)
                 .into(imageView);
 
-        TextView textView = view.findViewById(R.id.txtIngredientes);
+        TextView txtIngredientes = view.findViewById(R.id.txtIngredientes);
+        TextView txtTitulo = view.findViewById(R.id.txtTitulo);
 
-        textView.setText(ingredientes);
+        txtTitulo.setText(nome);
+        txtIngredientes.setText(ingredientes);
 
         builder.setView(view);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
