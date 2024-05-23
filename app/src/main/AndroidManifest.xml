@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Comedoria"
         tools:targetApi="31">
         <activity
-            android:name=".activities.modificar_produto"
+            android:name=".activities.ModificarProduto"
             android:exported="false" />
         <activity
             android:name=".Activity_Adicionar_Produtos"

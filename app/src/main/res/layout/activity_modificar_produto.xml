@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFEEE1"
-    tools:context=".activities.modificar_produto">
+    tools:context=".activities.ModificarProduto">
 
     <Button
         android:id="@+id/btnEnviarAlteracao"
