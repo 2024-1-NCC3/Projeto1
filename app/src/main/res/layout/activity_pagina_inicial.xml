@@ -36,7 +36,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/roda_pe"
-        android:layout_width="449dp"
+        android:layout_width="0dp"
         android:layout_height="83dp"
         android:background="#403832"
         app:layout_constraintBottom_toBottomOf="parent"

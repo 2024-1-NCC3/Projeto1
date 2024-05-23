@@ -94,8 +94,6 @@ public class ModificarProduto extends AppCompatActivity {
         }
 
         private void atualizarProduto(int quantidadeEstoque, double precoEstoque) throws JSONException {
-            Toast.makeText(this, "Vai rodara qui", Toast.LENGTH_SHORT).show();
-
             Map<String, String> headers = new HashMap<>();
             //define os heades que a solicitação vai precisar
             headers.put("apikey", API_KEY);
@@ -169,5 +167,9 @@ public class ModificarProduto extends AppCompatActivity {
         retorno.put(produtoEstoque);
 
         return retorno;
+    }
+
+    public void voltarTelaModProduto(View view){
+        finish();
     }
 }
