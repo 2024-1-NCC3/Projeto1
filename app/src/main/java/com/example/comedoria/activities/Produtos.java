@@ -2,25 +2,32 @@ package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 import com.example.comedoria.Adapter.AdapterProduto;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.ConfirmarPedido;
 import com.example.comedoria.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -304,6 +311,30 @@ public class Produtos extends AppCompatActivity {
         public int compare(Produto produto, Produto t1) {
             return produto.getNome().compareTo(t1.getNome());
         }
+    }
+
+    public void abrirIngredientes(int idProduto, String nome, String caminhoImg, String ingredientes){
+        LayoutInflater inflater = getLayoutInflater();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(nome);
+        View view = inflater.inflate(R.layout.sample, null);
+        ImageView imageView = view.findViewById(R.id.dialog_imageview);
+
+        Glide.with(this)
+                .load(caminhoImg)
+                .into(imageView);
+
+        TextView textView = view.findViewById(R.id.txtIngredientes);
+
+        textView.setText(ingredientes);
+
+        builder.setView(view);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).show();
     }
 
 
