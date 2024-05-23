@@ -266,7 +266,6 @@ public class Produtos extends AppCompatActivity {
             }
         });
 
-
         // Configuração do Dropdown de filtragem
         spinnerCategoria = findViewById(R.id.spinner_categoria);
 
@@ -274,6 +273,7 @@ public class Produtos extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
+
         adapter2.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
         spinnerCategoria.setAdapter(adapter2);
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -305,6 +305,7 @@ public class Produtos extends AppCompatActivity {
             return produto.getNome().compareTo(t1.getNome());
         }
     }
+
 
 
 }

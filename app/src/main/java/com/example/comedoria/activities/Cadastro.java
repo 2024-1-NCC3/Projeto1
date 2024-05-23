@@ -11,7 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 
@@ -25,6 +27,7 @@ public class Cadastro extends AppCompatActivity {
 
     private EditText inputNome, inputSobrenome,
             inputEmail, inputSenha,inputConfirmarEmail, inputConfirmarSenha;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,7 @@ public class Cadastro extends AppCompatActivity {
         if(verificarCampos()){
             JSONObject dadosCadastro = new JSONObject();
             JSONObject dadosCliente = new JSONObject();
+            RequestQueue filaRequest = Volley.newRequestQueue(this);
 
             //define os heades que a solicitação vai precisar
 

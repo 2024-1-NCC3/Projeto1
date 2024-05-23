@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.comedoria.BuildConfig;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
@@ -34,6 +35,8 @@ public class Login extends AppCompatActivity {
         //Atribuir os inputs para login
         txtInput = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
+        filaRequest = Volley.newRequestQueue(this);
+
     }
     public void cadastro(View view){
         Intent i = new Intent(this, Cadastro.class);
@@ -87,7 +90,7 @@ public class Login extends AppCompatActivity {
                                 intent.putExtra("idUsuario",idUsuario);
                                 startActivity(intent);
                                 finish();
-                            }else{
+                            }else if(papel == 1){
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, perfilAdm.class);
                                 intent.putExtra("accessToken", acessToken);
