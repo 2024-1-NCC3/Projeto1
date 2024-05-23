@@ -53,7 +53,7 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
     String ingrediente, accessToken;
     int quantidade;
     String categoria;
-    int tipo, idCategoria;
+    int  idCategoria;
 
     List<Categoria> categorias = new ArrayList<>();
     SpinnerAdapterCategoria adapterSpinner;

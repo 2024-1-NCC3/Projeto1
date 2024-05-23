@@ -249,7 +249,7 @@ public class Produtos extends AppCompatActivity {
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.filtro_ordenar,
-                R.layout.color_spinner_layout
+                R.layout.produtos_spinner_layout
         );
         arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
         spinnerOrdenar.setAdapter(arrayAdapter);
@@ -272,7 +272,7 @@ public class Produtos extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
+        adapter2 = new ArrayAdapter<>(this, R.layout.produtos_spinner_layout, listaCategorias);
 
         adapter2.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
         spinnerCategoria.setAdapter(adapter2);
