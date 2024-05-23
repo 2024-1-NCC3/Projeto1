@@ -147,7 +147,7 @@ public class Estoque extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,estoque(quantidade)",
+                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -161,10 +161,12 @@ public class Estoque extends AppCompatActivity {
                                 Double preco = jsonObject.getDouble("preco");
                                 JSONObject estoque = jsonObject.getJSONObject("estoque");
                                 int quantidade = estoque.getInt("quantidade");
+                                int idEstoque = estoque.getInt("id_estoque");
+
                                 String caminhoImagem = jsonObject.getString("caminho_imagem");
                                 int id = jsonObject.getInt("id_produto");
 
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade));
+                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade,idEstoque));
                             }
                         }
                         adapterEstoque.notifyDataSetChanged();
@@ -214,13 +216,14 @@ public class Estoque extends AppCompatActivity {
         finish();
     }
 
-    public void irModificarProduto(int idProduto, String nome, String caminhoImg, int quantidade, double preco){
-        Intent i = new Intent(this, modificar_produto.class);
+    public void irModificarProduto(int idProduto, String nome, String caminhoImg, int quantidade, double preco, int idEstoque){
+        Intent i = new Intent(this, ModificarProduto.class);
         i.putExtra("idProduto", idProduto);
         i.putExtra("imgProduto", caminhoImg);
         i.putExtra("nomeProduto", nome);
         i.putExtra("precoProduto", preco);
         i.putExtra("quantidadeProduto", quantidade);
+        i.putExtra("idEstoque", idEstoque);
         i.putExtra("accessToken", accessToken);
         startActivity(i);
     }

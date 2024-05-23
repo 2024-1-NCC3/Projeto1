@@ -188,5 +188,42 @@ public class ConectorAPI {
         RequestQueue filaRequest = Volley.newRequestQueue(context);
         filaRequest.add(request);
     }
+    public static void conexaoSinglePATCH(String endpoint, JSONObject dadosDeSolicitacao,
+                                         Map<String, String> headers,Context context, VolleySingleCallback callback){
+        String url = API_URL + endpoint;
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.PATCH,
+                url,
+                dadosDeSolicitacao,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+        RequestQueue filaRequest = Volley.newRequestQueue(context);
+        filaRequest.add(request);
+    }
+
 }
 
