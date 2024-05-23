@@ -103,6 +103,7 @@ public class ComprovantePedido extends AppCompatActivity {
                             String status = resposta.getString("status");
                             String observacoes = resposta.getString("observacoes");
                             int numeroPedido = resposta.getInt("numero_pedido");
+                            String idPedido = resposta.getString("id_pedido");
                             String dataRetirada = resposta.getString("data_para_retirada");
                             String horaRetirada = resposta.getString("hora_para_retirada");
 
@@ -121,7 +122,7 @@ public class ComprovantePedido extends AppCompatActivity {
                                 listaProdutos.add(new Produto(nomeProd,preco,quantidade));
                             }
 
-                            comprovante = new Comprovante(status,observacoes,numeroPedido,dataRetirada,horaRetirada,listaProdutos);
+                            comprovante = new Comprovante(status,observacoes,numeroPedido,dataRetirada,horaRetirada,listaProdutos, idPedido);
                             Log.i("Supabase", comprovante.toString());
 
                             tituloPedido.setText("Pedido nº " +comprovante.getNumeroPedido());
@@ -174,7 +175,7 @@ public class ComprovantePedido extends AppCompatActivity {
     }
 
     public void generateQR(){
-        String textQr = String.valueOf(comprovante.getNumeroPedido());
+        String textQr = String.valueOf(comprovante.getIdPedido());
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(textQr, BarcodeFormat.QR_CODE, 700, 700);

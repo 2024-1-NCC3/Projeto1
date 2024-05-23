@@ -8,15 +8,18 @@ public class Comprovante {
     private int numeroPedido;
     private String dataRetirada;
     private String horaRetirada;
+
+    private String idPedido;
     private List<Produto> listaProdutos;
 
-    public Comprovante(String status, String observacoes, int numeroPedido, String dataRetirada, String horaRetirada, List<Produto> listaProdutos) {
+    public Comprovante(String status, String observacoes, int numeroPedido, String dataRetirada, String horaRetirada, List<Produto> listaProdutos, String idPedido) {
         this.status = status;
         this.observacoes = observacoes;
         this.numeroPedido = numeroPedido;
         this.dataRetirada = dataRetirada;
         this.horaRetirada = horaRetirada;
         this.listaProdutos = listaProdutos;
+        this.idPedido = idPedido;
     }
 
     public String getStatus() {
@@ -42,4 +45,6 @@ public class Comprovante {
     public List<Produto> getListaProdutos() {
         return listaProdutos;
     }
+
+    public String getIdPedido() {return idPedido;}
 }
