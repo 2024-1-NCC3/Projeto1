@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -197,6 +198,7 @@ public class Produtos extends AppCompatActivity {
                 String nomeProduto = objProduto.getString("nome_produto");
                 Double preco = objProduto.getDouble("preco");
                 String caminhoImagem = objProduto.getString("caminho_imagem");
+                String ingredientes = objProduto.getString("ingredientes");
 
                 JSONObject estoque = objProduto.getJSONObject("estoque");
                 int quantidadeEstoque = estoque.getInt("quantidade");
@@ -211,7 +213,7 @@ public class Produtos extends AppCompatActivity {
                     }
                 }
 
-                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidadeEstoque));
+                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidadeEstoque, ingredientes));
 
             }
         }
@@ -328,6 +330,7 @@ public class Produtos extends AppCompatActivity {
 
         txtTitulo.setText(nome);
         txtIngredientes.setText(ingredientes);
+        Log.i("Ingredientes", ingredientes);
 
         builder.setView(view);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

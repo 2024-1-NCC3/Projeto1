@@ -72,6 +72,16 @@ public class Produto {
         this.estoque = estoque;
     }
 
+    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg, int estoque, String ingrediente) {
+        this.nome = nome;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+        this.ingrediente = ingrediente;
+        this.id = id;
+        this.categoria = categoria;
+        this.estoque = estoque;
+    }
+
     public Produto(String nome, double preco, int quantidade) {
         this.nome = nome;
         this.preco = preco;
