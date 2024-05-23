@@ -295,6 +295,10 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
 
         );
     }
+
+    public void voltarTelaAddProdutos(View view){
+        finish();
+    }
 }
 
 

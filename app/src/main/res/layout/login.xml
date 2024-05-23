@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.137"
-        app:srcCompat="@drawable/comedoria_logotipo" />
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView"
@@ -93,8 +93,9 @@
                 android:layout_width="151dp"
                 android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono_thin"
-                android:hint="email ou cpf"
+                android:hint="email"
                 android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="#80000000"

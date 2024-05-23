@@ -12,10 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comedoria.Class.Produto;
+import com.example.comedoria.ConfirmarPedido;
 import com.example.comedoria.R;
+import com.example.comedoria.activities.Estoque;
+import com.example.comedoria.activities.Produtos;
 import com.squareup.picasso.Picasso;
 
 
@@ -69,6 +73,14 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
                 produto.setSelecionado(!produto.isSelecionado());
                 Log.i("Checkboxes", produto.getNome());
 
+            }
+        });
+
+        holder.imgProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((Produtos)context).abrirIngredientes(produto.getNome(), produto.getCaminhoImg(),
+                        produto.getIngrediente());
             }
         });
     }

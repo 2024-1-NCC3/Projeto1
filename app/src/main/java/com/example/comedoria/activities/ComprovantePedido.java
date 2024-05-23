@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +26,12 @@ import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 
 import org.json.JSONArray;
@@ -40,6 +48,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class ComprovantePedido extends AppCompatActivity {
+
+    ImageView imgQRCode;
 
     String numPedido;
     TextView textData, tituloPedido, statusPedido;
@@ -64,6 +74,7 @@ public class ComprovantePedido extends AppCompatActivity {
         textData = findViewById(R.id.textData);
         tituloPedido = findViewById(R.id.tituloNumPedido);
         statusPedido = findViewById(R.id.statusPedido);
+        imgQRCode = findViewById(R.id.imgQRCode);
 
         adapterResumoPedido = new AdapterResumoPedido(produtos, this);
         recyclerResumo = findViewById(R.id.recycleResumo);
@@ -92,6 +103,7 @@ public class ComprovantePedido extends AppCompatActivity {
                             String status = resposta.getString("status");
                             String observacoes = resposta.getString("observacoes");
                             int numeroPedido = resposta.getInt("numero_pedido");
+                            String idPedido = resposta.getString("id_pedido");
                             String dataRetirada = resposta.getString("data_para_retirada");
                             String horaRetirada = resposta.getString("hora_para_retirada");
 
@@ -110,11 +122,13 @@ public class ComprovantePedido extends AppCompatActivity {
                                 listaProdutos.add(new Produto(nomeProd,preco,quantidade));
                             }
 
-                            comprovante = new Comprovante(status,observacoes,numeroPedido,dataRetirada,horaRetirada,listaProdutos);
+                            comprovante = new Comprovante(status,observacoes,numeroPedido,dataRetirada,horaRetirada,listaProdutos, idPedido);
                             Log.i("Supabase", comprovante.toString());
 
                             tituloPedido.setText("Pedido nº " +comprovante.getNumeroPedido());
                             statusPedido.setText(comprovante.getStatus());
+
+                            generateQR();
 
                             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
                             SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
@@ -158,6 +172,19 @@ public class ComprovantePedido extends AppCompatActivity {
     }
     public void atualizarLista(List<Produto> listaAtualizada){
         this.produtos = listaAtualizada;
+    }
+
+    public void generateQR(){
+        String textQr = String.valueOf(comprovante.getIdPedido());
+        MultiFormatWriter writer = new MultiFormatWriter();
+        try {
+            BitMatrix matrix = writer.encode(textQr, BarcodeFormat.QR_CODE, 700, 700);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
+            imgQRCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -54,18 +54,14 @@
             app:layout_constraintVertical_bias="0.012" />
 
         <ImageView
-            android:id="@+id/imgQRcode"
-            android:layout_width="201dp"
-            android:layout_height="193dp"
-            android:layout_marginTop="15dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
+            android:id="@+id/imgQRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/statusPedido"
-            app:srcCompat="@drawable/imgstrogonofffrango"
-            tools:srcCompat="@color/black" />
+            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
