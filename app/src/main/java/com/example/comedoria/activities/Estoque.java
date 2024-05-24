@@ -88,8 +88,6 @@ public class Estoque extends AppCompatActivity {
             JSONArray req = new JSONArray();
 
             req.put(body);
-
-        /**define os headers que a solicitação vai precisar*/
             String url = API_URL + "/rest/v1/estoque?some_column=eq.someValue";
 
             JsonArrayRequest request = new JsonArrayRequest(
