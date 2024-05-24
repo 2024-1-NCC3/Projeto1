@@ -32,6 +32,7 @@ public class Add_Funcionario extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_funcionario);
 
@@ -46,6 +47,7 @@ public class Add_Funcionario extends AppCompatActivity {
 
     }
 
+    /**Função de cadastrar um novo funcionário*/
     public void Cadastrar(View view){
         if(verificarCamposFun()){
             JSONObject dadosCadastro = new JSONObject();
@@ -62,6 +64,7 @@ public class Add_Funcionario extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
+            /**Configura os headers para a requisição*/
             Map<String, String> headers = new HashMap<>();
             headers.put("apikey", API_KEY);
             headers.put("Content-Type", "application/json");
@@ -126,6 +129,7 @@ public class Add_Funcionario extends AppCompatActivity {
 
     }
 
+    /**Verifica se os campos estão no padrão correto e se não estão vazios*/
     private boolean verificarCamposFun(){
         //Verifica se o campo Nome não está vazio
         if(inputNomeFun.getText().toString().trim().equals("")){
@@ -161,6 +165,8 @@ public class Add_Funcionario extends AppCompatActivity {
 
         return true;
     }
+
+    /**Verifica se o padrão do email inserido está correto*/
     private void definirListenerDoEmail(){
         inputEmailFun.addTextChangedListener(new TextWatcher() {
             @Override
@@ -192,12 +198,13 @@ public class Add_Funcionario extends AppCompatActivity {
         });
     }
 
-
+    /**Configura o botão de cancelar o cadastro do funcionário e voltar pra tela anterior*/
     public void CancelarCasdastroFun(View view){
         Intent i = new Intent(getApplicationContext(), perfilAdm.class);
         startActivity(i);
     }
 
+    /**Função para relacionar no banco de dados o usuário com o seu papel específico (funcionário ou cliente)*/
     private void relacionarUsuarioPapel(String id, Map<String, String> headerCliente) throws JSONException {
         JSONObject dadosSolicitacao = new JSONObject();
 
