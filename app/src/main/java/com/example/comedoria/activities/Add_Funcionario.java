@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,7 +26,7 @@ import java.util.Map;
 
 public class Add_Funcionario extends AppCompatActivity {
 
-    private EditText inputNomeFun, inputSobrenomeFun, inputCpfFun,
+    private EditText inputNomeFun, inputSobrenomeFun,
 
     inputEmailFun, inputSenhaFun,inputConfirmarEmailFun, inputConfirmarSenhaFun;
 
@@ -34,11 +37,12 @@ public class Add_Funcionario extends AppCompatActivity {
 
         inputNomeFun = findViewById(R.id.txtNome);
         inputSobrenomeFun = findViewById(R.id.txtSobrenome);
-        inputCpfFun = findViewById(R.id.txtCpf);
         inputEmailFun = findViewById(R.id.txtEmail);
         inputConfirmarEmailFun = findViewById(R.id.txtConfirmarEmail);
         inputSenhaFun = findViewById(R.id.txtSenha);
         inputConfirmarSenhaFun = findViewById(R.id.txtConfirmarSenha);
+
+        definirListenerDoEmail();
 
     }
 
@@ -87,7 +91,7 @@ public class Add_Funcionario extends AppCompatActivity {
 
                             dadosSolicitacao.put("primeiro_nome", inputNomeFun.getText());
                             dadosSolicitacao.put("ultimo_nome", inputSobrenomeFun.getText());
-                            dadosSolicitacao.put("id_papel", 2);
+                            dadosSolicitacao.put("id_papel", 1);
                             dadosSolicitacao.put("id_user", id);
 
                             ConectorAPI.conexaoSinglePOST(
@@ -104,9 +108,8 @@ public class Add_Funcionario extends AppCompatActivity {
                                         @Override
                                         //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
 
-                                        public void onError(VolleyError error) {
-                                            Toast.makeText(Add_Funcionario.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                                            finish();
+                                        public void onError(VolleyError error) throws JSONException {
+                                            relacionarUsuarioPapel(id,headerCliente);
                                         }
                                     }
                             );
@@ -158,8 +161,36 @@ public class Add_Funcionario extends AppCompatActivity {
 
         return true;
     }
+    private void definirListenerDoEmail(){
+        inputEmailFun.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputEmailFun.setError("Email inválido");
+                }
+            }
+        });
+        inputConfirmarEmailFun.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputConfirmarEmailFun.setError("Email inválido");
+                }
+            }
+        });
+    }
 
 
     public void CancelarCasdastroFun(View view){
@@ -167,4 +198,32 @@ public class Add_Funcionario extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void relacionarUsuarioPapel(String id, Map<String, String> headerCliente) throws JSONException {
+        JSONObject dadosSolicitacao = new JSONObject();
+
+        dadosSolicitacao.put("id_user", id);
+        dadosSolicitacao.put("id_papel", 1);
+
+        ConectorAPI.conexaoSinglePOST(
+                "/rest/v1/usuarios_papel",
+                dadosSolicitacao,
+                headerCliente,
+                getApplicationContext(),
+                new ConectorAPI.VolleySingleCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) throws JSONException {
+                        Toast.makeText(Add_Funcionario.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
+
+                    public void onError(VolleyError error) {
+
+                        Toast.makeText(Add_Funcionario.this, "Funcionário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+        );
+    }
 }
