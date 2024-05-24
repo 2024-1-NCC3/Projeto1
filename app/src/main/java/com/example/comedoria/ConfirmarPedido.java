@@ -182,4 +182,8 @@ public class ConfirmarPedido extends AppCompatActivity {
             }
         }
     });
+
+    public void voltarTelaConfirmarPedido(View view){
+        finish();
+    }
 }

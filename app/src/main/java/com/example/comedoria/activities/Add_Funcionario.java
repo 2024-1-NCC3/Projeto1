@@ -2,9 +2,10 @@ package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
@@ -12,12 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 
@@ -27,31 +23,33 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Cadastro extends AppCompatActivity {
 
-    private EditText inputNome, inputSobrenome,
-            inputEmail, inputSenha,inputConfirmarEmail, inputConfirmarSenha;
+public class Add_Funcionario extends AppCompatActivity {
 
+    private EditText inputNomeFun, inputSobrenomeFun,
 
+    inputEmailFun, inputSenhaFun,inputConfirmarEmailFun, inputConfirmarSenhaFun;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro);
+        setContentView(R.layout.activity_add_funcionario);
 
-        inputNome = findViewById(R.id.txtNome);
-        inputSobrenome = findViewById(R.id.txtSobrenome);
-        inputEmail = findViewById(R.id.txtEmail);
-        inputConfirmarEmail = findViewById(R.id.txtConfirmarEmail);
-        inputSenha = findViewById(R.id.txtSenha);
-        inputConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
+        inputNomeFun = findViewById(R.id.txtNome);
+        inputSobrenomeFun = findViewById(R.id.txtSobrenome);
+        inputEmailFun = findViewById(R.id.txtEmail);
+        inputConfirmarEmailFun = findViewById(R.id.txtConfirmarEmail);
+        inputSenhaFun = findViewById(R.id.txtSenha);
+        inputConfirmarSenhaFun = findViewById(R.id.txtConfirmarSenha);
 
         definirListenerDoEmail();
 
     }
 
-    /**Função de cadastrar um novo usuário*/
+    /**Função de cadastrar um novo funcionário*/
     public void Cadastrar(View view){
-        if(verificarCampos()){
+        if(verificarCamposFun()){
             JSONObject dadosCadastro = new JSONObject();
             JSONObject dadosCliente = new JSONObject();
 
@@ -59,8 +57,8 @@ public class Cadastro extends AppCompatActivity {
 
 
             try {
-                dadosCadastro.put("email", inputEmail.getText());
-                dadosCadastro.put("password", inputSenha.getText());
+                dadosCadastro.put("email", inputEmailFun.getText());
+                dadosCadastro.put("password", inputSenhaFun.getText());
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -80,7 +78,7 @@ public class Cadastro extends AppCompatActivity {
                         @Override
                         public void onSuccess(JSONObject response) throws JSONException {
 
-                            /**segunda solicitação para linkar o novo user a tabela usuarios*/
+                            //segunda solicitação para linkar o novo user a tabela usuarios
                             JSONObject user = response.getJSONObject("user");
                             String id = user.getString("id");
 
@@ -94,8 +92,9 @@ public class Cadastro extends AppCompatActivity {
 
                             JSONObject dadosSolicitacao = new JSONObject();
 
-                            dadosSolicitacao.put("primeiro_nome", inputNome.getText());
-                            dadosSolicitacao.put("ultimo_nome", inputSobrenome.getText());
+                            dadosSolicitacao.put("primeiro_nome", inputNomeFun.getText());
+                            dadosSolicitacao.put("ultimo_nome", inputSobrenomeFun.getText());
+                            dadosSolicitacao.put("id_papel", 1);
                             dadosSolicitacao.put("id_user", id);
 
                             ConectorAPI.conexaoSinglePOST(
@@ -106,15 +105,14 @@ public class Cadastro extends AppCompatActivity {
                                     new ConectorAPI.VolleySingleCallback() {
                                         @Override
                                         public void onSuccess(JSONObject response) throws JSONException {
-                                            Toast.makeText(Cadastro.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Add_Funcionario.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
                                         //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
 
                                         public void onError(VolleyError error) throws JSONException {
-
-                                            relacionarUsuarioPapel(id, headerCliente);
+                                            relacionarUsuarioPapel(id,headerCliente);
                                         }
                                     }
                             );
@@ -132,35 +130,35 @@ public class Cadastro extends AppCompatActivity {
     }
 
     /**Verifica se os campos estão no padrão correto e se não estão vazios*/
-    private boolean verificarCampos(){
+    private boolean verificarCamposFun(){
         //Verifica se o campo Nome não está vazio
-        if(inputNome.getText().toString().trim().equals("")){
+        if(inputNomeFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha o Nome", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se o campo Sobrenome não está vazio
-        if(inputSobrenome.getText().toString().trim().equals("")){
+        if(inputSobrenomeFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha o sobrenome", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se o campo Email não está vazio
-        if(inputEmail.getText().toString().trim().equals("")){
+        if(inputEmailFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha o email", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se o campo senha não está vazio
-        if(inputSenha.getText().toString().trim().equals("")){
+        if(inputSenhaFun.getText().toString().trim().equals("")){
             Toast.makeText(this, "Preencha a senha", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         //Verifica se email e confirmar email são iguais
-        if(!inputEmail.getText().toString().trim().equals(inputConfirmarEmail.getText().toString().trim())){
+        if(!inputEmailFun.getText().toString().trim().equals(inputConfirmarEmailFun.getText().toString().trim())){
             Toast.makeText(this, "Os emails não são iguais", Toast.LENGTH_SHORT).show();
             return false;
         }
         //Verifica se senha e confirmar senha são iguais
-        if(!inputConfirmarSenha.getText().toString().trim().equals(inputSenha.getText().toString().trim())){
+        if(!inputConfirmarSenhaFun.getText().toString().trim().equals(inputSenhaFun.getText().toString().trim())){
             Toast.makeText(this, "As senhas não são iguais", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -168,11 +166,50 @@ public class Cadastro extends AppCompatActivity {
         return true;
     }
 
+    /**Verifica se o padrão do email inserido está correto*/
+    private void definirListenerDoEmail(){
+        inputEmailFun.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputEmailFun.setError("Email inválido");
+                }
+            }
+        });
+        inputConfirmarEmailFun.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputConfirmarEmailFun.setError("Email inválido");
+                }
+            }
+        });
+    }
+
+    /**Configura o botão de cancelar o cadastro do funcionário e voltar pra tela anterior*/
+    public void CancelarCasdastroFun(View view){
+        Intent i = new Intent(getApplicationContext(), perfilAdm.class);
+        startActivity(i);
+    }
+
     /**Função para relacionar no banco de dados o usuário com o seu papel específico (funcionário ou cliente)*/
     private void relacionarUsuarioPapel(String id, Map<String, String> headerCliente) throws JSONException {
         JSONObject dadosSolicitacao = new JSONObject();
 
         dadosSolicitacao.put("id_user", id);
+        dadosSolicitacao.put("id_papel", 1);
 
         ConectorAPI.conexaoSinglePOST(
                 "/rest/v1/usuarios_papel",
@@ -182,7 +219,7 @@ public class Cadastro extends AppCompatActivity {
                 new ConectorAPI.VolleySingleCallback() {
                     @Override
                     public void onSuccess(JSONObject response) throws JSONException {
-                        Toast.makeText(Cadastro.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Add_Funcionario.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -190,48 +227,10 @@ public class Cadastro extends AppCompatActivity {
 
                     public void onError(VolleyError error) {
 
-                        Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Add_Funcionario.this, "Funcionário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
         );
-    }
-
-    /**Cancela a ação e volta para a tela anterior*/
-    public void cancelar(View view){
-        Intent i = new Intent(getApplicationContext(), Login.class);
-        startActivity(i);
-    }
-
-    /**Verifica se o padrão do email inserido está correto*/
-    private void definirListenerDoEmail(){
-        inputEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
-                    inputEmail.setError("Email inválido");
-                }
-            }
-        });
-        inputConfirmarEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
-                    inputConfirmarEmail.setError("Email inválido");
-                }
-            }
-        });
     }
 }

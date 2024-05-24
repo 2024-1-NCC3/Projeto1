@@ -19,6 +19,9 @@
             android:name=".activities.ModificarProduto"
             android:exported="false" />
         <activity
+            android:name=".activities.Add_Funcionario"
+            android:exported="false" />
+        <activity
             android:name=".Activity_Adicionar_Produtos"
             android:exported="false" />
         <activity

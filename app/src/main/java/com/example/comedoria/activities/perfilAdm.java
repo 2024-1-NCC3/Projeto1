@@ -32,11 +32,12 @@ public class perfilAdm extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void IrAdicionarSaldo(View view){
-        Intent intent = new Intent(perfilAdm.this, AdicionarSaldo.class);
+    public void IrAddFuncionario(View view){
+        Intent intent = new Intent(perfilAdm.this, Add_Funcionario.class);
         intent.putExtra("accessToken", accessToken);
         startActivity(intent);
     }
+
 
     /**Direciona para a tela de pedidos realizados pelos clientes*/
     public void IrPedidosTia(View view){
