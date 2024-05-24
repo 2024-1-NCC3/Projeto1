@@ -8,6 +8,16 @@ public class Produto {
     private int id;
     private double preco;
 
+    public int getEstoque() {
+        return estoque;
+    }
+
+    private int estoque;
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
+
     private List<String> categoria;
 
     public List<String> getCategoria() {
@@ -21,6 +31,49 @@ public class Produto {
     private boolean selecionado = false;
 
     private int quantidade = 1;
+    private int idEstoque;
+
+    /**Construtores da classe*/
+    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg, int estoque) {
+        this.nome = nome;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+        this.ingrediente = ingrediente;
+        this.id = id;
+        this.categoria = categoria;
+        this.estoque = estoque;
+    }
+
+    public Produto(String nome, double preco, int quantidade) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    public Produto(String nome, int id, double preco, String caminhoImg) {
+        this.nome = nome;
+        this.id = id;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+    }
+
+    //Este construtor é para o estoque
+    public Produto(int id, String nome, double preco, String caminhoImg, int quantidade,int idEstoque,List<String> categoria) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.caminhoImg = caminhoImg;
+        this.ingrediente = ingrediente;
+        this.setSelecionado(false);
+        this.quantidade = quantidade;
+        this.idEstoque = idEstoque;
+        this.categoria = categoria;
+    }
+
+    /**Método Getters e Setters dos atributos da classe*/
+    public int getIdEstoque() {
+        return idEstoque;
+    }
 
     private boolean aparecer = true;
 
@@ -46,38 +99,6 @@ public class Produto {
 
     public void setId(int id) {
         this.id = id;
-    }
-    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg) {
-        this.nome = nome;
-        this.preco = preco;
-        this.caminhoImg = caminhoImg;
-        this.ingrediente = ingrediente;
-        this.id = id;
-        this.categoria = categoria;
-    }
-
-    public Produto(String nome, double preco, int quantidade) {
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
-    }
-
-    public Produto(String nome, int id, double preco, String caminhoImg) {
-        this.nome = nome;
-        this.id = id;
-        this.preco = preco;
-        this.caminhoImg = caminhoImg;
-    }
-
-    //Este construtor é para o estoque
-    public Produto(int id, String nome, double preco, String caminhoImg, int quantidade) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.caminhoImg = caminhoImg;
-        this.ingrediente = ingrediente;
-        this.setSelecionado(false);
-        this.quantidade = quantidade;
     }
 
     public boolean isSelecionado() {

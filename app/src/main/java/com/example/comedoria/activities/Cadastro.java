@@ -5,6 +5,9 @@ import static com.example.comedoria.BuildConfig.API_KEY;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,7 +15,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 
@@ -24,27 +29,32 @@ import java.util.Map;
 
 public class Cadastro extends AppCompatActivity {
 
-    private EditText inputNome, inputSobrenome, inputCpf,
+    private EditText inputNome, inputSobrenome,
             inputEmail, inputSenha,inputConfirmarEmail, inputConfirmarSenha;
 
+
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro);
 
         inputNome = findViewById(R.id.txtNome);
         inputSobrenome = findViewById(R.id.txtSobrenome);
-        inputCpf = findViewById(R.id.txtCpf);
         inputEmail = findViewById(R.id.txtEmail);
         inputConfirmarEmail = findViewById(R.id.txtConfirmarEmail);
         inputSenha = findViewById(R.id.txtSenha);
         inputConfirmarSenha = findViewById(R.id.txtConfirmarSenha);
 
+        definirListenerDoEmail();
+
     }
 
+    /**Função de cadastrar um novo usuário*/
     public void Cadastrar(View view){
         if(verificarCampos()){
             JSONObject dadosCadastro = new JSONObject();
             JSONObject dadosCliente = new JSONObject();
+            RequestQueue filaRequest = Volley.newRequestQueue(this);
 
             //define os heades que a solicitação vai precisar
 
@@ -57,6 +67,7 @@ public class Cadastro extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
+            /**Configura os headers para a requisição*/
             Map<String, String> headers = new HashMap<>();
             headers.put("apikey", API_KEY);
             headers.put("Content-Type", "application/json");
@@ -70,7 +81,7 @@ public class Cadastro extends AppCompatActivity {
                         @Override
                         public void onSuccess(JSONObject response) throws JSONException {
 
-                            //segunda solicitação para linkar o novo user a tabela usuarios
+                            /**segunda solicitação para linkar o novo user a tabela usuarios*/
                             JSONObject user = response.getJSONObject("user");
                             String id = user.getString("id");
 
@@ -86,7 +97,6 @@ public class Cadastro extends AppCompatActivity {
 
                             dadosSolicitacao.put("primeiro_nome", inputNome.getText());
                             dadosSolicitacao.put("ultimo_nome", inputSobrenome.getText());
-                            dadosSolicitacao.put("id_papel", 2);
                             dadosSolicitacao.put("id_user", id);
 
                             ConectorAPI.conexaoSinglePOST(
@@ -103,9 +113,9 @@ public class Cadastro extends AppCompatActivity {
                                         @Override
                                         //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
 
-                                        public void onError(VolleyError error) {
-                                            Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                                            finish();
+                                        public void onError(VolleyError error) throws JSONException {
+
+                                            relacionarUsuarioPapel(id, headerCliente);
                                         }
                                     }
                             );
@@ -121,6 +131,8 @@ public class Cadastro extends AppCompatActivity {
 
 
     }
+
+    /**Verifica se os campos estão no padrão correto e se não estão vazios*/
     private boolean verificarCampos(){
         //Verifica se o campo Nome não está vazio
         if(inputNome.getText().toString().trim().equals("")){
@@ -156,8 +168,71 @@ public class Cadastro extends AppCompatActivity {
 
         return true;
     }
+
+    /**Função para relacionar no banco de dados o usuário com o seu papel específico (funcionário ou cliente)*/
+    private void relacionarUsuarioPapel(String id, Map<String, String> headerCliente) throws JSONException {
+        JSONObject dadosSolicitacao = new JSONObject();
+
+        dadosSolicitacao.put("id_user", id);
+
+        ConectorAPI.conexaoSinglePOST(
+                "/rest/v1/usuarios_papel",
+                dadosSolicitacao,
+                headerCliente,
+                getApplicationContext(),
+                new ConectorAPI.VolleySingleCallback() {
+                    @Override
+                    public void onSuccess(JSONObject response) throws JSONException {
+                        Toast.makeText(Cadastro.this, "Erro ao cadastrar. Tente novamente", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    //Não sei o porquê, mas o Volley reconhece a resposta do cadastro como erro
+
+                    public void onError(VolleyError error) {
+
+                        Toast.makeText(Cadastro.this, "Usuário cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+        );
+    }
+
+    /**Cancela a ação e volta para a tela anterior*/
     public void cancelar(View view){
         Intent i = new Intent(getApplicationContext(), Login.class);
         startActivity(i);
+    }
+
+    /**Verifica se o padrão do email inserido está correto*/
+    private void definirListenerDoEmail(){
+        inputEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputEmail.setError("Email inválido");
+                }
+            }
+        });
+        inputConfirmarEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    inputConfirmarEmail.setError("Email inválido");
+                }
+            }
+        });
     }
 }

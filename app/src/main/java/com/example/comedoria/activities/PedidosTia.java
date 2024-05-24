@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.comedoria.R;
 import com.example.comedoria.Adapter.ViewPagerAdapter;
@@ -19,6 +21,7 @@ public class PedidosTia extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedidos_tia);
 
@@ -58,6 +61,19 @@ public class PedidosTia extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**Volta para a tela anterior*/
+    public void voltarTelaPedidos(View view){
+        finish();
+    }
+
+    /**Volta para a tela inicial do aplicativo*/
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
 

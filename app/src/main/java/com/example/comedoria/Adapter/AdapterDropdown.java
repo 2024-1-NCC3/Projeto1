@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-    //Adapter para popular os dropdowns dos filtros de produto
+    /**Adapter para popular os dropdowns dos filtros de produto*/
     public class AdapterDropdown extends ArrayAdapter<String> {
 
         public AdapterDropdown(@NonNull Context context, List<String> dados) {

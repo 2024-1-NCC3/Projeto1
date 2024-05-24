@@ -16,6 +16,7 @@ public class perfilAdm extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_adm);
 
@@ -24,6 +25,7 @@ public class perfilAdm extends AppCompatActivity {
         accessToken = getIntent().getStringExtra("accessToken");
     }
 
+    /**Direciona para a tela de estoque*/
     public void IrPaginaEstoque(View view){
         Intent intent = new Intent(perfilAdm.this, Estoque.class);
         intent.putExtra("accessToken", accessToken);
@@ -36,8 +38,16 @@ public class perfilAdm extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**Direciona para a tela de pedidos realizados pelos clientes*/
     public void IrPedidosTia(View view){
         Intent intent = new Intent(perfilAdm.this, PedidosTia.class);
+        intent.putExtra("accessToken", accessToken);
+        startActivity(intent);
+    }
+
+    /**Direciona para a tela de adicionar saldo para um cliente*/
+    public void IrAddSaldo(View view){
+        Intent intent = new Intent(perfilAdm.this, AdicionarSaldo.class);
         intent.putExtra("accessToken", accessToken);
         startActivity(intent);
     }

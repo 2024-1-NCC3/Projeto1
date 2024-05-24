@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class AdicionarSaldo2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_saldo2);
 
@@ -47,6 +49,7 @@ public class AdicionarSaldo2 extends AppCompatActivity {
         txtIDCliente.setText("ID Cliente: " + idCliente);
     }
 
+    /**Confirmação de escolha do usuário para adicionar saldo*/
     public void confirmarEscolha(View view){
         if(inputSaldo.getText().toString() == ""){
             Toast.makeText(this, "Insira um valor para adicionar", Toast.LENGTH_SHORT).show();
@@ -75,11 +78,11 @@ public class AdicionarSaldo2 extends AppCompatActivity {
 
 
     }
-    private void adicionarSaldo(){
-        //Consulta o saldo anterior
 
+    /**Adiciona efetivamente o saldo ao cliente solicitado*/
+    private void adicionarSaldo(){
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -105,6 +108,8 @@ public class AdicionarSaldo2 extends AppCompatActivity {
         );
 
     }
+
+    /**Coleta o saldo anterior e adiciona com o que foi acrescentado*/
     private void atualizarSaldoUsuario(double saldoAnterior) throws JSONException {
 
         Map<String, String> headers = new HashMap<>();
@@ -139,6 +144,7 @@ public class AdicionarSaldo2 extends AppCompatActivity {
         );
     }
 
+    /**Gera o corpo no formato correto para a requisição de adicionar saldo*/
     private JSONArray gerarJSONArraySaldo(double saldoAnterior) throws JSONException {
         JSONObject saldo = new JSONObject();
         double saldoParaAdicionar = Double.parseDouble(inputSaldo.getText().toString());
@@ -148,6 +154,19 @@ public class AdicionarSaldo2 extends AppCompatActivity {
         retorno.put(saldo);
 
         return retorno;
+    }
+
+    /**Volta para a tela anterior*/
+    public void voltarTelaAddSaldo(View view){
+        finish();
+    }
+
+    /**Volta para a tela inicial do aplicativo*/
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
     }
 
 }

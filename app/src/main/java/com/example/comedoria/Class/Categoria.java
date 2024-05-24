@@ -4,9 +4,11 @@ public class Categoria {
     private String nome;
     private String Descricao;
     private String caminho;
-
     private Boolean aparecer;
 
+    private int idCategoria;
+
+    /**Construtores da classe*/
     public Categoria(String nome, String descricao, String caminho, boolean aparecer) {
         this.nome = nome;
         Descricao = descricao;
@@ -14,6 +16,13 @@ public class Categoria {
         this.aparecer = aparecer;
     }
 
+    public Categoria(String nome, int idCategoria) {
+        this.nome = nome;
+        this.idCategoria = idCategoria;
+    }
+
+
+    /**Método Getters e Setters dos atributos da classe*/
     public Boolean getAparecer() {
         return aparecer;
     }
@@ -43,5 +52,14 @@ public class Categoria {
 
     public void setCaminho(String caminho) {
         this.caminho = caminho;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

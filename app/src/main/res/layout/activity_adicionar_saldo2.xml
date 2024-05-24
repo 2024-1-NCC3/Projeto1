@@ -4,36 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFEEE1"
     tools:context=".activities.AdicionarSaldo2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBarraSuperior"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtTituloAdicionarSaldo"
+            android:id="@+id/txtConfirmarPedido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/itim"
             android:text="Adicionar Saldo"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:onClick="voltarTelaAddSaldo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/voltar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="8dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +57,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/itim"
             android:text="Cliente: "
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/itim"
             android:text="ID Cliente: "
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/txtNomeClienteSaldo"
             app:layout_constraintTop_toBottomOf="@+id/txtNomeClienteSaldo" />
 
@@ -68,6 +85,7 @@
                 android:id="@+id/inputSaldo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/itim"
                 android:hint="Valor para adicionar"
                 android:inputType="number|numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -76,8 +94,10 @@
             android:id="@+id/btnAdicionarSaldo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
             android:onClick="confirmarEscolha"
             android:text="Adicionar Saldo"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/btnCancelarSaldo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -86,7 +106,10 @@
             android:id="@+id/btnCancelarSaldo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
+            android:onClick="voltarTelaAddSaldo"
             android:text="Voltar"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnAdicionarSaldo"
             app:layout_constraintStart_toStartOf="@+id/btnAdicionarSaldo" />

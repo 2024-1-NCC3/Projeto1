@@ -35,6 +35,7 @@ import java.util.Map;
 
 
 public class PedidosParaRetirar extends Fragment {
+    /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
     private RecyclerView recyclerPedidosParaRetirar;
     private List<Pedido> pedidosNaoFinalizados = new ArrayList<>();
 
@@ -70,7 +71,9 @@ public class PedidosParaRetirar extends Fragment {
 
     }
 
+    /**Requisição para buscar pedidos com status de ainda não finalizado*/
     private void buscarPedidosNaoFinalizados(){
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
         //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
@@ -100,10 +103,11 @@ public class PedidosParaRetirar extends Fragment {
                 }
         );
     }
+
+    /**Transforma o JSONArray em algo que o aplicativo entenda, como uma lista*/
     private void interpretarJsonArray(JSONArray response) throws JSONException {
         pedidosNaoFinalizados.clear();
         for(int i =0;i<response.length();i++){
-            Log.i("Reposta",response.toString());
 
             JSONObject objetoPedido = response.getJSONObject(i);
 
@@ -147,6 +151,8 @@ public class PedidosParaRetirar extends Fragment {
         }
         adapterPedido.notifyDataSetChanged();
     }
+
+    /**Vai para a tela de confirmar pedidos*/
     public void irParaConfirmarPedido(Pedido pedido){
         Gson gson = new Gson();
         String jsonString = gson.toJson(pedido);

@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,13 +39,14 @@ public class Perfil extends AppCompatActivity {
     AdapterHistorico adapterHistorico;
     List<Pedido> historico = new ArrayList<>();
     String accessToken, idUsuario;
-    TextView txtSaldo;
+    TextView txtSaldo, lblData, lblResumo, lblTotal;
 
 
 
     private Spinner spinnerData, spinnerCategoria, spinnerTipo ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
@@ -52,6 +55,20 @@ public class Perfil extends AppCompatActivity {
 
         recyclerHistorico = findViewById(R.id.recyclerHistorico);
         txtSaldo = findViewById(R.id.txtSaldo);
+        lblData = findViewById(R.id.lblData);
+        lblTotal = findViewById(R.id.lblTotal);
+
+        TextPaint paintData = lblData.getPaint();
+        float tamanhoData = paintData.measureText("00/00/00");
+        lblData.setWidth((int) (tamanhoData));
+
+        TextPaint paintResumo = lblTotal.getPaint();
+        float tamanhoTotal = paintResumo.measureText("Aguardando ");
+        lblTotal.setWidth((int) (tamanhoTotal));
+
+
+
+
         adapterHistorico = new AdapterHistorico(historico, this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -69,9 +86,10 @@ public class Perfil extends AppCompatActivity {
 
     }
 
+    /**Monta a requisição para pegar os dados do usuário e carregá-los*/
     private void pegarDadosUsuario() {
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -98,16 +116,18 @@ public class Perfil extends AppCompatActivity {
         );
     }
 
-
+    /**Busca o histórico de pedidos do usuário*/
     private void buscarHistorico(){
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
                 "/rest/v1/pedido?id_usuario=eq." + idUsuario + "&select=status,observacoes," +
-                        "numero_pedido,id_pedido,data_para_retirada,hora_para_retirada,produtos(nome_produto,preco),detalhes_pedido(quantidade)",
+                        "numero_pedido,id_pedido,data_para_retirada,hora_para_retirada," +
+                        "produtos(nome_produto,preco),detalhes_pedido(quantidade)" +
+                        "&order=data_para_retirada.desc",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -126,6 +146,7 @@ public class Perfil extends AppCompatActivity {
         );
     }
 
+    /**Função para interpretar o JsonArray que volta da requisição e transformar ele em algo interpretável pelo aplicativo*/
     private void interpretarJsonArray(JSONArray response) throws JSONException {
         for(int i =0;i<response.length();i++){
             JSONObject objetoPedido = response.getJSONObject(i);
@@ -157,6 +178,7 @@ public class Perfil extends AppCompatActivity {
         adapterHistorico.notifyDataSetChanged();
     }
 
+    /**Vai para a tela do pedido que o cliente quiser ver o comprovante*/
     public void irParaPedido(String idPedido){
         Intent i = new Intent(this, ComprovantePedido.class);
         i.putExtra("idPedido",idPedido);
@@ -164,6 +186,7 @@ public class Perfil extends AppCompatActivity {
         startActivity(i);
     }
 
+    /**Carrega a opção de busca do usuário*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -188,6 +211,10 @@ public class Perfil extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**Volta para a tela anterior*/
+    public void sair(View view){
+        finish();
+    }
 
     //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Verifica se o item de menu clicado é o item de pesquisa

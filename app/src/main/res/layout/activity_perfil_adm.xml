@@ -60,8 +60,23 @@
             app:layout_constraintHorizontal_bias="0.116"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87"
+            app:layout_constraintVertical_bias="0.813"
             app:srcCompat="@drawable/adicionar_usuario" />
+
+        <ImageView
+            android:id="@+id/btnAddSaldo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#94E986"
+            android:onClick="IrAddSaldo"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.946"
+            app:srcCompat="@drawable/saldo" />
 
         <ImageView
             android:id="@+id/btnEstoque"
@@ -75,7 +90,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.86"
+            app:layout_constraintVertical_bias="0.682"
             app:srcCompat="@drawable/estoque" />
 
         <ImageView
@@ -88,10 +103,10 @@
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.884"
+            app:layout_constraintHorizontal_bias="0.88"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87"
+            app:layout_constraintVertical_bias="0.813"
             app:srcCompat="@drawable/etiqueta" />
 
         <ImageView

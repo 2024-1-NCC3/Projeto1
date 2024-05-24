@@ -6,9 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,18 +25,31 @@ import com.example.comedoria.Class.Comprovante;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ComprovantePedido extends AppCompatActivity {
+
+    ImageView imgQRCode;
 
     String numPedido;
     TextView textData, tituloPedido, statusPedido;
@@ -46,6 +64,7 @@ public class ComprovantePedido extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprovante_pedido);
 
@@ -56,6 +75,7 @@ public class ComprovantePedido extends AppCompatActivity {
         textData = findViewById(R.id.textData);
         tituloPedido = findViewById(R.id.tituloNumPedido);
         statusPedido = findViewById(R.id.statusPedido);
+        imgQRCode = findViewById(R.id.imgQRCode);
 
         adapterResumoPedido = new AdapterResumoPedido(produtos, this);
         recyclerResumo = findViewById(R.id.recycleResumo);
@@ -66,9 +86,10 @@ public class ComprovantePedido extends AppCompatActivity {
         recyclerResumo.setAdapter(adapterResumoPedido);
     }
 
+    /**Função para buscar o pedido e exibir ele na tela*/
     public void buscarPedido(String idPedido){
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os heades que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
         ConectorAPI.conexaoArrayGET(
@@ -84,6 +105,7 @@ public class ComprovantePedido extends AppCompatActivity {
                             String status = resposta.getString("status");
                             String observacoes = resposta.getString("observacoes");
                             int numeroPedido = resposta.getInt("numero_pedido");
+                            String idPedido = resposta.getString("id_pedido");
                             String dataRetirada = resposta.getString("data_para_retirada");
                             String horaRetirada = resposta.getString("hora_para_retirada");
 
@@ -102,13 +124,23 @@ public class ComprovantePedido extends AppCompatActivity {
                                 listaProdutos.add(new Produto(nomeProd,preco,quantidade));
                             }
 
-                            comprovante = new Comprovante(status,observacoes,numeroPedido,dataRetirada,horaRetirada,listaProdutos);
+                            comprovante = new Comprovante(status,observacoes,numeroPedido,dataRetirada,horaRetirada,listaProdutos, idPedido);
                             Log.i("Supabase", comprovante.toString());
 
                             tituloPedido.setText("Pedido nº " +comprovante.getNumeroPedido());
                             statusPedido.setText(comprovante.getStatus());
 
-                            textData.setText("Retirar as: " + comprovante.getDataRetirada() + " " +comprovante.getHoraRetirada());
+                            generateQR();
+
+                            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
+                            try {
+                                Date dataFormatada = formato.parse(comprovante.getDataRetirada());
+                                textData.setText("Retirar as: " + meuFormato.format(dataFormatada) +
+                                        " "+comprovante.getHoraRetirada());
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
 
                             adapterResumoPedido.setListaProduto(comprovante.getListaProdutos());
                             adapterResumoPedido.notifyDataSetChanged();
@@ -122,15 +154,43 @@ public class ComprovantePedido extends AppCompatActivity {
                 }
         );
     }
+
+    /**Volta para a tela anterior*/
+    public void voltarTelaComprovante(View view){
+        finish();
+    }
+
+    /**Volta para a tela inicial do aplicativo*/
+    public void voltarInicio(View view){
+        Intent intent = new Intent(this, PaginaInicial.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+
+    
     private void interpretarJsonArray(JSONArray response){
 
     }
+
+    /**Função de atualizar a lista da RecyclerView*/
     public void atualizarLista(List<Produto> listaAtualizada){
         this.produtos = listaAtualizada;
     }
 
-
-
-
+    /**Função que gera o QRCode a partir do ID criptografado do pedido*/
+    public void generateQR(){
+        String textQr = String.valueOf(comprovante.getIdPedido());
+        MultiFormatWriter writer = new MultiFormatWriter();
+        try {
+            BitMatrix matrix = writer.encode(textQr, BarcodeFormat.QR_CODE, 700, 700);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
+            imgQRCode.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
