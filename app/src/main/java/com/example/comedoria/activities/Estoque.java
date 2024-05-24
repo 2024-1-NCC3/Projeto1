@@ -26,6 +26,7 @@ import com.example.comedoria.BuildConfig;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -140,8 +141,14 @@ public class Estoque extends AppCompatActivity {
         filaRequest.add(request);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        acessarListaProdutos();
+    }
 
     private void acessarListaProdutos(){
+        listaProdutos.clear();
         Map<String, String> headers = new HashMap<>();
         /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
@@ -149,7 +156,7 @@ public class Estoque extends AppCompatActivity {
 
         /**define a rota do estoque que precisa ser acessada*/
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque)",
+                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque),categoria(nome_categoria)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -158,6 +165,16 @@ public class Estoque extends AppCompatActivity {
                         if(response.length() > 0){
                             for(int i = 0; i< response.length();i++){
                                 JSONObject jsonObject = response.getJSONObject(i);
+
+                                JSONArray arrayCategorias = jsonObject.getJSONArray("categoria");
+                                List<String> categorias = new ArrayList<>();
+
+                                for(int j = 0; j<arrayCategorias.length();j++){
+                                    JSONObject objCategoria = arrayCategorias.getJSONObject(j);
+                                    String nomeCategoria = objCategoria.getString("nome_categoria");
+
+                                    categorias.add(nomeCategoria);
+                                }
 
                                 String nomeProduto = jsonObject.getString("nome_produto");
                                 Double preco = jsonObject.getDouble("preco");
@@ -168,7 +185,7 @@ public class Estoque extends AppCompatActivity {
                                 String caminhoImagem = jsonObject.getString("caminho_imagem");
                                 int id = jsonObject.getInt("id_produto");
 
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade,idEstoque));
+                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade,idEstoque,categorias));
                             }
                         }
                         adapterEstoque.notifyDataSetChanged();
@@ -223,16 +240,15 @@ public class Estoque extends AppCompatActivity {
         finish();
     }
 
-    /**Vai pra tela de alterar um produto existente passando as informações do produto que vai ser alterado*/
-    public void irModificarProduto(int idProduto, String nome, String caminhoImg, int quantidade, double preco, int idEstoque){
+
+    /**Vai pra tela de alterar um produto existente passando as informações do produto que vai ser alterado*/   
+    public void irModificarProduto(Produto produto){
         Intent i = new Intent(this, ModificarProduto.class);
-        i.putExtra("idProduto", idProduto);
-        i.putExtra("imgProduto", caminhoImg);
-        i.putExtra("nomeProduto", nome);
-        i.putExtra("precoProduto", preco);
-        i.putExtra("quantidadeProduto", quantidade);
-        i.putExtra("idEstoque", idEstoque);
+        Gson gson = new Gson();
+        String produtoJson = gson.toJson(produto);
+
         i.putExtra("accessToken", accessToken);
+        i.putExtra("jsonString", produtoJson);
         startActivity(i);
     }
 
