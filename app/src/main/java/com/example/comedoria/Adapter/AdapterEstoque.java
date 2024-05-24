@@ -47,8 +47,7 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         viewHolder.modificarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((Estoque)context).irModificarProduto(produto.getId(), produto.getNome(), produto.getCaminhoImg(),
-                        produto.getQuantidade(), produto.getPreco(), produto.getIdEstoque());
+                ((Estoque)context).irModificarProduto(produto);
             }
         });
     }

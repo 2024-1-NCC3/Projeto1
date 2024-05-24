@@ -86,7 +86,7 @@ public class Produto {
     }
 
     //Este construtor é para o estoque
-    public Produto(int id, String nome, double preco, String caminhoImg, int quantidade,int idEstoque) {
+    public Produto(int id, String nome, double preco, String caminhoImg, int quantidade,int idEstoque,List<String> categoria) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
@@ -95,6 +95,7 @@ public class Produto {
         this.setSelecionado(false);
         this.quantidade = quantidade;
         this.idEstoque = idEstoque;
+        this.categoria = categoria;
     }
 
     public boolean isSelecionado() {

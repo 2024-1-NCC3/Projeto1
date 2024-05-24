@@ -12,10 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ public class ModificarProduto extends AppCompatActivity {
 
     private TextView txtNomeProduto;
 
-    private String accessToken,imgProduto,nomeProduto;
+    private String accessToken,imgProduto,nomeProduto,jsonString;
 
     private double precoProduto;
 
@@ -41,6 +43,7 @@ public class ModificarProduto extends AppCompatActivity {
     private TextInputEditText inputPreco, inputQuantidade;
 
     private CheckBox cbPromocao;
+    private boolean estaEmPromocao = false;
 
     Button enviarAlteracao;
 
@@ -50,12 +53,17 @@ public class ModificarProduto extends AppCompatActivity {
         setContentView(R.layout.activity_modificar_produto);
 
         accessToken = getIntent().getStringExtra("accessToken");
-        idProduto = getIntent().getIntExtra("idProduto",0);
-        imgProduto = getIntent().getStringExtra("imgProduto");
-        nomeProduto = getIntent().getStringExtra("nomeProduto");
-        precoProduto = getIntent().getDoubleExtra("precoProduto", 0.0);
-        quantidadeProduto = getIntent().getIntExtra("quantidadeProduto", 0);
-        idEstoque = getIntent().getIntExtra("idEstoque", 0);
+        jsonString = getIntent().getStringExtra("jsonString");
+
+        Gson gson = new Gson();
+        Produto produto = gson.fromJson(jsonString,Produto.class);
+
+        idProduto = produto.getId();
+        imgProduto = produto.getCaminhoImg();
+        nomeProduto = produto.getNome();
+        precoProduto = produto.getPreco();
+        quantidadeProduto = produto.getQuantidade();
+        idEstoque = produto.getIdEstoque();
 
 
         txtNomeProduto = findViewById(R.id.txtNomeProdutoModificarProduto);
@@ -65,6 +73,14 @@ public class ModificarProduto extends AppCompatActivity {
         inputPreco = findViewById(R.id.inputPreco);
         inputQuantidade = findViewById(R.id.inputQuantidade);
         enviarAlteracao= findViewById(R.id.btnEnviarAlteracao);
+        cbPromocao = findViewById(R.id.cbPromocao);
+
+        for(String categoria: produto.getCategoria()){
+            if(categoria.equals("Ofertas")){
+                cbPromocao.setChecked(true);
+                estaEmPromocao = true;
+            }
+        }
 
         txtNomeProduto.setText(nomeProduto);
         txtPreco.setHint("Preço: "+String.format(Locale.getDefault(), "R$ %.2f", precoProduto));
@@ -76,7 +92,7 @@ public class ModificarProduto extends AppCompatActivity {
             int quantidadeEstoque = quantidadeProduto;
             double precoEstoque = precoProduto;
 
-            if(inputQuantidade.getText().toString().equals("") && inputPreco.getText().toString().equals("")){
+            if(inputQuantidade.getText().toString().equals("") && inputPreco.getText().toString().equals("") && estaEmPromocao == cbPromocao.isChecked()){
                 Toast.makeText(this, "Nenhuma alteração feita", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -90,11 +106,65 @@ public class ModificarProduto extends AppCompatActivity {
                 quantidadeEstoque = Integer.parseInt(inputQuantidade.getText().toString());
                 precoEstoque = Double.parseDouble(inputPreco.getText().toString());
             }
-                atualizarProduto(quantidadeEstoque, precoEstoque);
+            atualizarProduto(quantidadeEstoque, precoEstoque);
+            colocarEmPromocao();
+
+            finish();
         }
 
+        private void colocarEmPromocao() throws JSONException {
+            Map<String, String> headers = new HashMap<>();
+            //define os heades que a solicitação vai precisar
+            headers.put("apikey", API_KEY);
+            headers.put("Authorization", "Bearer " + accessToken);
+
+            if(estaEmPromocao == true && cbPromocao.isChecked()){
+                return;
+            }else if(estaEmPromocao == false && !cbPromocao.isChecked()){
+                return;
+            }else if(estaEmPromocao == false && cbPromocao.isChecked()){
+                JSONObject solicitacao = new JSONObject();
+                solicitacao.put("id_produto", idProduto);
+                solicitacao.put("id_categoria", 5);
+
+                ConectorAPI.conexaoSinglePOST(
+                        "/rest/v1/categoria_produto",
+                        solicitacao,
+                        headers,
+                        getApplicationContext(),
+                        new ConectorAPI.VolleySingleCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) throws JSONException {
+
+                            }
+                        }
+                );
+
+            }else if(estaEmPromocao == true && !cbPromocao.isChecked()){
+                ConectorAPI.conexaoArrayDELETE(
+                        "/rest/v1/categoria_produto?id_produto=eq." + idProduto + "&id_categoria=eq.5",
+                        headers,
+                        getApplicationContext(),
+                        new ConectorAPI.VolleyArrayCallback() {
+                            @Override
+                            public void onSuccess(JSONArray response) throws JSONException {
+
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) throws JSONException {
+
+                            }
+                        }
+                );
+            }
+        }
         private void atualizarProduto(int quantidadeEstoque, double precoEstoque) throws JSONException {
-            Toast.makeText(this, "Vai rodara qui", Toast.LENGTH_SHORT).show();
 
             Map<String, String> headers = new HashMap<>();
             //define os heades que a solicitação vai precisar
@@ -113,7 +183,6 @@ public class ModificarProduto extends AppCompatActivity {
                             @Override
                             public void onSuccess(JSONArray response) throws JSONException {
                                 Toast.makeText(getApplicationContext(), "Quantidade alterada", Toast.LENGTH_SHORT).show();
-                                finish();
                             }
 
                             @Override
@@ -137,7 +206,6 @@ public class ModificarProduto extends AppCompatActivity {
                             @Override
                             public void onSuccess(JSONArray response) throws JSONException {
                                 Toast.makeText(getApplicationContext(), "Preço alterado", Toast.LENGTH_SHORT).show();
-                                finish();
                             }
 
                             @Override

@@ -26,6 +26,7 @@ import com.example.comedoria.BuildConfig;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,15 +140,21 @@ public class Estoque extends AppCompatActivity {
         filaRequest.add(request);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        acessarListaProdutos();
+    }
 
     private void acessarListaProdutos(){
+        listaProdutos.clear();
         Map<String, String> headers = new HashMap<>();
         //define os headers que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque)",
+                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque),categoria(nome_categoria)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -156,6 +163,16 @@ public class Estoque extends AppCompatActivity {
                         if(response.length() > 0){
                             for(int i = 0; i< response.length();i++){
                                 JSONObject jsonObject = response.getJSONObject(i);
+
+                                JSONArray arrayCategorias = jsonObject.getJSONArray("categoria");
+                                List<String> categorias = new ArrayList<>();
+
+                                for(int j = 0; j<arrayCategorias.length();j++){
+                                    JSONObject objCategoria = arrayCategorias.getJSONObject(j);
+                                    String nomeCategoria = objCategoria.getString("nome_categoria");
+
+                                    categorias.add(nomeCategoria);
+                                }
 
                                 String nomeProduto = jsonObject.getString("nome_produto");
                                 Double preco = jsonObject.getDouble("preco");
@@ -166,7 +183,7 @@ public class Estoque extends AppCompatActivity {
                                 String caminhoImagem = jsonObject.getString("caminho_imagem");
                                 int id = jsonObject.getInt("id_produto");
 
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade,idEstoque));
+                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade,idEstoque,categorias));
                             }
                         }
                         adapterEstoque.notifyDataSetChanged();
@@ -217,54 +234,13 @@ public class Estoque extends AppCompatActivity {
         finish();
     }
 
-    public void irModificarProduto(int idProduto, String nome, String caminhoImg, int quantidade, double preco, int idEstoque){
+    public void irModificarProduto(Produto produto){
         Intent i = new Intent(this, ModificarProduto.class);
-        i.putExtra("idProduto", idProduto);
-        i.putExtra("imgProduto", caminhoImg);
-        i.putExtra("nomeProduto", nome);
-        i.putExtra("precoProduto", preco);
-        i.putExtra("quantidadeProduto", quantidade);
-        i.putExtra("idEstoque", idEstoque);
+        Gson gson = new Gson();
+        String produtoJson = gson.toJson(produto);
+
         i.putExtra("accessToken", accessToken);
+        i.putExtra("jsonString", produtoJson);
         startActivity(i);
     }
-    // TODO: 22/05/2024 Receber dados dos campos para atualizar o estoque
-    private void alterarEstoque() throws JSONException {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("apikey", API_KEY);
-        headers.put("Authorization", "Bearer " + accessToken);
-        headers.put("Content-Type", "application/json");
-        headers.put("Prefer", "return=representation");
-
-        for(Produto produto: produtos){
-            JSONObject objCorpo = new JSONObject();
-
-            //objCorpo.put("quantidade", /*quantidadeEstoque*/);
-
-            JSONArray req = new JSONArray();
-            req.put(objCorpo);
-
-            ConectorAPI.conexaoArrayPATCH(
-                    "/rest/v1/estoque?id_estoque=eq."  /*+ idEstoque */,
-                    headers,
-                    req,
-                    getApplicationContext(),
-                    new ConectorAPI.VolleyArrayCallback() {
-                        @Override
-                        public void onSuccess(JSONArray response) throws JSONException {
-                            Toast.makeText(Estoque.this, "Estoque alterado", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onError(VolleyError error) throws JSONException {
-
-                        }
-                    }
-
-
-            );
-
-        }
-    }
-
 }
