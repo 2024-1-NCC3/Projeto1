@@ -28,11 +28,13 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
     private List<Pedido> historico;
     private Context contextPerfil;
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterHistorico(List<Pedido> lista, Context contextPerfil){
         this.historico = lista;
         this.contextPerfil = contextPerfil;
     }
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public AdapterHistorico.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,14 +43,14 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
         return new AdapterHistorico.MyViewHolder(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull AdapterHistorico.MyViewHolder holder, int position) {
         Pedido pedido = historico.get(position);
-
-
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
 
+        /**Carrega os pedidos e os status dele*/
         try {
             Date dataFormatada = formato.parse(pedido.getData());
             holder.txtData.setText(meuFormato.format(dataFormatada));
@@ -65,7 +67,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
             holder.txtStatus.setTextColor(Color.parseColor("#ffffbb33"));
         }
 
-        //Determina a largura do Status como fixa
+        /**Determina a largura do Status como fixa*/
         TextPaint paintStatus = holder.txtStatus.getPaint();
         float charWidthStatus = paintStatus.measureText("Aguardando ");
         holder.txtStatus.setWidth((int) (charWidthStatus));
@@ -74,7 +76,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
         float charWidthTotal = paintTotal.measureText("R$ 000,00");
         holder.txtTotal.setWidth((int) (charWidthTotal));
 
-
+        /**Direciona para a tela do pedido que foi clicado*/
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +86,7 @@ public class AdapterHistorico extends RecyclerView.Adapter<AdapterHistorico.MyVi
         });
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return historico.size();

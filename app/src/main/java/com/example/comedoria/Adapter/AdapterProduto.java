@@ -30,16 +30,20 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     private List<Produto> listaProdutos;
     private android.content.Context context;
 
+    /**Carrega a lista de produtos*/
     public void setFilteredList(List<Produto> listaFiltrada){
         listaProdutos = listaFiltrada;
         notifyDataSetChanged();
     };
+
+    /**Carrega a lista e o contexto da tela*/
     public AdapterProduto(Context context, List<Produto> lista){
         this.listaProdutos = lista;
         this.context = context;
     }
-    @NonNull
 
+    /**Cria as Views baseadas em um modelo*/
+    @NonNull
     @Override
     public MyViewHolder1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemLista = LayoutInflater.from(parent.getContext())
@@ -47,6 +51,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         return new MyViewHolder1(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder1 holder, int position) {
@@ -67,6 +72,8 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         holder.cbProduto.setOnCheckedChangeListener(null);
 
         holder.cbProduto.setChecked(produto.isSelecionado());
+
+        /**Determina se o produtos está selecionado ou não*/
         holder.cbProduto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -76,6 +83,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
             }
         });
 
+        /**Se a imagem do produto for clicada, abre um AlertDialogue com seus ingredientes*/
         holder.imgProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,10 +92,14 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
             }
         });
     }
+
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return listaProdutos.size();
     }
+
+    /**Coleta a lista de produtos*/
     public List<Produto> getListaProdutos(){
         return this.listaProdutos;
     }
@@ -105,9 +117,6 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
             cbProduto = itemView.findViewById(R.id.cbProduto);
             descricaoProduto = itemView.findViewById(R.id.descricaoProduto);
             imgProduto = itemView.findViewById(R.id.imageProduto);
-
-
-
         }
 
 

@@ -33,35 +33,7 @@ public class Produto {
     private int quantidade = 1;
     private int idEstoque;
 
-    public int getIdEstoque() {
-        return idEstoque;
-    }
-
-    private boolean aparecer = true;
-
-    public boolean isAparecer() {
-        return aparecer;
-    }
-
-    public void setAparecer(boolean aparecer) {
-        this.aparecer = aparecer;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    /**Construtores da classe*/
     public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg, int estoque) {
         this.nome = nome;
         this.preco = preco;
@@ -95,6 +67,37 @@ public class Produto {
         this.setSelecionado(false);
         this.quantidade = quantidade;
         this.idEstoque = idEstoque;
+    }
+
+    /**Método Getters e Setters dos atributos da classe*/
+    public int getIdEstoque() {
+        return idEstoque;
+    }
+
+    private boolean aparecer = true;
+
+    public boolean isAparecer() {
+        return aparecer;
+    }
+
+    public void setAparecer(boolean aparecer) {
+        this.aparecer = aparecer;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isSelecionado() {

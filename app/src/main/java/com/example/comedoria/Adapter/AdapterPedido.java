@@ -25,15 +25,19 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
     private PedidosParaRetirar pedidosParaRetirar;
     private PedidosRetirados pedidosRetirados;
 
+    /**Carrega a lista dos pedidos para retirar*/
     public AdapterPedido(List<Pedido> lista, PedidosParaRetirar fragment){
         this.PedidosNaoCompletados = lista;
         this.pedidosParaRetirar = fragment;
     }
+
+    /**Carrega a lista dos pedidos já retirados*/
     public AdapterPedido(List<Pedido> lista, PedidosRetirados fragment){
         this.PedidosNaoCompletados = lista;
         this.pedidosRetirados = fragment;
     }
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,6 +46,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         return new MyViewHolder(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Pedido pedido = PedidosNaoCompletados.get(position);
@@ -82,6 +87,7 @@ public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHold
         });
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return PedidosNaoCompletados.size();

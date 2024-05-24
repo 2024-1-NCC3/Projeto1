@@ -35,6 +35,7 @@ public class PaginaInicial extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagina_inicial);
         accessToken = getIntent().getStringExtra("accessToken");
@@ -54,14 +55,18 @@ public class PaginaInicial extends AppCompatActivity {
 
     }
 
+    /**Botão que vai diretamente para o login*/
     public void log(){
         Intent home = new Intent(PaginaInicial.this, Login.class);
         startActivity(home);
     }
 
+    /**Vai para a tela do cardápio e carrega todos os produtos da comedoria*/
     public void cardapio(View view){
         irParaProdutos("Todos");
     }
+
+    /**Vai para a tela do cardápio filtrando pela categoria escolhida*/
     public void irParaProdutos(String categoria){
         Intent cardapio = new Intent(this,Produtos.class);
         cardapio.putExtra("accessToken",accessToken);
@@ -75,6 +80,8 @@ public class PaginaInicial extends AppCompatActivity {
         Intent carrinho = new Intent();
         startActivity(carrinho);
     }
+
+    /**Vai para a tela do perfil e carrega as informações do usuário*/
     public void usuario(View view){
         Intent usuario = new Intent(this,Perfil.class);
         usuario.putExtra("idUsuario",idUsuario);
@@ -82,9 +89,9 @@ public class PaginaInicial extends AppCompatActivity {
         startActivity(usuario);
     }
 
-
+    /**Monta uma requisição para filtrar os produtos a partir da categoria selecionada*/
     private void carregarCategorias(){
-
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);

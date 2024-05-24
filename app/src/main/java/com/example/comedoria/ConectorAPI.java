@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**Aequivos com as rotas do servidor*/
 public class ConectorAPI {
     public RequestQueue requestQueue;
     //Interface para respostas JsonObject
@@ -35,9 +35,9 @@ public class ConectorAPI {
         void onError(VolleyError error) throws JSONException;
     }
 
-    //POST
-    //Json Object
-    //Com corpo de solicitação
+    /**POST
+    Json Object
+    Com corpo de solicitação*/
     public static void conexaoSinglePOST(String endpoint, JSONObject dadosDeSolicitacao,
                                    Map<String, String> headers,
                                          Context context,VolleySingleCallback callback){
@@ -76,9 +76,9 @@ public class ConectorAPI {
         filaRequest.add(request);
     }
 
-    //GET
-    //Json array
-    //Sem corpo de solicitação
+    /**GET
+    Json array
+    Sem corpo de solicitação*/
     public static void conexaoArrayGET(String endpoint, Map<String, String> headers,
                                   Context context, VolleyArrayCallback callback)
     {
@@ -117,6 +117,8 @@ public class ConectorAPI {
         filaRequest.add(request);
     }
 
+    /**POST
+     Com corpo de solicitação*/
     public static void conexaoArrayPOST(String endpoint, Map<String, String> headers, JSONArray corpoSolicitacao,
                                         Context context, VolleyArrayCallback callback){
         String url = API_URL + endpoint;
@@ -154,6 +156,8 @@ public class ConectorAPI {
         filaRequest.add(request);
     }
 
+    /**UPDATE
+     Com corpo de solicitação*/
     public static void conexaoArrayPATCH(String endpoint, Map<String, String> headers, JSONArray corpoSolicitacao,
                                         Context context, VolleyArrayCallback callback){
         String url = API_URL + endpoint;
@@ -190,6 +194,9 @@ public class ConectorAPI {
         RequestQueue filaRequest = Volley.newRequestQueue(context);
         filaRequest.add(request);
     }
+
+    /**UPDATE
+     Com corpo de solicitação*/
     public static void conexaoSinglePATCH(String endpoint, JSONObject dadosDeSolicitacao,
                                          Map<String, String> headers,Context context, VolleySingleCallback callback){
         String url = API_URL + endpoint;

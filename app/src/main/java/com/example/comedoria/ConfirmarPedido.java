@@ -45,6 +45,7 @@ public class ConfirmarPedido extends AppCompatActivity {
     List<Produto> listaProdutos = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar_pedido);
         accessToken = getIntent().getStringExtra("accessToken");
@@ -74,7 +75,9 @@ public class ConfirmarPedido extends AppCompatActivity {
 
     }
 
+    /**Busca os produtos do pedido para ser confirmado*/
     private void buscarProdutosDoPedido(){
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
@@ -108,10 +111,13 @@ public class ConfirmarPedido extends AppCompatActivity {
         );
 
     }
+
+    /**Confirgura o botão de confirmar a retirada*/
     public void confirmarRetirada(View view) throws JSONException {
         scanCode();
     }
 
+    /**Gera um JSONArray para a confirmação do pedido*/
     private JSONArray gerarJSONArrayConfirmacao() throws JSONException {
         JSONObject confirmacao = new JSONObject();
         confirmacao.put("status","Retirado");
@@ -122,6 +128,7 @@ public class ConfirmarPedido extends AppCompatActivity {
         return retorno;
     }
 
+    /**Abre a câmera para scannear o QRCode e se ele estiver correto confirma o pedido no servidor*/
     private void scanCode(){
         ScanOptions options = new ScanOptions();
         options.setBeepEnabled(true);

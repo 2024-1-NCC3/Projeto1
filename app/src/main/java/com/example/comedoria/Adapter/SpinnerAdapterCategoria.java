@@ -17,11 +17,13 @@ import java.util.List;
 
 public class SpinnerAdapterCategoria extends ArrayAdapter<Categoria> {
 
+    /**Carrega a lista e o contexto do Spinner*/
     public SpinnerAdapterCategoria(Context context, List<Categoria> categorias){
         super(context,0,categorias);
         setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
     }
 
+    /**Define os itens do Spinner*/
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
