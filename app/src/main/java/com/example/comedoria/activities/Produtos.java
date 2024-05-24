@@ -206,6 +206,7 @@ public class Produtos extends AppCompatActivity {
                 String nomeProduto = objProduto.getString("nome_produto");
                 Double preco = objProduto.getDouble("preco");
                 String caminhoImagem = objProduto.getString("caminho_imagem");
+                String ingredientes = objProduto.getString("ingredientes");
 
                 JSONObject estoque = objProduto.getJSONObject("estoque");
                 int quantidadeEstoque = estoque.getInt("quantidade");
@@ -220,7 +221,7 @@ public class Produtos extends AppCompatActivity {
                     }
                 }
 
-                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidadeEstoque));
+                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidadeEstoque, ingredientes));
 
             }
         }

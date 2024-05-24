@@ -34,7 +34,7 @@ public class Produto {
     private int idEstoque;
 
     /**Construtores da classe*/
-    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg, int estoque) {
+    public Produto(int id,String nome, double preco, List<String> categoria, String caminhoImg, int estoque, String ingrediente) {
         this.nome = nome;
         this.preco = preco;
         this.caminhoImg = caminhoImg;
