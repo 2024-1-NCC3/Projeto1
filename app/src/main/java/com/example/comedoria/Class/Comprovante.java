@@ -12,6 +12,7 @@ public class Comprovante {
     private String idPedido;
     private List<Produto> listaProdutos;
 
+    /**Construtores da classe*/
     public Comprovante(String status, String observacoes, int numeroPedido, String dataRetirada, String horaRetirada, List<Produto> listaProdutos, String idPedido) {
         this.status = status;
         this.observacoes = observacoes;
@@ -22,6 +23,7 @@ public class Comprovante {
         this.idPedido = idPedido;
     }
 
+    /**Método Getters e Setters dos atributos da classe*/
     public String getStatus() {
         return status;
     }

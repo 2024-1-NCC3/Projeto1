@@ -49,6 +49,7 @@ public class ModificarProduto extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar_produto);
 
@@ -88,6 +89,7 @@ public class ModificarProduto extends AppCompatActivity {
 
     }
 
+    /**Verifica se os campos estão corretos e preenchidos, e logo após, envia a alteração do produto*/
         public void enviarAlteracao(View view) throws JSONException {
             int quantidadeEstoque = quantidadeProduto;
             double precoEstoque = precoProduto;
@@ -112,6 +114,8 @@ public class ModificarProduto extends AppCompatActivity {
             finish();
         }
 
+
+    /**Requisição que envia a atualização do produto para o banco de dados*/
         private void colocarEmPromocao() throws JSONException {
             Map<String, String> headers = new HashMap<>();
             //define os heades que a solicitação vai precisar
@@ -167,7 +171,7 @@ public class ModificarProduto extends AppCompatActivity {
         private void atualizarProduto(int quantidadeEstoque, double precoEstoque) throws JSONException {
 
             Map<String, String> headers = new HashMap<>();
-            //define os heades que a solicitação vai precisar
+            /**define os headers que a solicitação vai precisar*/
             headers.put("apikey", API_KEY);
             headers.put("Authorization", "Bearer " + accessToken);
             headers.put("Content-Type", "application/json");
@@ -219,6 +223,7 @@ public class ModificarProduto extends AppCompatActivity {
                 }
             }
 
+    /**Gera o corpo da requisição de quantidade no modelo correto*/
     private JSONArray gerarJSONQuantidade(int quantidadeProduto) throws JSONException {
         JSONObject produtoEstoque = new JSONObject();
         produtoEstoque.put("quantidade",quantidadeProduto);
@@ -229,6 +234,7 @@ public class ModificarProduto extends AppCompatActivity {
         return retorno;
     }
 
+    /**Gera o corpo da requisição de preço no modelo correto*/
     private JSONArray gerarJSONPreco(double precoProduto) throws JSONException {
         JSONObject produtoEstoque = new JSONObject();
         produtoEstoque.put("preco",precoProduto);

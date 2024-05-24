@@ -63,6 +63,7 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView e dos Spinners*/
         super.onCreate(savedInstanceState);
         bindingAddProduto = ActivityAdicionarProdutosBinding.inflate(getLayoutInflater());
         setContentView(bindingAddProduto.getRoot());
@@ -90,10 +91,10 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
 
             }
         });
-
         popularSpinner();
     }
 
+    /**Configura o botão de adicionar o cadastro do produto*/
     public void finalizarCadastroProduto(View view) throws JSONException {
 
         if(inputNomeProduto.getText().toString().equals("")){
@@ -127,7 +128,7 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
 
        adicionarProduto(nomeProduto,preco,ingrediente,quantidade,idCategoria);
 
-        //cria um arquivo para armazenar esse dados
+        /**cria um arquivo para armazenar esse dados*/
         SharedPreferences sharedPref = getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
 
@@ -158,8 +159,9 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
         }
     }
 
+    /**Requisição para adicionar o produto no banco de dados*/
     private void adicionarProduto(String nome, double preco, String ingredientes, int estoqueInicial, int idCategoria) throws JSONException {
-        // primeiro temos que criar um estoque
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
@@ -254,7 +256,9 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
 
     }
 
+    /**Popula o Spinner com as categorias de produtos*/
     private void popularSpinner(){
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
@@ -296,6 +300,7 @@ public class Activity_Adicionar_Produtos extends AppCompatActivity {
         );
     }
 
+    /**Volta para a tela anterior*/
     public void voltarTelaAddProdutos(View view){
         finish();
     }

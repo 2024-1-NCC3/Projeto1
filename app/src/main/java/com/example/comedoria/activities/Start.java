@@ -13,6 +13,7 @@ public class Start extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Função da tela inicial com o logo da comedoria*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {

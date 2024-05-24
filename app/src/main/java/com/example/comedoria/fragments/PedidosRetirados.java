@@ -50,6 +50,7 @@ public class PedidosRetirados extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onViewCreated(view, savedInstanceState);
         recyclerPedidosRetirados = view.findViewById(R.id.recyclerRetirados);
         adapterPedido = new AdapterPedido(pedidosRetirados,this);
@@ -64,9 +65,10 @@ public class PedidosRetirados extends Fragment {
 
     }
 
+    /**Requisição para buscar pedidos com status de já retirado*/
     private void buscarPedidosNaoFinalizados(){
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -94,6 +96,8 @@ public class PedidosRetirados extends Fragment {
                 }
         );
     }
+
+    /**Transforma o JSONArray em algo que o aplicativo entenda, como uma lista*/
     private void interpretarJsonArray(JSONArray response) throws JSONException {
         Log.i("Lista", pedidosRetirados.toString());
         for(int i =0;i<response.length();i++){

@@ -22,6 +22,7 @@ public class AdapterConfirmar extends RecyclerView.Adapter<AdapterConfirmar.MyVi
         this.listaProduto = listaProduto;
     }
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public AdapterConfirmar.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,6 +30,7 @@ public class AdapterConfirmar extends RecyclerView.Adapter<AdapterConfirmar.MyVi
         return new AdapterConfirmar.MyViewHolder(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull AdapterConfirmar.MyViewHolder holder, int position) {
         Produto produto = listaProduto.get(position);
@@ -41,6 +43,7 @@ public class AdapterConfirmar extends RecyclerView.Adapter<AdapterConfirmar.MyVi
 
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return listaProduto.size();

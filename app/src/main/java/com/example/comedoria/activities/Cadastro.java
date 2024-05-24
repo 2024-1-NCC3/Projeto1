@@ -33,6 +33,7 @@ public class Cadastro extends AppCompatActivity {
 
 
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro);
 
@@ -47,6 +48,7 @@ public class Cadastro extends AppCompatActivity {
 
     }
 
+    /**Função de cadastrar um novo usuário*/
     public void Cadastrar(View view){
         if(verificarCampos()){
             JSONObject dadosCadastro = new JSONObject();
@@ -64,6 +66,7 @@ public class Cadastro extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
+            /**Configura os headers para a requisição*/
             Map<String, String> headers = new HashMap<>();
             headers.put("apikey", API_KEY);
             headers.put("Content-Type", "application/json");
@@ -77,7 +80,7 @@ public class Cadastro extends AppCompatActivity {
                         @Override
                         public void onSuccess(JSONObject response) throws JSONException {
 
-                            //segunda solicitação para linkar o novo user a tabela usuarios
+                            /**segunda solicitação para linkar o novo user a tabela usuarios*/
                             JSONObject user = response.getJSONObject("user");
                             String id = user.getString("id");
 
@@ -127,6 +130,8 @@ public class Cadastro extends AppCompatActivity {
 
 
     }
+
+    /**Verifica se os campos estão no padrão correto e se não estão vazios*/
     private boolean verificarCampos(){
         //Verifica se o campo Nome não está vazio
         if(inputNome.getText().toString().trim().equals("")){
@@ -162,6 +167,8 @@ public class Cadastro extends AppCompatActivity {
 
         return true;
     }
+
+    /**Função para relacionar no banco de dados o usuário com o seu papel específico (funcionário ou cliente)*/
     private void relacionarUsuarioPapel(String id, Map<String, String> headerCliente) throws JSONException {
         JSONObject dadosSolicitacao = new JSONObject();
 
@@ -189,10 +196,13 @@ public class Cadastro extends AppCompatActivity {
                 }
         );
     }
+
+    /**Cancela a ação e volta para a tela anterior*/
     public void cancelar(View view){
         finish();
     }
 
+    /**Verifica se o padrão do email inserido está correto*/
     private void definirListenerDoEmail(){
         inputEmail.addTextChangedListener(new TextWatcher() {
             @Override

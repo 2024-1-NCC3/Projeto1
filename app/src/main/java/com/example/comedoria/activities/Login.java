@@ -32,6 +32,7 @@ public class Login extends AppCompatActivity {
     private static final String API_KEY = BuildConfig.API_KEY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
@@ -40,19 +41,23 @@ public class Login extends AppCompatActivity {
         txtSenha = findViewById(R.id.txtSenha);
         definirListenerDoEmail();
     }
+
+    /**Função que leva para a tela de cadastro*/
     public void cadastro(View view){
         Intent i = new Intent(this, Cadastro.class);
         startActivity(i);
     }
+
+    /**Função que monta a requisição de logar com o email e senha inseridos*/
     public void Logar(View view) throws JSONException {
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Content-Type", "application/json");
 
         JSONObject dadosDeSolicitacao = new JSONObject();
-        //Adiciona os campos= input e senha ao Json, e define seus valores
 
+        /**Adiciona os campos email e senha ao JSON*/
         dadosDeSolicitacao.put("email", txtInput.getText());
         dadosDeSolicitacao.put("password", txtSenha.getText());
 
@@ -66,7 +71,7 @@ public class Login extends AppCompatActivity {
                 new ConectorAPI.VolleySingleCallback() {
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
-                //Verificar se quem logou é cliente ou funcionário
+                /**Verificar se quem logou é cliente ou funcionário ou cliente*/
                 Map<String, String> headers = new HashMap<>();
 
                 String acessToken = response.getString("access_token");
@@ -86,7 +91,7 @@ public class Login extends AppCompatActivity {
                             JSONObject resposta = response.getJSONObject(0);
                             int papel = resposta.getInt("id_papel");
 
-                            //se for cliente, vai para a página Inicial
+                            /**Se for cliente, vai para a Página Inicial de cliente*/
                             if(papel == 2){
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, PaginaInicial.class);
@@ -94,7 +99,8 @@ public class Login extends AppCompatActivity {
                                 intent.putExtra("idUsuario",idUsuario);
                                 startActivity(intent);
                                 finish();
-                            }else if(papel == 1){
+                            }/**Se for funcionário, vai para a Página Inicial de funcionário*/
+                            else if(papel == 1){
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, perfilAdm.class);
                                 intent.putExtra("accessToken", acessToken);
@@ -132,6 +138,8 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+    /**Verifica se o email está no padrão correto*/
     private void definirListenerDoEmail(){
         txtInput.addTextChangedListener(new TextWatcher() {
             @Override

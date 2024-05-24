@@ -66,6 +66,7 @@ public class Produtos extends AppCompatActivity {
     @SuppressLint({"ResourceAsColor", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
         accessToken = getIntent().getStringExtra("accessToken");
@@ -75,6 +76,7 @@ public class Produtos extends AppCompatActivity {
 
     }
 
+    /**Direciona para a tela do carrinho para finalizar o pedido*/
     public void irParaOCarrinho(View view){
         List<Produto> produtosSelecionados = new ArrayList<>();
 
@@ -96,6 +98,7 @@ public class Produtos extends AppCompatActivity {
             startActivity(i);
         }
     }
+    /**Coleta as categorias dos produtos carregados*/
     private void pegarCategorias(List<Produto> lista){
         for(Produto produto: lista){
             for(String categoria: produto.getCategoria()){
@@ -106,6 +109,7 @@ public class Produtos extends AppCompatActivity {
         }
     }
 
+    /**Define métodos de ordenação da lista de produtos, que estão alocados nos spinners de filtro*/
     private void ordernarLista(String tipo){
         switch(tipo){
             case "Ordenar":
@@ -127,6 +131,7 @@ public class Produtos extends AppCompatActivity {
         }
         adapterProduto.notifyDataSetChanged();
     }
+    /**A partir do filtro escolhido, filtra a lista visível de produtos*/
     public void filtrarLista(String categoria){
         listaFiltrada.clear();
 
@@ -147,10 +152,11 @@ public class Produtos extends AppCompatActivity {
 
     }
 
+    /**Requisição para pegar a lista de produtos do banco de dados*/
     private void CarregarListaProdutos(){
         Map<String, String> headers = new HashMap<>();
         String endpoint = "";
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -171,10 +177,12 @@ public class Produtos extends AppCompatActivity {
                 });
     }
 
+    /**Volta para a tela anterior*/
     public void voltarTelaProdutos(View view){
         finish();
     }
 
+    /**Volta para a tela inicial do aplicativo*/
     public void voltarInicio(View view){
         Intent intent = new Intent(this, PaginaInicial.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -182,6 +190,7 @@ public class Produtos extends AppCompatActivity {
         finish();
     }
 
+    /**Coleta os dados do JSONArray e adiciona numa lista de produtos*/
     private void converterJsonArray(JSONArray response) throws JSONException {
         if(response.length() > 0){
             //listaProdutos.clear();
@@ -228,6 +237,7 @@ public class Produtos extends AppCompatActivity {
         adapter2.notifyDataSetChanged();
     }
 
+    /**Encontra a categoria selecionada*/
     private int encontrarCategoria(String categoriaProcurada){
         for(int i=0;i<listaCategorias.size();i++){
             if(listaCategorias.get(i).equals(categoriaProcurada)){
@@ -237,6 +247,7 @@ public class Produtos extends AppCompatActivity {
         return 0;
     }
 
+    /**Função para carregar os elementos da tela de produtos a partir dos filtros*/
     private void iniciarPag(){
         listaCategorias.add("Todos");
         CarregarListaProdutos();
@@ -273,7 +284,7 @@ public class Produtos extends AppCompatActivity {
             }
         });
 
-        // Configuração do Dropdown de filtragem
+        /**Configuração do Dropdown de filtragem*/
         spinnerCategoria = findViewById(R.id.spinner_categoria);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
@@ -298,7 +309,7 @@ public class Produtos extends AppCompatActivity {
         });
     }
 
-    //Comparadores para fazer a ordenação dos produtos
+    /**Comparadores para fazer a ordenação dos produtos*/
     class ComparadorPreco implements Comparator<Produto>{
 
         @Override
@@ -313,6 +324,7 @@ public class Produtos extends AppCompatActivity {
         }
     }
 
+    /**Função de abrir os ingredientes do produto ao clicar na sua foto*/
     public void abrirIngredientes(String nome, String caminhoImg, String ingredientes){
         LayoutInflater inflater = getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

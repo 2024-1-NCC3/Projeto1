@@ -64,6 +64,7 @@ public class ComprovantePedido extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprovante_pedido);
 
@@ -85,9 +86,10 @@ public class ComprovantePedido extends AppCompatActivity {
         recyclerResumo.setAdapter(adapterResumoPedido);
     }
 
+    /**Função para buscar o pedido e exibir ele na tela*/
     public void buscarPedido(String idPedido){
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os heades que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
         ConectorAPI.conexaoArrayGET(
@@ -153,11 +155,12 @@ public class ComprovantePedido extends AppCompatActivity {
         );
     }
 
-
+    /**Volta para a tela anterior*/
     public void voltarTelaComprovante(View view){
         finish();
     }
 
+    /**Volta para a tela inicial do aplicativo*/
     public void voltarInicio(View view){
         Intent intent = new Intent(this, PaginaInicial.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -170,10 +173,13 @@ public class ComprovantePedido extends AppCompatActivity {
     private void interpretarJsonArray(JSONArray response){
 
     }
+
+    /**Função de atualizar a lista da RecyclerView*/
     public void atualizarLista(List<Produto> listaAtualizada){
         this.produtos = listaAtualizada;
     }
 
+    /**Função que gera o QRCode a partir do ID criptografado do pedido*/
     public void generateQR(){
         String textQr = String.valueOf(comprovante.getIdPedido());
         MultiFormatWriter writer = new MultiFormatWriter();

@@ -66,6 +66,7 @@ public class Carrinho extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
 
@@ -87,7 +88,7 @@ public class Carrinho extends AppCompatActivity {
         fabHome = findViewById(R.id.btnFlutuante);
         fabHome.setImageTintList(ColorStateList.valueOf(Color.WHITE));
 
-        //seta a largura do título quantidade corretamente
+        /**seta a largura do título quantidade corretamente*/
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.remove);
         int larguraIcon = bitmap.getWidth();
 
@@ -108,6 +109,7 @@ public class Carrinho extends AppCompatActivity {
         atualizarTotal();
     }
 
+    /**Configura o botão de selecionar a hora para a entrega do pedido*/
     public void selecionarHora(View view){
         Calendar calendar = Calendar.getInstance();
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
@@ -141,6 +143,7 @@ public class Carrinho extends AppCompatActivity {
         picker.show(getSupportFragmentManager(),"tag");
     }
 
+    /**Configura o botão de selecionar a data para a entrega do pedido*/
     public void selecionarData(View view){
         MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Selecione a data de retirada")
@@ -164,9 +167,12 @@ public class Carrinho extends AppCompatActivity {
         picker.show(getSupportFragmentManager(),"tag");
     }
 
+    /**Atualiza a lista dos produtos*/
     public void atualizarLista(List<Produto> listaAtualizada){
         this.produtos = listaAtualizada;
     }
+
+    /**Atualiza o total da soma dos pedidos*/
     public void atualizarTotal(){
         double soma = 0;
         for(Produto produto: produtos){
@@ -175,10 +181,12 @@ public class Carrinho extends AppCompatActivity {
         txtTotal.setText(String.format(Locale.getDefault(), "R$ %.2f", soma));
     }
 
+    /**Volta para a tela anterior*/
     public void voltarTelaCarrinho(View view){
         finish();
     }
 
+    /**Volta para o início do aplicativo*/
     public void voltarInicio(View view){
         Intent intent = new Intent(this, PaginaInicial.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -187,10 +195,12 @@ public class Carrinho extends AppCompatActivity {
     }
 
 
+    /**Função para o botão de finalizar o pedido*/
     public void finalizarPedido(View view) throws JSONException {
 
         double soma = 0;
 
+        /**Verifica se o campo de data e hora não estão vazios*/
         if(date == null || horas == null){
             Toast.makeText(this, "Por favor, selecione uma data e hora para retirada", Toast.LENGTH_SHORT).show();
             return;
@@ -202,6 +212,7 @@ public class Carrinho extends AppCompatActivity {
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
             return;
         }else{
+            /**Verifica o estoque enquanto o cliente está finalizando o pedido, para conferir se tem produtos disponíveis*/
             verificarEstoque(new VolleyCallback() {
                 @Override
                 public void onResponse(boolean sucesso) throws JSONException {
@@ -224,6 +235,7 @@ public class Carrinho extends AppCompatActivity {
     }
 
 
+    /**Verifica se o usuário tem saldo suficiente para o pedido*/
     private void verificarSaldo( final VolleyCallback saldoCallback){
         Map<String, String> headers = new HashMap<>();
 
@@ -262,6 +274,8 @@ public class Carrinho extends AppCompatActivity {
         );
 
     }
+
+    /**Verifica se o estoque tem os produtos*/
     private void verificarEstoque(final VolleyCallback estoqueCallBack){
         String produtosDoPedido = "";
         for(Produto produto:produtos){
@@ -316,6 +330,7 @@ public class Carrinho extends AppCompatActivity {
 
     }
 
+    /**Função de criar o pedido no banco de dados*/
     private void criarPedido() throws JSONException {
         Map<String, String> headers = new HashMap<>();
         //define os heades que a solicitação vai precisar
@@ -343,7 +358,7 @@ public class Carrinho extends AppCompatActivity {
 
                     @Override
                     public void onError(VolleyError error) {
-                        //se a resposta for um erro, irá apresentar um Toast com o erro
+                        /**se a resposta for um erro, irá apresentar um Toast com o erro*/
                         String body = null;
                         try {
                             body = new String(error.networkResponse.data, "utf-8");
@@ -363,6 +378,7 @@ public class Carrinho extends AppCompatActivity {
         );
     }
 
+    /**Função para reduzir o saldo do usuário após a compra*/
     private void reduzirSaldo() throws JSONException {
         double total = 0.0;
         Map<String, String> headers = new HashMap<>();
@@ -404,6 +420,7 @@ public class Carrinho extends AppCompatActivity {
         );
     }
 
+    /**Função para reduzir o estoque após a compra*/
     private void reduzirEstoque() throws JSONException {
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
@@ -444,6 +461,8 @@ public class Carrinho extends AppCompatActivity {
         }
 
     }
+
+    /**Função para formular o corpo de requisição correto para registrar um novo pedido*/
     private JSONArray JsonNovoPedido() throws JSONException {
         Log.i("SUpabase", date);
 
@@ -460,6 +479,8 @@ public class Carrinho extends AppCompatActivity {
 
         return req;
     }
+
+    /**Função de adicionar os produtos selecionados ao pedido no banco de dados*/
     private void adicionarProdutosNoPedido() throws JSONException {
 
 
@@ -493,6 +514,7 @@ public class Carrinho extends AppCompatActivity {
         );
     }
 
+    /**Função para formular o corpo de requisição correto para inserir os produtos no pedido*/
     private JSONArray JsonPedidosParaAdicionar() throws JSONException {
         JSONArray req = new JSONArray();
         for(Produto produto: produtos){

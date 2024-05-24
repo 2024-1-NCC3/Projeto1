@@ -23,11 +23,13 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
     private android.content.Context context;
     private List<Produto> listaProdutos;
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterEstoque(Context context, List<Produto> lista){
         this.context = context;
         this.listaProdutos = lista;
     }
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public AdapterEstoque.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -35,6 +37,7 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         return new AdapterEstoque.ViewHolder(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
@@ -44,6 +47,7 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         Picasso.get().load(produto.getCaminhoImg()).into(viewHolder.imgProduto);
         viewHolder.textPreco.setText("Preço: "+String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()));
 
+        /**Quando for clicado para modificar algum produto, direciona para a tela de alteração com as informações do produto*/
         viewHolder.modificarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,11 +56,13 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         });
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return listaProdutos.size();
     }
 
+    /**Carrega a lista de produtos*/
     public List<Produto> getListaProdutos(){
         return this.listaProdutos;
     }

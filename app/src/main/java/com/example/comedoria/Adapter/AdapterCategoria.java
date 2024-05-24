@@ -21,13 +21,13 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
     private List<Categoria> listaCategorias;
     private Context context;
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterCategoria(List<Categoria> lista, Context context){
         this.listaCategorias = lista;
         this.context = context;
     }
 
-
-
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,15 +36,16 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
         return new MyViewHolder(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Categoria categoria = listaCategorias.get(position);
-
 
         if(!categoria.getAparecer()){
             holder.rootView.setVisibility(View.GONE);
         }
 
+        /**Se uma categoria for clicada, vai para a tela de produtos com ela filtrada com a categoria selecionada*/
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,13 +54,13 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
         });
 
         holder.descricaoCategoria.setText(categoria.getDescricao());
-        //Cuida de carregar a imagem pela URL
+        /**Cuida de carregar a imagem pela URL*/
         Picasso.get().load(categoria.getCaminho()).into(holder.imgCategoria);
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
-
         return listaCategorias.size();
     }
 
