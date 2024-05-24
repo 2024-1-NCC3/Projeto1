@@ -2,6 +2,7 @@ package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.text.Editable;
@@ -199,7 +200,8 @@ public class Cadastro extends AppCompatActivity {
 
     /**Cancela a ação e volta para a tela anterior*/
     public void cancelar(View view){
-        finish();
+        Intent i = new Intent(getApplicationContext(), Login.class);
+        startActivity(i);
     }
 
     /**Verifica se o padrão do email inserido está correto*/
