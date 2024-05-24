@@ -54,7 +54,6 @@ public class Cadastro extends AppCompatActivity {
         if(verificarCampos()){
             JSONObject dadosCadastro = new JSONObject();
             JSONObject dadosCliente = new JSONObject();
-            RequestQueue filaRequest = Volley.newRequestQueue(this);
 
             //define os heades que a solicitação vai precisar
 
