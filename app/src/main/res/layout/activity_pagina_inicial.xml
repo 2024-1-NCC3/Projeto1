@@ -7,41 +7,18 @@
     android:layout_height="match_parent"
     android:background="@color/verde_fundo_categoria">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/fundo"
-        app:layout_constraintBottom_toTopOf="@+id/recycleView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="3">
-
-
-        <ImageView
-            android:id="@+id/home"
-            android:layout_width="83dp"
-            android:layout_height="72dp"
-            android:clickable="true"
-            android:onClick="log"
-            app:srcCompat="@drawable/ic_home"
-            tools:layout_editor_absoluteX="30dp"
-            tools:layout_editor_absoluteY="71dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@+id/roda_pe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="8" />
 
     <androidx.cardview.widget.CardView
@@ -55,15 +32,7 @@
         app:layout_constraintBottom_toTopOf="@+id/recycleView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_weight="5">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_pessoa" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintVertical_weight="5"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/roda_pe"
@@ -78,41 +47,30 @@
 
         <ImageView
             android:id="@+id/cardapio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:clickable="true"
+            android:onClick="cardapio"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.171"
+            app:layout_constraintHorizontal_bias="0.322"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.526"
+            app:layout_constraintVertical_bias="0.555"
             app:srcCompat="@drawable/cardapio" />
 
         <ImageView
-            android:id="@+id/garcom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.473"
-            app:srcCompat="@drawable/garcom" />
-
-        <ImageView
             android:id="@+id/usuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:clickable="true"
+            android:onClick="usuario"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.807"
+            app:layout_constraintHorizontal_bias="0.69"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.526"
+            app:layout_constraintVertical_bias="0.555"
             app:srcCompat="@drawable/usuario" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

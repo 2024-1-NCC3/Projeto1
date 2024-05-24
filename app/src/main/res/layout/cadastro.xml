@@ -8,15 +8,15 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="130dp"
-        android:layout_height="93dp"
+        android:layout_width="120dp"
+        android:layout_height="90dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.069"
-        app:srcCompat="@drawable/comedoria_logotipo" />
+        app:srcCompat="@drawable/logo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutCadastro"
@@ -38,20 +38,22 @@
             android:id="@+id/layoutNome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_login_ui"
             android:backgroundTint="@color/fundo"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.031">
 
             <ImageView
                 android:id="@+id/imgNome"
                 android:layout_width="35dp"
-                android:layout_height="37dp"
+                android:layout_height="35dp"
                 android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,38 +66,41 @@
             <EditText
                 android:id="@+id/txtNome"
                 android:layout_width="151dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="nome"
                 android:imeOptions="actionNext"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.64"
+                app:layout_constraintHorizontal_bias="0.637"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutSobrenome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
             android:background="@drawable/rounded_login_ui"
             android:backgroundTint="@color/fundo"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/layoutNome"
+            app:layout_constraintVertical_bias="0.018">
 
             <ImageView
                 android:id="@+id/imgSobreome"
                 android:layout_width="35dp"
-                android:layout_height="37dp"
+                android:layout_height="35dp"
                 android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +113,11 @@
             <EditText
                 android:id="@+id/txtSobrenome"
                 android:layout_width="151dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="sobrenome"
                 android:imeOptions="actionNext"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -126,21 +132,21 @@
             android:id="@+id/layoutEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
             android:background="@drawable/rounded_login_ui"
             android:backgroundTint="@color/fundo"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/layoutSobrenome"
+            app:layout_constraintVertical_bias="0.024">
 
             <ImageView
                 android:id="@+id/imgEmail"
                 android:layout_width="35dp"
-                android:layout_height="37dp"
+                android:layout_height="35dp"
                 android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -153,10 +159,11 @@
             <EditText
                 android:id="@+id/txtEmail"
                 android:layout_width="151dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="email"
                 android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -168,69 +175,25 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cpf"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/rounded_login_ui"
-            android:backgroundTint="@color/fundo"
-            android:paddingLeft="0dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.525"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ConfirmarEmail">
-
-            <ImageView
-                android:id="@+id/imgCpf"
-                android:layout_width="35dp"
-                android:layout_height="37dp"
-                android:soundEffectsEnabled="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.06"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_pessoa"
-                tools:srcCompat="@drawable/ic_pessoa" />
-
-            <EditText
-                android:id="@+id/txtCpf"
-                android:layout_width="151dp"
-                android:layout_height="40dp"
-                android:fontFamily="@font/jetbrains_mono"
-                android:hint="cpf"
-                android:singleLine="true"
-                android:textColor="#80000000"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.646"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/senha"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:background="@drawable/rounded_login_ui"
             android:backgroundTint="@color/fundo"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cpf">
+            app:layout_constraintTop_toBottomOf="@+id/ConfirmarEmail"
+            app:layout_constraintVertical_bias="0.037">
 
             <ImageView
                 android:id="@+id/imgSenha"
                 android:layout_width="35dp"
-                android:layout_height="37dp"
+                android:layout_height="35dp"
                 android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -243,9 +206,10 @@
             <EditText
                 android:id="@+id/txtSenha"
                 android:layout_width="151dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono"
                 android:hint="senha"
+                android:password="true"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -261,21 +225,22 @@
             android:id="@+id/ConfirmarSenha"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:background="@drawable/rounded_login_ui"
             android:backgroundTint="@color/fundo"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/senha">
+            app:layout_constraintTop_toBottomOf="@+id/senha"
+            app:layout_constraintVertical_bias="0.067">
 
             <ImageView
                 android:id="@+id/imgConfirmarSenha"
                 android:layout_width="35dp"
-                android:layout_height="37dp"
+                android:layout_height="35dp"
                 android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -288,9 +253,10 @@
             <EditText
                 android:id="@+id/txtConfirmarSenha"
                 android:layout_width="151dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono"
                 android:hint="confirmar senha"
+                android:password="true"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -306,21 +272,22 @@
             android:id="@+id/ConfirmarEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:background="@drawable/rounded_login_ui"
             android:backgroundTint="@color/fundo"
             android:paddingLeft="0dp"
             android:paddingTop="0dp"
             android:paddingBottom="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutEmail">
+            app:layout_constraintTop_toBottomOf="@+id/layoutEmail"
+            app:layout_constraintVertical_bias="0.028">
 
             <ImageView
                 android:id="@+id/imgConfirmarEmail"
                 android:layout_width="35dp"
-                android:layout_height="37dp"
+                android:layout_height="35dp"
                 android:soundEffectsEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -333,9 +300,10 @@
             <EditText
                 android:id="@+id/txtConfirmarEmail"
                 android:layout_width="151dp"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono"
                 android:hint="confirmar email"
+                android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -358,12 +326,12 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             app:backgroundTint="@color/botao"
-            app:layout_constraintBottom_toTopOf="@+id/btnCancelar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ConfirmarSenha"
-            app:layout_constraintVertical_bias="0.857" />
+            app:layout_constraintVertical_bias="0.364" />
 
         <Button
             android:id="@+id/btnCancelar"
@@ -378,8 +346,10 @@
             app:backgroundTint="@color/botao"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.525"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCadastrar"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

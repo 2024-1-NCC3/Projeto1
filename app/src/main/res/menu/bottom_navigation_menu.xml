@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/para_retirar"
+        android:enabled="true"
+        android:icon="@drawable/list"
+        android:title="Para retirar"/>
+    <item
+        android:id="@+id/retirado"
+        android:enabled="true"
+        android:icon="@drawable/check"
+        android:title="Retirados"/>
+</menu>

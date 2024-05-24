@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bege"
+    tools:context=".Activity_Adicionar_Produtos">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBarraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borda_arrendondada_inferior_verde_escuro"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtTituloProdutos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/itim"
+            android:text="Adicionar Produtos"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:onClick="voltarTelaAddProdutos"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/voltar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputQnt"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="204dp"
+        android:hint="Quantidade"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
+        app:layout_constraintVertical_bias="0.015">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputQuantidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="12sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputPreco"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="221dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Preço"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:boxStrokeColor="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputNomeProduto"
+        app:layout_constraintVertical_bias="0.015">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputPreco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="12sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputNomeProduto"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome Produto"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:boxStrokeColor="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutBarraSuperior"
+        app:layout_constraintVertical_bias="0.062">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputNomeProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinnerAddProduto"
+        android:layout_width="379dp"
+        android:layout_height="59dp"
+        android:background="@drawable/borda_spinner"
+        android:dropDownSelector="@color/verde_fundo_categoria"
+        android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputQnt"
+        app:layout_constraintVertical_bias="0.019" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputIngredientes"
+        android:layout_width="379dp"
+        android:layout_height="104dp"
+        android:hint="Ingredientes"
+        android:textColorHint="@color/verde_fundo_categoria"
+        app:boxStrokeColor="@color/verde_fundo_categoria"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAddProduto"
+        app:layout_constraintVertical_bias="0.023">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputDingredientes"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:shadowColor="@color/verde_fundo_categoria"
+            android:textColorHighlight="@color/verde_fundo_categoria"
+            android:textColorHint="@color/verde_fundo_categoria"
+            android:textColorLink="@color/verde_fundo_categoria"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_finalizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:onClick="finalizarCadastroProduto"
+        android:text="Finalizar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="15dp"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerAddProduto"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerAddProduto"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="@+id/spinnerAddProduto"
+        app:layout_constraintTop_toTopOf="@+id/spinnerAddProduto"
+        app:layout_constraintVertical_bias="0.51"
+        app:srcCompat="@drawable/seta_spinner" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

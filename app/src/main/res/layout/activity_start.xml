@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bege"
-    tools:context=".LoadingActivity"
+    tools:context=".activities.LoadingActivity"
     android:gravity="center"
     >
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/comedoria_logotipo"></ImageView>
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:src="@drawable/comedoria_logotipo"
+        app:srcCompat="@drawable/logo"></ImageView>
 </LinearLayout>

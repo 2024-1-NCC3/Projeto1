@@ -5,40 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/marro_comedori_tia"
-    android:paddingStart="8dp"
     android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/txtNomeProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/itim"
         android:singleLine="false"
         android:text="Nome do produto"
+        android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layoutQuantidade"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txtSoma"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="R$ 00,00"
+        android:fontFamily="@font/itim"
+        android:text="R$ 0000,00"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/layoutQuantidade"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/layoutQuantidade"
-        app:layout_constraintTop_toTopOf="@+id/layoutQuantidade" />
+        app:layout_constraintTop_toTopOf="@+id/txtNomeProduto"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutQuantidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/txtNomeProduto"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtSoma"
-        app:layout_constraintStart_toEndOf="@+id/txtNomeProduto"
         app:layout_constraintTop_toTopOf="@+id/txtNomeProduto">
 
         <ImageView
@@ -48,17 +50,21 @@
             app:layout_constraintBottom_toBottomOf="@+id/txtQuantidade"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtQuantidade"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@mipmap/remove" />
 
         <TextView
             android:id="@+id/txtQuantidade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No"
+            android:fontFamily="@font/itim"
+            android:text="000"
+            android:textAlignment="center"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgRetirar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imgAdicionar"
@@ -67,6 +73,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/txtQuantidade"
             app:layout_constraintStart_toEndOf="@+id/txtQuantidade"
             app:layout_constraintTop_toTopOf="@+id/txtQuantidade"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@mipmap/add" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
