@@ -115,7 +115,7 @@ public class ModificarProduto extends AppCompatActivity {
         }
 
 
-    /**Requisição que envia a atualização do produto para o banco de dados*/
+    /**Requisição que envia a atualização do produto se ele está ou não em promoção*/
         private void colocarEmPromocao() throws JSONException {
             Map<String, String> headers = new HashMap<>();
             //define os heades que a solicitação vai precisar
@@ -149,7 +149,8 @@ public class ModificarProduto extends AppCompatActivity {
                         }
                 );
 
-            }else if(estaEmPromocao == true && !cbPromocao.isChecked()){
+            }
+            else if(estaEmPromocao == true && !cbPromocao.isChecked()){
                 ConectorAPI.conexaoArrayDELETE(
                         "/rest/v1/categoria_produto?id_produto=eq." + idProduto + "&id_categoria=eq.5",
                         headers,
@@ -168,6 +169,8 @@ public class ModificarProduto extends AppCompatActivity {
                 );
             }
         }
+
+        /**Requisição que verifica se a quantidade a tual é diferente da quantidade do estoque e igual elas*/
         private void atualizarProduto(int quantidadeEstoque, double precoEstoque) throws JSONException {
 
             Map<String, String> headers = new HashMap<>();
@@ -199,6 +202,7 @@ public class ModificarProduto extends AppCompatActivity {
                 );
             }
 
+            /**Requisição que verifica se o preço atual é diferente da quantidade do estoque e igual eles*/
             if(precoEstoque != precoProduto){
 
                 ConectorAPI.conexaoArrayPATCH(
