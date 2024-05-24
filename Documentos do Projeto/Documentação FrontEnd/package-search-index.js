@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.example.comedoria"},{"l":"com.example.comedoria.activities"},{"l":"com.example.comedoria.Adapter"},{"l":"com.example.comedoria.Class"},{"l":"com.example.comedoria.fragments"}]
