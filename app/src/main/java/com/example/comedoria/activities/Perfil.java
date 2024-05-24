@@ -2,7 +2,6 @@ package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,14 +40,14 @@ public class Perfil extends AppCompatActivity {
     String accessToken, idUsuario;
     TextView txtSaldo, lblData, lblResumo, lblTotal;
 
-
-
     private Spinner spinnerData, spinnerCategoria, spinnerTipo ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
+        // Inicialização dos elementos da interface
         accessToken = getIntent().getStringExtra("accessToken");
         idUsuario = getIntent().getStringExtra("idUsuario");
 
@@ -57,6 +56,7 @@ public class Perfil extends AppCompatActivity {
         lblData = findViewById(R.id.lblData);
         lblTotal = findViewById(R.id.lblTotal);
 
+        // Ajuste da largura dos elementos de texto
         TextPaint paintData = lblData.getPaint();
         float tamanhoData = paintData.measureText("00/00/00");
         lblData.setWidth((int) (tamanhoData));
@@ -65,29 +65,21 @@ public class Perfil extends AppCompatActivity {
         float tamanhoTotal = paintResumo.measureText("Aguardando ");
         lblTotal.setWidth((int) (tamanhoTotal));
 
-
-
-
+        // Configuração do adaptador e do RecyclerView
         adapterHistorico = new AdapterHistorico(historico, this);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-
         recyclerHistorico.setLayoutManager(layoutManager);
         recyclerHistorico.setHasFixedSize(true);
         recyclerHistorico.setAdapter(adapterHistorico);
 
+        // Obtenção dos dados do usuário e histórico de pedidos
         pegarDadosUsuario();
         buscarHistorico();
-
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_perfil);
-
-
     }
 
+    // Método para obter os dados do usuário
     private void pegarDadosUsuario() {
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -98,26 +90,24 @@ public class Perfil extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-                        if(response.length()>0){
+                        if(response.length() > 0){
                             JSONObject usuario = response.getJSONObject(0);
                             double saldo = usuario.getDouble("saldo");
-
                             txtSaldo.setText(String.format(Locale.getDefault(), "R$ %.2f", saldo));
                         }
                     }
 
                     @Override
                     public void onError(VolleyError error) {
-
+                        // Tratamento de erro
                     }
                 }
         );
     }
 
-
-    private void buscarHistorico(){
+    // Método para buscar o histórico de pedidos do usuário
+    private void buscarHistorico() {
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -131,21 +121,22 @@ public class Perfil extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-                        if(response.length()>0){
+                        if(response.length() > 0){
                             interpretarJsonArray(response);
                         }
                     }
 
                     @Override
                     public void onError(VolleyError error) {
-
+                        // Tratamento de erro
                     }
                 }
         );
     }
 
+    // Método para interpretar o JSONArray de pedidos
     private void interpretarJsonArray(JSONArray response) throws JSONException {
-        for(int i =0;i<response.length();i++){
+        for(int i = 0; i < response.length(); i++){
             JSONObject objetoPedido = response.getJSONObject(i);
             String data = objetoPedido.getString("data_para_retirada");
             String status = objetoPedido.getString("status");
@@ -156,12 +147,11 @@ public class Perfil extends AppCompatActivity {
             List<String> listaProdutos = new ArrayList<>();
             double total = 0;
 
-            for(int j =0; j< arrayProdutos.length();j++){
+            for(int j = 0; j < arrayProdutos.length(); j++){
                 JSONObject produto = arrayProdutos.getJSONObject(j);
                 JSONObject detalhes = arrayQuantidade.getJSONObject(j);
 
                 String nomeProduto = produto.getString("nome_produto");
-
                 double precoProduto = produto.getDouble("preco");
                 int quantidade = detalhes.getInt("quantidade");
 
@@ -175,20 +165,21 @@ public class Perfil extends AppCompatActivity {
         adapterHistorico.notifyDataSetChanged();
     }
 
-    public void irParaPedido(String idPedido){
+    // Método para abrir a tela de detalhes do pedido
+    public void irParaPedido(String idPedido) {
         Intent i = new Intent(this, ComprovantePedido.class);
         i.putExtra("idPedido",idPedido);
         i.putExtra("accessToken", accessToken);
         startActivity(i);
     }
 
+    // Método para criar a barra de pesquisa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.pesqui, menu);
         MenuItem menuItem = menu.findItem(R.id.pesqui);
         SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Pesqui");
+        searchView.setQueryHint("Pesquisar");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -198,7 +189,7 @@ public class Perfil extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                
+                // Aqui você pode realizar a busca conforme o texto digitado no SearchView
                 return false;
             }
         });
@@ -206,46 +197,8 @@ public class Perfil extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void sair(View view){
+    // Método para sair do perfil
+    public void sair(View view) {
         finish();
     }
-
-    //    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Verifica se o item de menu clicado é o item de pesquisa
-//        if (item.getItemId() == R.id.pesqui) {
-//            // Chama um método para mostrar um DatePickerDialog para selecionar a data
-//            showDatePickerDialog();
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    // Método para exibir um DatePickerDialog para selecionar a data
-//    private void showDatePickerDialog() {
-//        // Obtém a data atual
-//        final Calendar calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-//
-//        // Cria um DatePickerDialog com a data atual
-//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-//                (view, year1, monthOfYear, dayOfMonth1) -> {
-//                    // Quando uma data é selecionada, formate-a conforme necessário
-//                    // e atribua-a à variável guardaData
-//                    guardaData = String.format("%02d/%02d/%04d", dayOfMonth1, monthOfYear + 1, year1);
-//                    // Exemplo de exibição da data selecionada
-//                    Toast.makeText(getApplicationContext(), "Data selecionada: " + guardaData, Toast.LENGTH_SHORT).show();
-//                }, year, month, dayOfMonth);
-//
-//        // Mostra o DatePickerDialog
-//        datePickerDialog.show();
-//    }
-//
-//    // Método para obter a data guardada
-//    public String getGuardaData() {
-//        return guardaData;
-//    }
-
-
 }

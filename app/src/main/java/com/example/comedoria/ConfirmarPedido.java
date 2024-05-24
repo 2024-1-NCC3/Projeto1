@@ -35,6 +35,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Esta classe representa a atividade para confirmar um pedido.
+ */
 public class ConfirmarPedido extends AppCompatActivity {
     TextView nomeCliente, numeroPedido, totalConfirmar;
     String accessToken;
@@ -43,6 +46,12 @@ public class ConfirmarPedido extends AppCompatActivity {
     AdapterConfirmar adapterConfirmar;
     View rootView;
     List<Produto> listaProdutos = new ArrayList<>();
+
+    /**
+     * Método chamado quando a atividade é criada.
+     *
+     * @param savedInstanceState Os dados fornecidos para a atividade quando foi reconstruída a partir de um estado anterior, caso exista.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,14 +76,15 @@ public class ConfirmarPedido extends AppCompatActivity {
 
         buscarProdutosDoPedido();
 
-
         nomeCliente.setText(pedido.getNomeCliente());
-        numeroPedido.setText(pedido.getNumeroPedido() + "");
+        numeroPedido.setText(String.valueOf(pedido.getNumeroPedido()));
         totalConfirmar.setText(String.format(Locale.getDefault(), "Total: R$ %.2f", pedido.getTotal()));
-
     }
 
-    private void buscarProdutosDoPedido(){
+    /**
+     * Método para buscar os produtos do pedido.
+     */
+    private void buscarProdutosDoPedido() {
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
@@ -87,7 +97,7 @@ public class ConfirmarPedido extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
                         JSONArray detalhesPedido = response.getJSONObject(0).getJSONArray("detalhes_pedido");
-                        for(int i = 0;i<detalhesPedido.length();i++){
+                        for (int i = 0; i < detalhesPedido.length(); i++) {
                             JSONObject produto = detalhesPedido.getJSONObject(i);
                             int quantidade = produto.getInt("quantidade");
                             JSONObject det = produto.getJSONObject("produtos");
@@ -106,15 +116,30 @@ public class ConfirmarPedido extends AppCompatActivity {
                     }
                 }
         );
-
-    }
-    public void confirmarRetirada(View view) throws JSONException {
-        scanCode();
     }
 
+    /**
+     * Método chamado ao confirmar a retirada do pedido.
+     *
+     * @param view A vista que ativou este método.
+     */
+    public void confirmarRetirada(View view) {
+        try {
+            scanCode();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Método para gerar um JSONArray de confirmação.
+     *
+     * @return O JSONArray gerado.
+     * @throws JSONException Exceção lançada se houver um erro ao criar o JSONArray.
+     */
     private JSONArray gerarJSONArrayConfirmacao() throws JSONException {
         JSONObject confirmacao = new JSONObject();
-        confirmacao.put("status","Retirado");
+        confirmacao.put("status", "Retirado");
 
         JSONArray retorno = new JSONArray();
         retorno.put(confirmacao);
@@ -122,7 +147,10 @@ public class ConfirmarPedido extends AppCompatActivity {
         return retorno;
     }
 
-    private void scanCode(){
+    /**
+     * Método para iniciar a leitura do código de barras.
+     */
+    private void scanCode() throws JSONException {
         ScanOptions options = new ScanOptions();
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
@@ -130,10 +158,13 @@ public class ConfirmarPedido extends AppCompatActivity {
         barLauncher.launch(options);
     }
 
-    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result ->{
-        if(result.getContents() != null){
+    /**
+     * Lançador de resultado para iniciar a leitura do código de barras.
+     */
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents() != null) {
             String numPedido = String.valueOf(pedido.getId_pedido());
-            if(result.getContents().equals(numPedido)){
+            if (result.getContents().equals(numPedido)) {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("apikey", API_KEY);
                 headers.put("Authorization", "Bearer " + accessToken);
@@ -160,10 +191,9 @@ public class ConfirmarPedido extends AppCompatActivity {
                             }
                     );
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
-            }
-            else{
+            } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmarPedido.this);
                 builder.setTitle("QRCode errado");
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

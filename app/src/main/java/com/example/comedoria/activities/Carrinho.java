@@ -50,12 +50,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Atividade para gerenciar o carrinho de compras.
+ */
 public class Carrinho extends AppCompatActivity {
-    TextView txtHora, txtData,txtTotal, txtTituloQuantidade, txtTituloSoma, txtTituloHorario;
+
+    TextView txtHora, txtData, txtTotal, txtTituloQuantidade, txtTituloSoma, txtTituloHorario;
     TextInputEditText inputObservacoes;
     RecyclerView recycleCarrinho;
     List<Produto> produtos;
-    String accessToken,idUsuario,idPedido,date,horas;
+    String accessToken, idUsuario, idPedido, date, horas;
     Calendar dataFinal;
     int dia, mes, ano, hora, minuto;
 
@@ -63,7 +67,11 @@ public class Carrinho extends AppCompatActivity {
     double saldo;
     FloatingActionButton fabHome;
 
-
+    /**
+     * Chamado quando a atividade é criada pela primeira vez.
+     *
+     * @param savedInstanceState Se a atividade está sendo re-inicializada após ser previamente finalizada, então este Bundle contém os dados que ela forneceu mais recentemente em onSaveInstanceState(Bundle). Caso contrário, está nulo.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,17 +95,16 @@ public class Carrinho extends AppCompatActivity {
         fabHome = findViewById(R.id.btnFlutuante);
         fabHome.setImageTintList(ColorStateList.valueOf(Color.WHITE));
 
-        //seta a largura do título quantidade corretamente
+        // Seta a largura do título quantidade corretamente
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.remove);
         int larguraIcon = bitmap.getWidth();
 
         TextPaint paintQuantidade = txtTituloHorario.getPaint();
         float tamanhoQuantidade = paintQuantidade.measureText("000");
-        txtTituloQuantidade.setWidth((int) (tamanhoQuantidade) + (larguraIcon *2));
+        txtTituloQuantidade.setWidth((int) (tamanhoQuantidade) + (larguraIcon * 2));
 
         float tamanhoSoma = paintQuantidade.measureText("R$ 0000,00 ");
         txtTituloSoma.setWidth((int) (tamanhoSoma));
-
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recycleCarrinho.setLayoutManager(layoutManager);
@@ -108,7 +115,12 @@ public class Carrinho extends AppCompatActivity {
         atualizarTotal();
     }
 
-    public void selecionarHora(View view){
+    /**
+     * Abre um seletor de hora para o usuário escolher a hora de retirada.
+     *
+     * @param view A visão que foi clicada.
+     */
+    public void selecionarHora(View view) {
         Calendar calendar = Calendar.getInstance();
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
@@ -116,8 +128,6 @@ public class Carrinho extends AppCompatActivity {
                 .setMinute(calendar.get(Calendar.MINUTE))
                 .setTitleText("Selecione a hora de retirada")
                 .build();
-
-
 
         picker.addOnPositiveButtonClickListener(new View.OnClickListener() {
             @Override
@@ -128,20 +138,23 @@ public class Carrinho extends AppCompatActivity {
                 calendar.set(Calendar.HOUR_OF_DAY, hora);
                 calendar.set(Calendar.MINUTE, minuto);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                 horas = simpleDateFormat.format(calendar.getTime());
                 txtHora.setText(horas);
-
 
                 System.out.printf(txtHora.getText().toString());
             }
         });
         Timestamp time = new Timestamp(calendar.getTimeInMillis());
-        picker.show(getSupportFragmentManager(),"tag");
+        picker.show(getSupportFragmentManager(), "tag");
     }
 
-    public void selecionarData(View view){
+    /**
+     * Abre um seletor de data para o usuário escolher a data de retirada.
+     *
+     * @param view A visão que foi clicada.
+     */
+    public void selecionarData(View view) {
         MaterialDatePicker<Long> picker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Selecione a data de retirada")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
@@ -151,8 +164,8 @@ public class Carrinho extends AppCompatActivity {
             public void onPositiveButtonClick(Long selection) {
                 date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(selection));
 
-                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-                SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy");
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                SimpleDateFormat meuFormato = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
                 try {
                     Date dataFormatada = formato.parse(date);
                     txtData.setText(meuFormato.format(dataFormatada));
@@ -161,55 +174,78 @@ public class Carrinho extends AppCompatActivity {
                 }
             }
         });
-        picker.show(getSupportFragmentManager(),"tag");
+        picker.show(getSupportFragmentManager(), "tag");
     }
 
-    public void atualizarLista(List<Produto> listaAtualizada){
+    /**
+     * Atualiza a lista de produtos no carrinho.
+     *
+     * @param listaAtualizada A lista atualizada de produtos.
+     */
+    public void atualizarLista(List<Produto> listaAtualizada) {
         this.produtos = listaAtualizada;
     }
-    public void atualizarTotal(){
+
+    /**
+     * Atualiza o valor total do carrinho.
+     */
+    public void atualizarTotal() {
         double soma = 0;
-        for(Produto produto: produtos){
-            soma+= produto.getPreco() * produto.getQuantidade();
+        for (Produto produto : produtos) {
+            soma += produto.getPreco() * produto.getQuantidade();
         }
         txtTotal.setText(String.format(Locale.getDefault(), "R$ %.2f", soma));
     }
 
-    public void voltarTelaCarrinho(View view){
+    /**
+     * Retorna à tela anterior.
+     *
+     * @param view A visão que foi clicada.
+     */
+    public void voltarTelaCarrinho(View view) {
         finish();
     }
 
-    public void voltarInicio(View view){
+    /**
+     * Retorna à tela inicial.
+     *
+     * @param view A visão que foi clicada.
+     */
+    public void voltarInicio(View view) {
         Intent intent = new Intent(this, PaginaInicial.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
     }
 
-
+    /**
+     * Finaliza o pedido após verificar estoque e saldo.
+     *
+     * @param view A visão que foi clicada.
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     public void finalizarPedido(View view) throws JSONException {
-
         double soma = 0;
 
-        if(date == null || horas == null){
+        if (date == null || horas == null) {
             Toast.makeText(this, "Por favor, selecione uma data e hora para retirada", Toast.LENGTH_SHORT).show();
             return;
         }
-        for(Produto produto: produtos){
+        for (Produto produto : produtos) {
             soma += produto.getPreco() * produto.getQuantidade();
         }
-        if(soma <= 0){
+        if (soma <= 0) {
             Toast.makeText(this, "Selecione no mínimo um produto", Toast.LENGTH_SHORT).show();
             return;
-        }else{
+        } else {
             verificarEstoque(new VolleyCallback() {
                 @Override
                 public void onResponse(boolean sucesso) throws JSONException {
-                    if(sucesso){
+                    if (sucesso) {
                         verificarSaldo(new VolleyCallback() {
                             @Override
                             public void onResponse(boolean sucesso) throws JSONException {
-                                if(sucesso){
+                                if (sucesso) {
                                     criarPedido();
                                 }
                             }
@@ -217,14 +253,15 @@ public class Carrinho extends AppCompatActivity {
                     }
                 }
             });
-
-
         }
-
     }
 
-
-    private void verificarSaldo( final VolleyCallback saldoCallback){
+    /**
+     * Verifica se o saldo do usuário é suficiente.
+     *
+     * @param saldoCallback Callback para verificar o saldo.
+     */
+    private void verificarSaldo(final VolleyCallback saldoCallback) {
         Map<String, String> headers = new HashMap<>();
 
         headers.put("apikey", API_KEY);
@@ -241,14 +278,14 @@ public class Carrinho extends AppCompatActivity {
                         saldo = objCliente.getDouble("saldo");
                         double total = 0;
 
-                        for(Produto produto: produtos){
+                        for (Produto produto : produtos) {
                             total += produto.getPreco() * produto.getQuantidade();
                         }
 
-                        if(saldo < total){
+                        if (saldo < total) {
                             Toast.makeText(getApplicationContext(), "Saldo insuficiente", Toast.LENGTH_SHORT).show();
                             saldoCallback.onResponse(false);
-                        }else{
+                        } else {
                             saldoCallback.onResponse(true);
                         }
                     }
@@ -258,16 +295,20 @@ public class Carrinho extends AppCompatActivity {
                         saldoCallback.onResponse(false);
                     }
                 }
-
         );
-
     }
-    private void verificarEstoque(final VolleyCallback estoqueCallBack){
+
+    /**
+     * Verifica se há estoque suficiente para os produtos no carrinho.
+     *
+     * @param estoqueCallBack Callback para verificar o estoque.
+     */
+    private void verificarEstoque(final VolleyCallback estoqueCallBack) {
         String produtosDoPedido = "";
-        for(Produto produto:produtos){
-            produtosDoPedido += produto.getId() +",";
+        for (Produto produto : produtos) {
+            produtosDoPedido += produto.getId() + ",";
         }
-        produtosDoPedido = produtosDoPedido.substring(0,produtosDoPedido.length()-1);
+        produtosDoPedido = produtosDoPedido.substring(0, produtosDoPedido.length() - 1);
 
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
@@ -283,25 +324,23 @@ public class Carrinho extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-
-
-                        for(int i = 0; i<response.length();i++){
+                        for (int i = 0; i < response.length(); i++) {
                             JSONObject objEstoque = response.getJSONObject(i);
                             int idProduto = objEstoque.getInt("id_produto");
                             JSONObject estoque = objEstoque.getJSONObject("estoque");
                             int idEstoque = estoque.getInt("id_estoque");
                             int quantidadeEstoque = estoque.getInt("quantidade");
 
-                            relacaoProdutoEstoque.put(idProduto,new Estoque(idEstoque,quantidadeEstoque));
+                            relacaoProdutoEstoque.put(idProduto, new Estoque(idEstoque, quantidadeEstoque));
                         }
 
-                        for(Produto produto:produtos){
-                            //Se a quantidade selecionada for maior que o estoque da tia, retorna falso
-                            if(produto.getQuantidade() > relacaoProdutoEstoque.get(produto.getId()).getQuantidade() ){
-                                Toast.makeText(getApplicationContext(), "Não temos mais o produto: " + produto.getNome() +" em estoque.", Toast.LENGTH_SHORT).show();
+                        for (Produto produto : produtos) {
+                            // Se a quantidade selecionada for maior que o estoque disponível, retorna falso
+                            if (produto.getQuantidade() > relacaoProdutoEstoque.get(produto.getId()).getQuantidade()) {
+                                Toast.makeText(getApplicationContext(), "Não temos mais o produto: " + produto.getNome() + " em estoque.", Toast.LENGTH_SHORT).show();
                                 estoqueCallBack.onResponse(false);
                                 return;
-                            };
+                            }
                         }
                         estoqueCallBack.onResponse(true);
                     }
@@ -311,22 +350,23 @@ public class Carrinho extends AppCompatActivity {
                         estoqueCallBack.onResponse(false);
                     }
                 }
-
         );
-
     }
 
+    /**
+     * Cria um novo pedido.
+     *
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     private void criarPedido() throws JSONException {
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        // Define os headers que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
         headers.put("Content-Type", "application/json");
         headers.put("Prefer", "return=representation");
 
-
-
-        //Faz a requisição para criar um pedido no servidor
+        // Faz a requisição para criar um pedido no servidor
         ConectorAPI.conexaoArrayPOST(
                 "/rest/v1/pedido",
                 headers,
@@ -343,7 +383,7 @@ public class Carrinho extends AppCompatActivity {
 
                     @Override
                     public void onError(VolleyError error) {
-                        //se a resposta for um erro, irá apresentar um Toast com o erro
+                        // Se a resposta for um erro, irá apresentar um Toast com o erro
                         String body = null;
                         try {
                             body = new String(error.networkResponse.data, "utf-8");
@@ -363,6 +403,11 @@ public class Carrinho extends AppCompatActivity {
         );
     }
 
+    /**
+     * Reduz o saldo do usuário após a finalização do pedido.
+     *
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     private void reduzirSaldo() throws JSONException {
         double total = 0.0;
         Map<String, String> headers = new HashMap<>();
@@ -371,9 +416,8 @@ public class Carrinho extends AppCompatActivity {
         headers.put("Content-Type", "application/json");
         headers.put("Prefer", "return=representation");
 
-
-        for(Produto produto: produtos){
-            total+= produto.getQuantidade() * produto.getPreco();
+        for (Produto produto : produtos) {
+            total += produto.getQuantidade() * produto.getPreco();
         }
 
         JSONObject objCorpo = new JSONObject();
@@ -381,7 +425,6 @@ public class Carrinho extends AppCompatActivity {
 
         JSONArray req = new JSONArray();
         req.put(objCorpo);
-
 
         ConectorAPI.conexaoArrayPATCH(
                 "/rest/v1/usuarios?id_user=eq." + idUsuario,
@@ -391,19 +434,22 @@ public class Carrinho extends AppCompatActivity {
                 new ConectorAPI.VolleyArrayCallback() {
                     @Override
                     public void onSuccess(JSONArray response) throws JSONException {
-
+                        // Sucesso ao reduzir saldo
                     }
 
                     @Override
                     public void onError(VolleyError error) throws JSONException {
-
+                        // Erro ao reduzir saldo
                     }
                 }
-
-
         );
     }
 
+    /**
+     * Reduz o estoque dos produtos após a finalização do pedido.
+     *
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     private void reduzirEstoque() throws JSONException {
         Map<String, String> headers = new HashMap<>();
         headers.put("apikey", API_KEY);
@@ -411,12 +457,12 @@ public class Carrinho extends AppCompatActivity {
         headers.put("Content-Type", "application/json");
         headers.put("Prefer", "return=representation");
 
-        for(Produto produto: produtos){
+        for (Produto produto : produtos) {
             JSONObject objCorpo = new JSONObject();
             int quantidadePedido = produto.getQuantidade();
             int quantidadeEstoque = relacaoProdutoEstoque.get(produto.getId()).getQuantidade();
 
-            objCorpo.put("quantidade", quantidadeEstoque - quantidadePedido );
+            objCorpo.put("quantidade", quantidadeEstoque - quantidadePedido);
 
             JSONArray req = new JSONArray();
             req.put(objCorpo);
@@ -429,21 +475,24 @@ public class Carrinho extends AppCompatActivity {
                     new ConectorAPI.VolleyArrayCallback() {
                         @Override
                         public void onSuccess(JSONArray response) throws JSONException {
-
+                            // Sucesso ao reduzir estoque
                         }
 
                         @Override
                         public void onError(VolleyError error) throws JSONException {
-
+                            // Erro ao reduzir estoque
                         }
                     }
-
-
             );
-
         }
-
     }
+
+    /**
+     * Cria o JSON para o novo pedido.
+     *
+     * @return Um JSONArray representando o novo pedido.
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     private JSONArray JsonNovoPedido() throws JSONException {
         Log.i("SUpabase", date);
 
@@ -454,17 +503,20 @@ public class Carrinho extends AppCompatActivity {
         solicitacao.put("data_para_retirada", date);
         solicitacao.put("observacoes", inputObservacoes.getText().toString());
 
-
         JSONArray req = new JSONArray();
         req.put(solicitacao);
 
         return req;
     }
+
+    /**
+     * Adiciona produtos ao pedido.
+     *
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     private void adicionarProdutosNoPedido() throws JSONException {
-
-
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        // Define os headers que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + accessToken);
@@ -493,18 +545,21 @@ public class Carrinho extends AppCompatActivity {
         );
     }
 
+    /**
+     * Cria o JSON para adicionar os produtos ao pedido.
+     *
+     * @return Um JSONArray representando os produtos a serem adicionados ao pedido.
+     * @throws JSONException Se ocorrer um erro de JSON.
+     */
     private JSONArray JsonPedidosParaAdicionar() throws JSONException {
         JSONArray req = new JSONArray();
-        for(Produto produto: produtos){
+        for (Produto produto : produtos) {
             JSONObject prod = new JSONObject();
-
             prod.put("id_produto", produto.getId());
             prod.put("id_pedido", idPedido);
-            prod.put("quantidade",produto.getQuantidade());
-
+            prod.put("quantidade", produto.getQuantidade());
             req.put(prod);
         }
         return req;
     }
-
 }

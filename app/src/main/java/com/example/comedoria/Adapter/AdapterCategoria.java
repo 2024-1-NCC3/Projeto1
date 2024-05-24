@@ -21,13 +21,13 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
     private List<Categoria> listaCategorias;
     private Context context;
 
+    // Construtor do adaptador
     public AdapterCategoria(List<Categoria> lista, Context context){
         this.listaCategorias = lista;
         this.context = context;
     }
 
-
-
+    // Método chamado quando um novo item de categoria é criado
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,15 +36,17 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
         return new MyViewHolder(itemLista);
     }
 
+    // Método chamado para exibir os dados de uma categoria
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Categoria categoria = listaCategorias.get(position);
 
-
+        // Verifica se a categoria deve ser exibida ou não
         if(!categoria.getAparecer()){
             holder.rootView.setVisibility(View.GONE);
         }
 
+        // Define o comportamento de clique na categoria
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,23 +54,27 @@ public class AdapterCategoria extends RecyclerView.Adapter<AdapterCategoria.MyVi
             }
         });
 
+        // Define a descrição da categoria
         holder.descricaoCategoria.setText(categoria.getDescricao());
-        //Cuida de carregar a imagem pela URL
+
+        // Carrega a imagem da categoria utilizando Picasso
         Picasso.get().load(categoria.getCaminho()).into(holder.imgCategoria);
     }
 
+    // Retorna o número total de categorias na lista
     @Override
     public int getItemCount() {
-
         return listaCategorias.size();
     }
 
-    public class MyViewHolder extends  RecyclerView.ViewHolder{
+    // Classe ViewHolder que contém as visualizações dos itens de categoria
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView descricaoCategoria;
         ImageView imgCategoria;
         View rootView;
 
-        public MyViewHolder(View itemView){            
+        // Construtor que inicializa as visualizações
+        public MyViewHolder(View itemView){
             super(itemView);
             rootView = itemView;
             descricaoCategoria = itemView.findViewById(R.id.txtDescricaoCategoria);
