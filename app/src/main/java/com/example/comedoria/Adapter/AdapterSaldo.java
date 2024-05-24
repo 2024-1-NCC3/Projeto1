@@ -19,13 +19,13 @@ public class AdapterSaldo extends RecyclerView.Adapter<AdapterSaldo.MyViewHolder
     private List<Cliente> lista;
     private Context context;
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterSaldo(List<Cliente> lista, Context context) {
-
         this.lista = lista;
         this.context = context;
-
     }
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,6 +34,7 @@ public class AdapterSaldo extends RecyclerView.Adapter<AdapterSaldo.MyViewHolder
         return new MyViewHolder(view);
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull AdapterSaldo.MyViewHolder holder, int position) {
         Cliente cliente = lista.get(position);
@@ -41,10 +42,10 @@ public class AdapterSaldo extends RecyclerView.Adapter<AdapterSaldo.MyViewHolder
         holder.txtNomeCliente.setText(cliente.getNomeCompleto());
         holder.txtIdCliente.setText("ID: " + cliente.getIdCliente().substring(0,8));
 
+        /**Redireciona para a tela de adicionar saldo para o cliente carregando o ID do cliente*/
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(context instanceof AdicionarSaldo){
                     ((AdicionarSaldo)context).adicionarSaldoParaCliente(cliente.getIdCliente(),cliente.getNomeCompleto());
                 }
@@ -52,6 +53,7 @@ public class AdapterSaldo extends RecyclerView.Adapter<AdapterSaldo.MyViewHolder
         });
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return lista.size();

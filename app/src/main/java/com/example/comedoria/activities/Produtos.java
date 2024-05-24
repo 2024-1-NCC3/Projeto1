@@ -2,25 +2,32 @@ package com.example.comedoria.activities;
 
 import static com.example.comedoria.BuildConfig.API_KEY;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 import com.example.comedoria.Adapter.AdapterProduto;
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.ConectorAPI;
+import com.example.comedoria.ConfirmarPedido;
 import com.example.comedoria.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -59,6 +66,7 @@ public class Produtos extends AppCompatActivity {
     @SuppressLint({"ResourceAsColor", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produtos);
         accessToken = getIntent().getStringExtra("accessToken");
@@ -68,6 +76,7 @@ public class Produtos extends AppCompatActivity {
 
     }
 
+    /**Direciona para a tela do carrinho para finalizar o pedido*/
     public void irParaOCarrinho(View view){
         List<Produto> produtosSelecionados = new ArrayList<>();
 
@@ -89,6 +98,7 @@ public class Produtos extends AppCompatActivity {
             startActivity(i);
         }
     }
+    /**Coleta as categorias dos produtos carregados*/
     private void pegarCategorias(List<Produto> lista){
         for(Produto produto: lista){
             for(String categoria: produto.getCategoria()){
@@ -99,6 +109,7 @@ public class Produtos extends AppCompatActivity {
         }
     }
 
+    /**Define métodos de ordenação da lista de produtos, que estão alocados nos spinners de filtro*/
     private void ordernarLista(String tipo){
         switch(tipo){
             case "Ordenar":
@@ -120,6 +131,7 @@ public class Produtos extends AppCompatActivity {
         }
         adapterProduto.notifyDataSetChanged();
     }
+    /**A partir do filtro escolhido, filtra a lista visível de produtos*/
     public void filtrarLista(String categoria){
         listaFiltrada.clear();
 
@@ -140,15 +152,16 @@ public class Produtos extends AppCompatActivity {
 
     }
 
+    /**Requisição para pegar a lista de produtos do banco de dados*/
     private void CarregarListaProdutos(){
         Map<String, String> headers = new HashMap<>();
         String endpoint = "";
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,categoria(nome_categoria)" ,
+                "/rest/v1/produtos?select=*,categoria(nome_categoria),estoque(quantidade)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -164,10 +177,12 @@ public class Produtos extends AppCompatActivity {
                 });
     }
 
+    /**Volta para a tela anterior*/
     public void voltarTelaProdutos(View view){
         finish();
     }
 
+    /**Volta para a tela inicial do aplicativo*/
     public void voltarInicio(View view){
         Intent intent = new Intent(this, PaginaInicial.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -175,6 +190,7 @@ public class Produtos extends AppCompatActivity {
         finish();
     }
 
+    /**Coleta os dados do JSONArray e adiciona numa lista de produtos*/
     private void converterJsonArray(JSONArray response) throws JSONException {
         if(response.length() > 0){
             //listaProdutos.clear();
@@ -190,6 +206,10 @@ public class Produtos extends AppCompatActivity {
                 String nomeProduto = objProduto.getString("nome_produto");
                 Double preco = objProduto.getDouble("preco");
                 String caminhoImagem = objProduto.getString("caminho_imagem");
+
+                JSONObject estoque = objProduto.getJSONObject("estoque");
+                int quantidadeEstoque = estoque.getInt("quantidade");
+
                 List<String> categoriaProduto = new ArrayList<>();
 
                 if(arrayCategoria.length() >0){
@@ -200,7 +220,7 @@ public class Produtos extends AppCompatActivity {
                     }
                 }
 
-                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem));
+                listaProdutos.add(new Produto(id,nomeProduto,preco,categoriaProduto,caminhoImagem, quantidadeEstoque));
 
             }
         }
@@ -217,6 +237,7 @@ public class Produtos extends AppCompatActivity {
         adapter2.notifyDataSetChanged();
     }
 
+    /**Encontra a categoria selecionada*/
     private int encontrarCategoria(String categoriaProcurada){
         for(int i=0;i<listaCategorias.size();i++){
             if(listaCategorias.get(i).equals(categoriaProcurada)){
@@ -226,6 +247,7 @@ public class Produtos extends AppCompatActivity {
         return 0;
     }
 
+    /**Função para carregar os elementos da tela de produtos a partir dos filtros*/
     private void iniciarPag(){
         listaCategorias.add("Todos");
         CarregarListaProdutos();
@@ -245,7 +267,7 @@ public class Produtos extends AppCompatActivity {
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.filtro_ordenar,
-                R.layout.color_spinner_layout
+                R.layout.produtos_spinner_layout
         );
         arrayAdapter.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
         spinnerOrdenar.setAdapter(arrayAdapter);
@@ -262,14 +284,14 @@ public class Produtos extends AppCompatActivity {
             }
         });
 
-
-        // Configuração do Dropdown de filtragem
+        /**Configuração do Dropdown de filtragem*/
         spinnerCategoria = findViewById(R.id.spinner_categoria);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaCategorias);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        adapter2 = new ArrayAdapter<>(this, R.layout.color_spinner_layout, listaCategorias);
+        adapter2 = new ArrayAdapter<>(this, R.layout.produtos_spinner_layout, listaCategorias);
+
         adapter2.setDropDownViewResource(R.layout.color_spinner_dropdown_layout);
         spinnerCategoria.setAdapter(adapter2);
         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -287,7 +309,7 @@ public class Produtos extends AppCompatActivity {
         });
     }
 
-    //Comparadores para fazer a ordenação dos produtos
+    /**Comparadores para fazer a ordenação dos produtos*/
     class ComparadorPreco implements Comparator<Produto>{
 
         @Override
@@ -301,5 +323,33 @@ public class Produtos extends AppCompatActivity {
             return produto.getNome().compareTo(t1.getNome());
         }
     }
+
+    /**Função de abrir os ingredientes do produto ao clicar na sua foto*/
+    public void abrirIngredientes(String nome, String caminhoImg, String ingredientes){
+        LayoutInflater inflater = getLayoutInflater();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = inflater.inflate(R.layout.sample, null);
+        ImageView imageView = view.findViewById(R.id.dialog_imageview);
+
+        Glide.with(this)
+                .load(caminhoImg)
+                .into(imageView);
+
+        TextView txtIngredientes = view.findViewById(R.id.txtIngredientes);
+        TextView txtTitulo = view.findViewById(R.id.txtTitulo);
+
+        txtTitulo.setText(nome);
+        txtIngredientes.setText(ingredientes);
+
+        builder.setView(view);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        }).show();
+    }
+
+
 
 }

@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.069"
-        app:srcCompat="@drawable/comedoria_logotipo" />
+        app:srcCompat="@drawable/logo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutCadastro"
@@ -70,6 +70,7 @@
                 android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="nome"
                 android:imeOptions="actionNext"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -116,6 +117,7 @@
                 android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="sobrenome"
                 android:imeOptions="actionNext"
+                android:inputType="text"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -161,6 +163,7 @@
                 android:fontFamily="@font/jetbrains_mono_thin"
                 android:hint="email"
                 android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"
@@ -300,6 +303,7 @@
                 android:layout_height="45dp"
                 android:fontFamily="@font/jetbrains_mono"
                 android:hint="confirmar email"
+                android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="#80000000"
                 android:textSize="12sp"

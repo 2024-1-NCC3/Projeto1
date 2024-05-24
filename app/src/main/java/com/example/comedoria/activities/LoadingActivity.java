@@ -15,6 +15,7 @@ public class LoadingActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Função da tela de carregamento, que configura uma ProgressBar circular*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 

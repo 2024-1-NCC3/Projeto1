@@ -21,8 +21,9 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**Aequivos com as rotas do servidor*/
 public class ConectorAPI {
+    public RequestQueue requestQueue;
     //Interface para respostas JsonObject
     public interface VolleySingleCallback {
         void onSuccess(JSONObject response) throws JSONException;
@@ -31,14 +32,15 @@ public class ConectorAPI {
     //Interface para respostas JsonArray
     public interface VolleyArrayCallback {
         void onSuccess(JSONArray response) throws JSONException;
-        void onError(VolleyError error);
+        void onError(VolleyError error) throws JSONException;
     }
 
-    //POST
-    //Json Object
-    //Com corpo de solicitação
+    /**POST
+    Json Object
+    Com corpo de solicitação*/
     public static void conexaoSinglePOST(String endpoint, JSONObject dadosDeSolicitacao,
-                                   Map<String, String> headers,Context context, VolleySingleCallback callback){
+                                   Map<String, String> headers,
+                                         Context context,VolleySingleCallback callback){
         String url = API_URL + endpoint;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
@@ -74,9 +76,9 @@ public class ConectorAPI {
         filaRequest.add(request);
     }
 
-    //GET
-    //Json array
-    //Sem corpo de solicitação
+    /**GET
+    Json array
+    Sem corpo de solicitação*/
     public static void conexaoArrayGET(String endpoint, Map<String, String> headers,
                                   Context context, VolleyArrayCallback callback)
     {
@@ -98,7 +100,11 @@ public class ConectorAPI {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError(error);
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         ){
@@ -111,6 +117,8 @@ public class ConectorAPI {
         filaRequest.add(request);
     }
 
+    /**POST
+     Com corpo de solicitação*/
     public static void conexaoArrayPOST(String endpoint, Map<String, String> headers, JSONArray corpoSolicitacao,
                                         Context context, VolleyArrayCallback callback){
         String url = API_URL + endpoint;
@@ -131,7 +139,11 @@ public class ConectorAPI {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError(error);
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         ){
@@ -144,6 +156,8 @@ public class ConectorAPI {
         filaRequest.add(request);
     }
 
+    /**UPDATE
+     Com corpo de solicitação*/
     public static void conexaoArrayPATCH(String endpoint, Map<String, String> headers, JSONArray corpoSolicitacao,
                                         Context context, VolleyArrayCallback callback){
         String url = API_URL + endpoint;
@@ -164,7 +178,11 @@ public class ConectorAPI {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onError(error);
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         ){
@@ -176,5 +194,45 @@ public class ConectorAPI {
         RequestQueue filaRequest = Volley.newRequestQueue(context);
         filaRequest.add(request);
     }
+
+    /**UPDATE
+     Com corpo de solicitação*/
+    public static void conexaoSinglePATCH(String endpoint, JSONObject dadosDeSolicitacao,
+                                         Map<String, String> headers,Context context, VolleySingleCallback callback){
+        String url = API_URL + endpoint;
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.PATCH,
+                url,
+                dadosDeSolicitacao,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            callback.onError(error);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+        ){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return headers;
+            }
+        };
+        RequestQueue filaRequest = Volley.newRequestQueue(context);
+        filaRequest.add(request);
+    }
+
 }
 

@@ -38,6 +38,7 @@ public class AdicionarSaldo extends AppCompatActivity {
     private List<Cliente> listaClienteAux = new ArrayList<>();
     private String accessToken;
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_saldo);
 
@@ -55,6 +56,7 @@ public class AdicionarSaldo extends AppCompatActivity {
 
     }
 
+    /**Carrega as informações da barra de pesquisa*/
     private void configurarPesquisa(){
 
         EditText inputPesquisa = searchSaldo.getEditText();
@@ -64,6 +66,7 @@ public class AdicionarSaldo extends AppCompatActivity {
 
          }
 
+         /**Coleta os dados que estão sendo pesquisados para buscar na lista de clientes*/
          @Override
          public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
              String pesquisa = charSequence.toString();
@@ -73,7 +76,7 @@ public class AdicionarSaldo extends AppCompatActivity {
              }
              else{
                  for(Cliente cliente : listaCliente){
-                     //Se a pesquisa tem o Nome ou id de alguém
+                     /**Busca se a pesquisa tem o nome ou o ID de algum cliente*/
                      if (cliente.getNomeCompleto().toLowerCase().contains(pesquisa.toLowerCase())
                              || cliente.getIdCliente().toLowerCase().contains(pesquisa.toLowerCase())) {
                          listaClienteAux.add(cliente);
@@ -93,7 +96,9 @@ public class AdicionarSaldo extends AppCompatActivity {
          );
     }
 
+    /**Faz uma requisição para popular a lista de clientes*/
     private void popularListaClientes(){
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
         //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
@@ -128,6 +133,7 @@ public class AdicionarSaldo extends AppCompatActivity {
 
         );
     }
+    /**Vai para a tela de adicionar saldo, levando as informações do cliente*/
     public void adicionarSaldoParaCliente(String ID, String nome){
         Intent i = new Intent(this,AdicionarSaldo2.class);
         i.putExtra("IDCliente", ID);

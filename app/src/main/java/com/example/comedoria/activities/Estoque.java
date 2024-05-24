@@ -51,6 +51,7 @@ public class Estoque extends AppCompatActivity {
     @SuppressLint({"ResourceAsColor", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estoque);
 
@@ -72,10 +73,10 @@ public class Estoque extends AppCompatActivity {
 
         recyclerEstoque.setAdapter(adapterEstoque);
 
-
     }
 
     public void atualizarEstoque(View view) throws JSONException {
+        /**define os headers que a solicitação vai precisar*/
             Map<String, String> headers = new HashMap<>();
             headers.put("apikey", API_KEY);
             headers.put("Authorization", "Bearer " + accessToken);
@@ -87,7 +88,7 @@ public class Estoque extends AppCompatActivity {
 
             req.put(body);
 
-            //url para logar com senha
+        /**define os headers que a solicitação vai precisar*/
             String url = API_URL + "/rest/v1/estoque?some_column=eq.someValue";
 
             JsonArrayRequest request = new JsonArrayRequest(
@@ -102,12 +103,12 @@ public class Estoque extends AppCompatActivity {
                                 for(int i=0; i< response.length();i++){
                                     try{
                                         JSONObject jsonObj = response.getJSONObject(i);
-                                        //Se o pedido ter uma resposta, verifica se teve sucesso
+                                        /**Se o pedido tiver uma resposta, verifica se teve sucesso*/
 
                                         Boolean sucesso = jsonObj.getBoolean("sucesso");
                                         String msg = jsonObj.getString("msg");
 
-                                        //Manda a mensagem de retorno, pra indicar o status
+                                        /**Manda a mensagem de retorno, pra indicar o status*/
                                         Toast.makeText(Estoque.this, msg, Toast.LENGTH_SHORT).show();
                                         //Se estever tudo certo, passa para a próxima página
                                         if(sucesso){
@@ -134,7 +135,7 @@ public class Estoque extends AppCompatActivity {
                 }
             };
 
-        // Adicionar a solicitação à fila de solicitações
+        /**Adicionar a solicitação à fila de solicitações*/
         RequestQueue filaRequest = Volley.newRequestQueue(Estoque.this);
         filaRequest.add(request);
     }
@@ -142,12 +143,13 @@ public class Estoque extends AppCompatActivity {
 
     private void acessarListaProdutos(){
         Map<String, String> headers = new HashMap<>();
-        //define os headers que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
+        /**define a rota do estoque que precisa ser acessada*/
         ConectorAPI.conexaoArrayGET(
-                "/rest/v1/produtos?select=*,estoque(quantidade)",
+                "/rest/v1/produtos?select=*,estoque(quantidade, id_estoque)",
                 headers,
                 getApplicationContext(),
                 new ConectorAPI.VolleyArrayCallback() {
@@ -161,10 +163,12 @@ public class Estoque extends AppCompatActivity {
                                 Double preco = jsonObject.getDouble("preco");
                                 JSONObject estoque = jsonObject.getJSONObject("estoque");
                                 int quantidade = estoque.getInt("quantidade");
+                                int idEstoque = estoque.getInt("id_estoque");
+
                                 String caminhoImagem = jsonObject.getString("caminho_imagem");
                                 int id = jsonObject.getInt("id_produto");
 
-                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade));
+                                listaProdutos.add(new Produto(id,nomeProduto,preco,caminhoImagem,quantidade,idEstoque));
                             }
                         }
                         adapterEstoque.notifyDataSetChanged();
@@ -177,6 +181,7 @@ public class Estoque extends AppCompatActivity {
                 });
     }
 
+    /**Monta o modelo de requisição para ser solicitada*/
     private JSONObject montarRequisicao()throws JSONException{
         JSONArray listReq = new JSONArray();
 
@@ -198,20 +203,37 @@ public class Estoque extends AppCompatActivity {
         return requisicao;
     }
 
+    /**Vai para tela de cadastrar novos produtos*/
     public void IrTelaCadastroProduto(View view){
         Intent i = new Intent(Estoque.this, Activity_Adicionar_Produtos.class);
+        i.putExtra("accessToken", accessToken);
         startActivity(i);
     }
 
+    /**Volta para a tela anterior*/
     public void voltarTelaEstoque(View view){
         finish();
     }
 
+    /**Volta para o início do aplicativo*/
     public void voltarInicio(View view){
         Intent intent = new Intent(this, PaginaInicial.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
+    }
+
+    /**Vai pra tela de alterar um produto existente passando as informações do produto que vai ser alterado*/
+    public void irModificarProduto(int idProduto, String nome, String caminhoImg, int quantidade, double preco, int idEstoque){
+        Intent i = new Intent(this, ModificarProduto.class);
+        i.putExtra("idProduto", idProduto);
+        i.putExtra("imgProduto", caminhoImg);
+        i.putExtra("nomeProduto", nome);
+        i.putExtra("precoProduto", preco);
+        i.putExtra("quantidadeProduto", quantidade);
+        i.putExtra("idEstoque", idEstoque);
+        i.putExtra("accessToken", accessToken);
+        startActivity(i);
     }
 
 }

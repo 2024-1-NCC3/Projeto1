@@ -2,13 +2,9 @@ package com.example.comedoria.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comedoria.Class.Produto;
 import com.example.comedoria.R;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.comedoria.activities.Estoque;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -27,11 +23,13 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
     private android.content.Context context;
     private List<Produto> listaProdutos;
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterEstoque(Context context, List<Produto> lista){
         this.context = context;
         this.listaProdutos = lista;
     }
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public AdapterEstoque.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -39,77 +37,33 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
         return new AdapterEstoque.ViewHolder(itemLista);
     }
 
+    /**Popula as Views geradas com funções*/
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Produto produto = listaProdutos.get(i);
         viewHolder.textTitle.setText(produto.getNome());
-        viewHolder.textQuantidade.setHint(""+produto.getQuantidade());
+        viewHolder.textQuantidade.setText("Quantidade: "+produto.getQuantidade());
         Picasso.get().load(produto.getCaminhoImg()).into(viewHolder.imgProduto);
-        viewHolder.textPreco.setHint(String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()));
+        viewHolder.textPreco.setText("Preço: "+String.format(Locale.getDefault(), "R$ %.2f", produto.getPreco()));
 
-        viewHolder.textPreco.addTextChangedListener(new TextWatcher() {
+        /**Quando for clicado para modificar algum produto, direciona para a tela de alteração com as informações do produto*/
+        viewHolder.modificarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                double preco = Double.parseDouble(charSequence.toString().replace("R$", "").trim());
-                produto.setPreco(preco);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public void onClick(View view) {
+                ((Estoque)context).irModificarProduto(produto.getId(), produto.getNome(), produto.getCaminhoImg(),
+                        produto.getQuantidade(), produto.getPreco(), produto.getIdEstoque());
             }
         });
-
-        viewHolder.textQuantidade.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                int quantidade = Integer.parseInt(charSequence.toString().replace("R$", "").trim());
-                produto.setQuantidade(quantidade);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        viewHolder.cBPromocao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    produto.getCategoria().add("Oferta");
-                }else{
-                    produto.getCategoria().remove("Oferta");
-                }
-
-            }
-
-        });
-
-        viewHolder.excluir.setOnClickListener(view -> {
-            listaProdutos.remove(i);
-            notifyItemRemoved(i);
-            notifyItemRangeChanged(i, listaProdutos.size());
-        });
-
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return listaProdutos.size();
     }
 
+    /**Carrega a lista de produtos*/
     public List<Produto> getListaProdutos(){
         return this.listaProdutos;
     }
@@ -118,25 +72,22 @@ public class AdapterEstoque extends RecyclerView.Adapter<AdapterEstoque.ViewHold
 
         TextView textTitle;
 
-        TextInputEditText textPreco;
+        TextView textPreco;
 
-        TextInputEditText textQuantidade;
+        TextView textQuantidade;
         ImageView imgProduto;
 
-        CheckBox cBPromocao;
-
-        TextView excluir;
+        TextView modificarProduto;
 
 
         @SuppressLint("ResourceAsColor")
         public ViewHolder(View itemView){
             super(itemView);
-            textTitle = itemView.findViewById(R.id.textTitulo);
-            textQuantidade = itemView.findViewById(R.id.textQuantidade);
-            textPreco = itemView.findViewById(R.id.textPrecoEstoque);
+            textTitle = itemView.findViewById(R.id.txtNomeProdutoModificarProduto);
+            textQuantidade = itemView.findViewById(R.id.txtQuantidadeEstoque);
+            textPreco = itemView.findViewById(R.id.txtPrecoEstoque);
             imgProduto = itemView.findViewById(R.id.imgProduto);
-            cBPromocao = itemView.findViewById(R.id.cBPromocao);
-            excluir = itemView.findViewById(R.id.btnExcluir);
+            modificarProduto = itemView.findViewById(R.id.btnModificarProduto);
         }
     }
 }

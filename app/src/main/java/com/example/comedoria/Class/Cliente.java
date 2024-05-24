@@ -5,12 +5,14 @@ public class Cliente {
     private String sobrenome;
     private String idCliente;
 
+    /**Construtores da classe*/
     public Cliente(String nome, String sobrenome, String idCliente) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.idCliente = idCliente;
     }
 
+    /**Método Getters e Setters dos atributos da classe*/
     public String getNome() {
         return nome;
     }

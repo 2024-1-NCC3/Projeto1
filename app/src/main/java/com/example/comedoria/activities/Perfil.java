@@ -46,6 +46,7 @@ public class Perfil extends AppCompatActivity {
     private Spinner spinnerData, spinnerCategoria, spinnerTipo ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela, como o token de acesso e o adapter da RecyclerView*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
@@ -85,9 +86,10 @@ public class Perfil extends AppCompatActivity {
 
     }
 
+    /**Monta a requisição para pegar os dados do usuário e carregá-los*/
     private void pegarDadosUsuario() {
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -114,10 +116,10 @@ public class Perfil extends AppCompatActivity {
         );
     }
 
-
+    /**Busca o histórico de pedidos do usuário*/
     private void buscarHistorico(){
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
+        /**define os headers que a solicitação vai precisar*/
         headers.put("apikey", API_KEY);
         headers.put("Authorization", "Bearer " + accessToken);
 
@@ -144,6 +146,7 @@ public class Perfil extends AppCompatActivity {
         );
     }
 
+    /**Função para interpretar o JsonArray que volta da requisição e transformar ele em algo interpretável pelo aplicativo*/
     private void interpretarJsonArray(JSONArray response) throws JSONException {
         for(int i =0;i<response.length();i++){
             JSONObject objetoPedido = response.getJSONObject(i);
@@ -175,6 +178,7 @@ public class Perfil extends AppCompatActivity {
         adapterHistorico.notifyDataSetChanged();
     }
 
+    /**Vai para a tela do pedido que o cliente quiser ver o comprovante*/
     public void irParaPedido(String idPedido){
         Intent i = new Intent(this, ComprovantePedido.class);
         i.putExtra("idPedido",idPedido);
@@ -182,6 +186,7 @@ public class Perfil extends AppCompatActivity {
         startActivity(i);
     }
 
+    /**Carrega a opção de busca do usuário*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -206,6 +211,7 @@ public class Perfil extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**Volta para a tela anterior*/
     public void sair(View view){
         finish();
     }

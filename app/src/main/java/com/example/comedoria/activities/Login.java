@@ -2,14 +2,18 @@ package com.example.comedoria.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Patterns;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.comedoria.BuildConfig;
 import com.example.comedoria.ConectorAPI;
 import com.example.comedoria.R;
@@ -28,28 +32,36 @@ public class Login extends AppCompatActivity {
     private static final String API_KEY = BuildConfig.API_KEY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**Configura as variáveis que precisam ser trazidas ao iniciar a tela*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
         //Atribuir os inputs para login
         txtInput = findViewById(R.id.txtEmail);
         txtSenha = findViewById(R.id.txtSenha);
+        definirListenerDoEmail();
     }
+
+    /**Função que leva para a tela de cadastro*/
     public void cadastro(View view){
         Intent i = new Intent(this, Cadastro.class);
         startActivity(i);
     }
+
+    /**Função que monta a requisição de logar com o email e senha inseridos*/
     public void Logar(View view) throws JSONException {
+        /**Configura os headers para a requisição*/
         Map<String, String> headers = new HashMap<>();
-        //define os heades que a solicitação vai precisar
         headers.put("apikey", API_KEY);
         headers.put("Content-Type", "application/json");
 
         JSONObject dadosDeSolicitacao = new JSONObject();
-        //Adiciona os campos= input e senha ao Json, e define seus valores
 
+        /**Adiciona os campos email e senha ao JSON*/
         dadosDeSolicitacao.put("email", txtInput.getText());
         dadosDeSolicitacao.put("password", txtSenha.getText());
+
+
 
         ConectorAPI.conexaoSinglePOST(
                 "/auth/v1/token?grant_type=password",
@@ -59,7 +71,7 @@ public class Login extends AppCompatActivity {
                 new ConectorAPI.VolleySingleCallback() {
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
-                //Verificar se quem logou é cliente ou funcionário
+                /**Verificar se quem logou é cliente ou funcionário ou cliente*/
                 Map<String, String> headers = new HashMap<>();
 
                 String acessToken = response.getString("access_token");
@@ -79,18 +91,21 @@ public class Login extends AppCompatActivity {
                             JSONObject resposta = response.getJSONObject(0);
                             int papel = resposta.getInt("id_papel");
 
-                            //se for cliente, vai para a página Inicial
+                            /**Se for cliente, vai para a Página Inicial de cliente*/
                             if(papel == 2){
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, PaginaInicial.class);
                                 intent.putExtra("accessToken", acessToken);
                                 intent.putExtra("idUsuario",idUsuario);
                                 startActivity(intent);
-                            }else{
+                                finish();
+                            }/**Se for funcionário, vai para a Página Inicial de funcionário*/
+                            else if(papel == 1){
                                 Toast.makeText(Login.this, "Logado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Login.this, perfilAdm.class);
                                 intent.putExtra("accessToken", acessToken);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     }
@@ -124,4 +139,21 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /**Verifica se o email está no padrão correto*/
+    private void definirListenerDoEmail(){
+        txtInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                    txtInput.setError("Email inválido");
+                }
+            }
+        });
+    }
 }

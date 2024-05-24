@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +25,7 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
     private List<Produto> listaCarrinho;
     private Context contextCarrinho;
 
+    /**Cria as Views baseadas em um modelo*/
     @NonNull
     @Override
     public AdapterCarrinho.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,11 +34,13 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
         return new AdapterCarrinho.MyViewHolder(itemLista);
     }
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterCarrinho(List<Produto> lista, Context contextCarrinho){
         this.listaCarrinho = lista;
         this.contextCarrinho = contextCarrinho;
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull AdapterCarrinho.MyViewHolder holder, int position) {
         Produto produto = listaCarrinho.get(position);
@@ -53,17 +57,23 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
         float charWidthPreco = paintPreco.measureText("R$ 0000,00");
         holder.precoProduto.setWidth((int) (charWidthPreco));
 
-
+        /**Adiciona ou diminui 1 na quantidade do produto*/
         holder.botaoAdicionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                produto.setQuantidade(produto.getQuantidade() + 1);
-                notifyDataSetChanged();
+                if(produto.getQuantidade() + 1 <= produto.getEstoque()){
 
-                if(contextCarrinho instanceof Carrinho){
-                    ((Carrinho)contextCarrinho).atualizarLista(listaCarrinho);
-                    ((Carrinho)contextCarrinho).atualizarTotal();
+                    produto.setQuantidade(produto.getQuantidade() + 1);
+                    notifyDataSetChanged();
+
+                    if(contextCarrinho instanceof Carrinho){
+                        ((Carrinho)contextCarrinho).atualizarLista(listaCarrinho);
+                        ((Carrinho)contextCarrinho).atualizarTotal();
+                    }
+                }else{
+                    Toast.makeText(contextCarrinho, "Desculpe, não temos essa quantidade disponível", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
@@ -86,6 +96,7 @@ public class AdapterCarrinho extends RecyclerView.Adapter<AdapterCarrinho.MyView
 
     }
 
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return listaCarrinho.size();

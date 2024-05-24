@@ -34,7 +34,7 @@
             android:id="@+id/imageView6"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:onClick="voltarTelaPedidos"
+            android:onClick="voltarTelaAddProdutos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.01"
@@ -58,6 +58,7 @@
         app:layout_constraintVertical_bias="0.015">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputQuantidade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
@@ -126,8 +127,7 @@
         android:layout_height="59dp"
         android:background="@drawable/borda_spinner"
         android:dropDownSelector="@color/verde_fundo_categoria"
-        android:entries="@array/filtro_categoria_add_produto"
-        android:popupBackground="#0F5929"
+        android:popupBackground="@drawable/borda_quatro_pontas_arrendondadas_verde_escuro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

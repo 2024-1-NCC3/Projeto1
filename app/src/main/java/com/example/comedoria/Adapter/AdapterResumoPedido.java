@@ -23,42 +23,39 @@ public class AdapterResumoPedido extends RecyclerView.Adapter<AdapterResumoPedid
     @NonNull
     @Override
 
-
+    /**Carrega a lista e o contexto da tela*/
     public AdapterResumoPedido.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-
         View itemLista = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_resumo_pedido, parent,false);
         return new AdapterResumoPedido.MyViewHolder(itemLista);
-
     }
 
-
-
-
+    /**Define o tamanho da lista carregada*/
     @Override
     public int getItemCount() {
         return listaResumo.size();
     }
 
+    /**Carrega a lista e o contexto da tela*/
     public AdapterResumoPedido(List<Produto> lista, Context contextResumo){
         this.listaResumo = lista;
         this.contextResumo = contextResumo;
     }
 
+    /**Carrega a lista do resumo do pedido*/
     public void setListaProduto(List<Produto> listaProduto){
         this.listaResumo = listaProduto;
     }
 
+    /**Popula as Views geradas com funções*/
     @Override
     public void onBindViewHolder(@NonNull AdapterResumoPedido.MyViewHolder holder, int position) {
         Produto produto = listaResumo.get(position);
 
         holder.nomeProduto.setText((produto.getNome()));
         holder.quantidadeProduto.setText((produto.getQuantidade() +""));
-
-
-
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView nomeProduto;
