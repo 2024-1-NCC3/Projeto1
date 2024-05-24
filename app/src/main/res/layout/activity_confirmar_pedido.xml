@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:background="@drawable/borda_arredondada_quatro_lado_bege2"
+            android:background="#FFEEE1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,8 +57,10 @@
                 android:id="@+id/lblCliente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/itim"
                 android:text="Cliente: "
                 android:textColor="@color/verde_fundo_categoria"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,8 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/itim"
                 android:text="Nº do Pedido:"
                 android:textColor="@color/verde_fundo_categoria"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lblCliente" />
 
@@ -77,8 +81,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/itim"
                 android:text="Resumo:"
                 android:textColor="@color/verde_fundo_categoria"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lblNumeroPedido" />
 
@@ -96,16 +102,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/itim"
                 android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/lblCliente"
-                app:layout_constraintTop_toTopOf="@+id/lblCliente" />
+                app:layout_constraintTop_toTopOf="@+id/lblCliente"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtNumeroPedidoConfirmar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:fontFamily="@font/itim"
                 android:text="TextView"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/lblNumeroPedido"
                 app:layout_constraintTop_toTopOf="@+id/lblNumeroPedido" />
 
@@ -114,7 +124,9 @@
                 android:layout_width="132dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/itim"
                 android:text="Produto"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textView15"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +137,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
+                android:fontFamily="@font/itim"
                 android:text="Total"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView14" />
 
@@ -134,7 +148,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
+                android:fontFamily="@font/itim"
                 android:text="Preço"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textView13"
                 app:layout_constraintTop_toTopOf="@+id/textView15" />
 
@@ -143,7 +159,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
+                android:fontFamily="@font/itim"
                 android:text="Quantidade"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textView14"
                 app:layout_constraintTop_toTopOf="@+id/textView12" />
 
@@ -152,8 +170,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/itim"
                 android:text="Total: "
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recyclerConfirmar" />
 
