@@ -20,15 +20,23 @@
 
 -Raiz<br>
 |<br>
-|-->documentos<br>
-  &emsp;|-->antigos<br>
-  &emsp;|Documentação.docx<br>
-|-->executáveis<br>
-  &emsp;|-->windows<br>
-|-->imagens<br>
-|-->src<br>
-  &emsp;|-->Arquivos do jogo<br>
-|readme.md<br>
+|-->Documentos do Projeto<br>
+  &emsp;|-->Documentação FrontEnd<br>
+  &emsp;|Breve_Descrição.docx<br>
+  &emsp;|Descrição.docx<br>
+  &emsp;|UMLComedoriaDaTia.pdf<br>
+  
+|-->app<br>
+  &emsp;|-->src<br>
+  &emsp; &emsp;|-->main<br>
+  &emsp; &emsp;&emsp;|-->java/com/example/comedoria<br>
+  &emsp;&emsp;&emsp;&emsp;|-->Adapter<br>
+  &emsp;&emsp;&emsp;&emsp;|-->Class<br>
+  &emsp;&emsp;&emsp;&emsp;|-->activities<br>
+  &emsp;&emsp;&emsp;&emsp;|-->fragments<br>
+  &emsp; &emsp;&emsp;|-->res<br>
+|Comedoria.apk<br>
+|README.md<br>
 
 ## 🛠 Instalação
 
@@ -37,7 +45,12 @@
 Busque pelo apk "comedoria.apk" e instale no seu dispositivo Android. Futuramente iremos publicar na Google Play
 
 ## 🗃 Histórico de lançamentos
-
+* 0.4.0 - 18/05/2024
+    * MUDANÇA: Telas Finalizadas
+* 0.3.0 - 27/04/2024
+    * MUDANÇA: Conexão com o banco de dados
+* 0.2.0 - 15/04/2024
+    * MUDANÇA: Refatoração do repositório
 * 0.1.0 - 24/03/2024
     * MUDANÇA: Adição de primeiras telas do aplicativo
 * 0.0.1 - 04/02/2024
@@ -45,9 +58,5 @@ Busque pelo apk "comedoria.apk" e instale no seu dispositivo Android. Futurament
 
 ## 📋 Licença/License
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/2024-1-NCC3/Projeto1">Comedoria da Tia</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/2024-1-NCC3/Projeto1">Alexsander Sudario, Bruno Costa, Victor Domingues, Vitor Tokunaga</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a></p>
-
-## 🎓 Referências
-
-Aqui estão as referências usadas no projeto.
 
 
